@@ -1,4 +1,19 @@
 /* Globals */
+:root {
+  --white: #ffffff;
+  --hueletColor: #ec8b10;
+  --bgColor: #181718;
+  --hoverColor: #605e5c;
+}
+::selection {
+  background: var(--hueletColor);
+  color: #fff;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 html, body {
   margin: 0;
   padding: 0;
@@ -87,6 +102,9 @@ code {
     padding: 4px 20px 0;
     width: 1em;
 }
+.hidden {
+  display: none;
+}
 /* Buttons */
 .main-btn {
   background-color: black;
@@ -146,4 +164,46 @@ code {
 }
 .cursor {
     cursor: pointer;
+}
+.h2-1 {
+  color: #fff;
+  font-weight: lighter;
+  padding: 15px;
+}
+.video-holder {
+  padding: 60px;
+}
+.following {
+  padding: 60px;
+}
+.flex-parent {
+  display: flex;
+  flex-direction: row;
+}
+.a-1 {
+  transition: 0.4s;
+}
+.a-1:hover {
+  color: #551a8b;
+}
+.h2-2 {
+  color: #551a8b;
+  transition: 0.4s;
+}
+.h2-2:hover {
+  color: #fff;
+  font-weight: lighter;
+}
+.img-1 {
+  width: 175px;
+  height: 160px;
+  border-radius: 50%;
+}
+.p-1 {
+  color: #fff;
+}
+.d-1 {
+  background-color: #ee8906;
+  width: 99px;
+  height: 150px;
 }
