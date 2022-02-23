@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { Lock, Shield } from "react-feather";
 import { FontSizes, FontWeights, ColorClassNames, Text } from '@fluentui/react';
 import Footer from '../components/footer';
+import Link from 'next/link';
 
 const Home: NextPage = () => {
   return (
@@ -14,9 +15,9 @@ const Home: NextPage = () => {
       </Text>
         <div className="watch-now-clears">
             <div className="watch-now-link">
-                <a href="/auth/up"> 
+                <Link href="/auth/up" passHref={true}> 
                     <button className="main-btn">Watch now</button>
-                </a>
+                </Link>
             </div>
         </div>
         <div id="desktop">
