@@ -3,6 +3,7 @@
     height: 40vh;
     padding: 1rem;
 }
+
 .EasterEgg {
     aspect-ratio: 900/600;
     width: 100vw;
@@ -10,12 +11,15 @@
     background-size: cover;
     background-position: center;
 }
+
 .EasterEggSectionImg1 {
     background-image: url("./../assets/first-waves-est.svg");
 }
+
 .EasterEggSectionImg2 {
     background-image: url("./../assets/second-waves-est.svg");
 }
+
 .EasterEggSectionLong {
     background: #1e5ab0;
     width: 100vw;

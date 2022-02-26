@@ -5,29 +5,36 @@
   --bgColor: #181718;
   --hoverColor: #605e5c;
 }
+
 ::selection {
   background: var(--hueletColor);
   color: #fff;
 }
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-html, body {
+
+html,
+body {
   margin: 0;
   padding: 0;
   background: #181718;
   color: #FFFFFF;
 }
+
 #klausen {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
 }
+
 .footer-container {
   padding: 1rem;
 }
+
 /* Text */
 code {
   border-radius: 25px;
@@ -36,6 +43,7 @@ code {
   font-weight: 400;
   padding: .25em .5em;
 }
+
 /* Display */
 .main-si {
   color: #FFFFFF;
@@ -45,6 +53,7 @@ code {
   display: grid;
   place-items: center;
 }
+
 .sp-1-io {
   color: #FFFFFF;
   background: rgba(255, 255, 255, 0.20);
@@ -53,19 +62,21 @@ code {
   -webkit-backdrop-filter: blur(2.0px);
   border-radius: 10px;
   transition: 0.6s;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   display: grid;
   place-items: center;
   padding: 7em;
   cursor: pointer;
 }
+
 .sp-1-io-inner {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .sp-1-io:hover {
   background: rgba(255, 255, 255, 0.20);
   box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.50);
@@ -73,6 +84,7 @@ code {
   -webkit-backdrop-filter: blur(2.0px);
   border-radius: 10px;
 }
+
 .sp-option-io {
   color: #FFFFFF;
   background: rgba(255, 255, 255, 0.20);
@@ -82,29 +94,34 @@ code {
   border-radius: 10px;
   transition: 0.6s;
 }
+
 .sp-options-mo {
   padding: 2em;
   display: flex;
   flex-direction: row;
 }
+
 .border-suggested {
   border: 3px solid #7026B9;
 }
+
 .plus-one-placeholder {
-    background-color: #303245;
-    border-radius: 12px;
-    border: 0;
-    box-sizing: border-box;
-    color: #eee;
-    font-size: 18px;
-    height: 100%;
-    outline: 0;
-    padding: 4px 20px 0;
-    width: 1em;
+  background-color: #303245;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 1em;
 }
+
 .hidden {
   display: none;
 }
+
 /* Buttons */
 .main-btn {
   background-color: black;
@@ -114,94 +131,118 @@ code {
   cursor: pointer;
   width: 99vw;
 }
+
 .main-btn:hover {
   background-color: white;
   color: black;
 }
+
 /* Icons */
 .privacy-icon {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .mod-icon {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 /* Iconsizes */
 .icon-sm {
   width: 1em;
   height: 1em;
 }
+
 .icon-md {
   width: 2.5em;
   height: 2.5em;
 }
+
 .icon-lg {
   width: 3em;
   height: 3em;
 }
+
 /* Misc. */
 ::selection {
   background: #EE8906;
 }
+
 .spacer {
   padding: 2em;
 }
+
 .spacer-sm {
   padding: 0.2em;
 }
+
 .spacer-md {
   padding: 2em;
 }
+
 .spacer-lg {
   padding: 4em;
 }
+
 .flex {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
+
 .cursor {
-    cursor: pointer;
+  cursor: pointer;
 }
+
 .h2-1 {
   color: #fff;
   font-weight: lighter;
   padding: 15px;
 }
+
 .video-holder {
   padding: 60px;
 }
+
 .following {
   padding: 60px;
 }
+
 .flex-parent {
   display: flex;
   flex-direction: row;
 }
+
 .a-1 {
   transition: 0.4s;
 }
+
 .a-1:hover {
   color: #551a8b;
 }
+
 .h2-2 {
   color: #551a8b;
   transition: 0.4s;
 }
+
 .h2-2:hover {
   color: #fff;
   font-weight: lighter;
 }
+
 .img-1 {
   width: 175px;
   height: 160px;
   border-radius: 50%;
 }
+
 .p-1 {
   color: #fff;
 }
+
 .d-1 {
   background-color: #ee8906;
   width: 99px;

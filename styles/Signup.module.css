@@ -113,6 +113,9 @@
     padding: 4px 12px 3;
     width: 1em;
 }
+.pwgTriggerIcon {
+  filter: invert(100%) sepia(11%) saturate(2%) hue-rotate(129deg) brightness(109%) contrast(101%);
+}
 .pwgModal {
     visibility: hidden;
     opacity: 0;
