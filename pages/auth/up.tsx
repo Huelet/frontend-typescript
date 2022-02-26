@@ -10,14 +10,20 @@ const AuthUp: NextPage = () => {
   const [password, setPassword] = useState("");
   const [accessCode, setAccessCode] = useState("");
   const [pwgResponse, setPwgResponse] = useState("");
-  const handleUsernameChange = (event: { target: { value: SetStateAction<string>; }; }) => {
-    setUsername(event.target.value)
+  const handleUsernameChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setUsername(event.target.value);
   };
-  const handlePasswordChange = (event: { target: { value: SetStateAction<string>; }; }) => {
-    setPassword(event.target.value)
+  const handlePasswordChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setPassword(event.target.value);
   };
-  const handleAccessCodeChange = (event: { target: { value: SetStateAction<string>; }; }) => {
-    setAccessCode(event.target.value)
+  const handleAccessCodeChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setAccessCode(event.target.value);
   };
   function getRandomPassword() {
     fetch(
@@ -29,9 +35,25 @@ const AuthUp: NextPage = () => {
         setPwgResponse("Copied to clipboard!");
       });
   }
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    fetch
+    const resp = await fetch("https://api.huelet.net/auth/up", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "username": username,
+        "password": password,
+        "accessCode": accessCode,
+      }),
+    })
+    console.log(resp);
+    if (resp.status === 200) {
+        location.assign("/explore")
+    }
   };
   return (
     <div id="klausen">
@@ -108,7 +130,7 @@ const AuthUp: NextPage = () => {
                 />
                 <div
                   className={"cursor"}
-                  data-tip="We will have sent you a DM with this code. If you don&apos;t have it, please let us know."
+                  data-tip="We will have sent you a DM with this code. If you don't have it, please let us know."
                 >
                   <Image
                     src={"https://cdn.huelet.net/assets/icons/info.svg"}
