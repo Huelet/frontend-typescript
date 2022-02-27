@@ -95,6 +95,9 @@ const AuthUp: NextPage = () => {
                       alt="Open password generate modal"
                       width={15}
                       height={15}
+                      loader={() => {
+                        return "https://cdn.huelet.net/assets/icons/add.svg";
+                      }}
                       className={styles.pwgTriggerIcon}
                     />
                   </div>
@@ -121,6 +124,9 @@ const AuthUp: NextPage = () => {
                     alt="Open tooltip"
                     width={15}
                     height={15}
+                    loader={() => {
+                      return "https://cdn.huelet.net/assets/icons/info.svg";
+                    }}
                     className={styles.pwgTriggerIcon}
                   />
                 </div>
@@ -140,6 +146,9 @@ const AuthUp: NextPage = () => {
             <Image
               src={"https://cdn.huelet.net/assets/icons/close.svg"}
               alt="Close password generate modal"
+              loader={() => {
+                return "https://cdn.huelet.net/assets/icons/close.svg";
+              }}
               width={10}
               height={10}
             />

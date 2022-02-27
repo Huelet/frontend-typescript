@@ -2,6 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['cdn.huelet.net']
+    domains: ['cdn.huelet.net'],
+    loader: "custom"
   }
 }
