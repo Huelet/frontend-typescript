@@ -25,14 +25,7 @@ const AuthIn: NextPage = () => {
   }) => {
     setAccessCode(event.target.value);
   };
-  function getRandomPassword() {
-    fetch("https://www.random.org/passwords/?num=1&len=12&format=plain&rnd=new")
-      .then((res) => res.text())
-      .then((res) => {
-        navigator.clipboard.writeText(res);
-        setPwgResponse("Copied to clipboard!");
-      });
-  }
+
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const resp = await fetch("https://api.huelet.net/auth/in", {
@@ -108,48 +101,6 @@ const AuthIn: NextPage = () => {
               </button>
               <div id="error-box"></div>
             </form>
-          </div>
-        </div>
-      </div>
-      <div className={styles.pwgModal} id="pwg-modal">
-        <a href="#">
-          <div className={styles.pwgModalClose}>
-            <Image
-              src={"https://cdn.huelet.net/assets/icons/close.svg"}
-              alt="Close password generate modal"
-              loader={() => {
-                return "https://cdn.huelet.net/assets/icons/close.svg";
-              }}
-              width={10}
-              height={10}
-            />
-          </div>
-        </a>
-        <div className={styles.pwgModalContent}>
-          <div className="sp-1-eo">
-            <div className="sp-1-io p-5">
-              <div className={styles.mainText}>
-                <h2>Generate a password</h2>
-              </div>
-              <div className={styles.mainText}>
-                <p className="pwg-subtitle">
-                  Generate a password for your account
-                </p>
-              </div>
-              <button
-                className={styles.submit}
-                id="pwg-submit"
-                onClick={getRandomPassword}
-              >
-                Generate
-              </button>
-              <div className="spacer.sm"></div>
-              <div className="sp-1-io">
-                <div className="p-5" id="pwg-response">
-                  <div className={styles.mainText}>{pwgResponse}</div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
