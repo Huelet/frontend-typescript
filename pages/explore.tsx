@@ -92,16 +92,12 @@ const Explore: NextPage = () => {
           </div>
         </div>
       </div>
-      <div className="p-1">
-        Good {getDate()}
-        <h2 className="h2-1 ms-font-su ms-fontWeight-semibold ms-fontColor-white ms-textColor-black ms-fontSize-large">
-          We&apos;re working on this part. For now, we&apos;re just going to
-          show you the bare data we got from the API.
+      <div className={styles.mainText}>
+        Good {getDate()}!
+        <br />
+        <h2 className={styles.mainText}>
+          We&apos;re working on this part. Come back later.
         </h2>
-        <p className="h2-1 ms-font-su ms-fontWeight-semibold ms-fontColor-white ms-textColor-black ms-fontSize-large">
-          []
-        </p>
-        <div id="daily"></div>
       </div>
     </div>
   );
