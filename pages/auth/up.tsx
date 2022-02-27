@@ -3,7 +3,7 @@ import Image from "next/image";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import ReactTooltip from "react-tooltip";
-import { FontWeights, Text, ColorClassNames } from "@fluentui/react";
+import { FontWeights, ColorClassNames } from "@fluentui/react";
 
 const AuthUp: NextPage = () => {
   const [username, setUsername] = useState("");
@@ -26,9 +26,7 @@ const AuthUp: NextPage = () => {
     setAccessCode(event.target.value);
   };
   function getRandomPassword() {
-    fetch(
-      "https://www.random.org/strings/?num=1&len=16&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new"
-    )
+    fetch("https://www.random.org/passwords/?num=1&len=12&format=plain&rnd=new")
       .then((res) => res.text())
       .then((res) => {
         navigator.clipboard.writeText(res);
@@ -45,14 +43,14 @@ const AuthUp: NextPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "username": username,
-        "password": password,
-        "accessCode": accessCode,
+        username: username,
+        password: password,
+        accessCode: accessCode,
       }),
-    })
+    });
     console.log(resp);
     if (resp.status === 200) {
-        location.assign("/explore")
+      location.assign("/explore");
     }
   };
   return (
@@ -60,33 +58,19 @@ const AuthUp: NextPage = () => {
       <div className="main-si">
         <div className="sp-1-eo">
           <div className="sp-1-io p-5">
-            <Text
-              styles={{
-                root: {
-                  color: ColorClassNames.white,
-                  fontWeight: FontWeights.light,
-                },
-              }}
-            >
+            <div className={styles.mainText}>
               <h2 className="klausen-title">Sign up for Huelet!</h2>
-            </Text>
-            <Text
-              styles={{
-                root: {
-                  color: ColorClassNames.white,
-                  fontWeight: FontWeights.light,
-                },
-              }}
-            >
+            </div>
+            <div className={styles.mainText}>
               <p className="klausen-subtitle">
                 We only need a username and password{" "}
               </p>
-            </Text>
+            </div>
             <form id="form" onSubmit={handleSubmit}>
               <input
                 className={styles.input}
                 id="username"
-                type="text"
+                type="div"
                 name="username"
                 placeholder="Username"
                 onChange={handleUsernameChange}
@@ -122,7 +106,7 @@ const AuthUp: NextPage = () => {
                 <input
                   className={styles.input}
                   id="accessCode"
-                  type="text"
+                  type="div"
                   name="accessCode"
                   placeholder="Alpha code"
                   onChange={handleAccessCodeChange}
@@ -164,28 +148,14 @@ const AuthUp: NextPage = () => {
         <div className={styles.pwgModalContent}>
           <div className="sp-1-eo">
             <div className="sp-1-io p-5">
-              <Text
-                styles={{
-                  root: {
-                    color: ColorClassNames.white,
-                    fontWeight: FontWeights.light,
-                  },
-                }}
-              >
+              <div className={styles.mainText}>
                 <h2>Generate a password</h2>
-              </Text>
-              <Text
-                styles={{
-                  root: {
-                    color: ColorClassNames.white,
-                    fontWeight: FontWeights.light,
-                  },
-                }}
-              >
+              </div>
+              <div className={styles.mainText}>
                 <p className="pwg-subtitle">
                   Generate a password for your account
                 </p>
-              </Text>
+              </div>
               <button
                 className={styles.submit}
                 id="pwg-submit"
@@ -196,9 +166,7 @@ const AuthUp: NextPage = () => {
               <div className="spacer.sm"></div>
               <div className="sp-1-io">
                 <div className="p-5" id="pwg-response">
-                  <Text styles={{ root: { color: ColorClassNames.white } }}>
-                    {pwgResponse}
-                  </Text>
+                  <div className={styles.mainText}>{pwgResponse}</div>
                 </div>
               </div>
             </div>
