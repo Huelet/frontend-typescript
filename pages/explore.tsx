@@ -13,6 +13,16 @@ const Explore: NextPage = () => {
   const addCount = () => {
     setTimesClicked(timesClicked + 1);
   };
+  const getTimeOfDay = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      return "morning";
+    } else if (hour < 18) {
+      return "afternoon";
+    } else {
+      return "evening";
+    }
+  };
   if (timesClicked >= 10) {
     console.log("You have clicked the button more than 10 times");
     setIsOpen(true);
@@ -87,17 +97,13 @@ const Explore: NextPage = () => {
           </div>
         </div>
       </div>
-      <p className="p-1">
-        Good<span id="timeOfDay"></span>
-        <h2 className="h2-1 ms-font-su ms-fontWeight-semibold ms-fontColor-white ms-textColor-black ms-fontSize-large">
-          We&apos;re working on this part. For now, we&apos;re just going to show you the
-          bare data we got from the API.
-        </h2>
-        <p className="h2-1 ms-font-su ms-fontWeight-semibold ms-fontColor-white ms-textColor-black ms-fontSize-large">
-          []
-        </p>
-        <div id="daily"></div>
-      </p>
+      <div className={styles.mainText}>
+        Good {getTimeOfDay()}!
+        <br />
+      <h2 className={styles.mainText}>
+        We&apos;re working on this part. Come back later.
+      </h2>
+      </div>
     </div>
   );
 };
