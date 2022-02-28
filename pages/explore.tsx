@@ -13,20 +13,15 @@ const Explore: NextPage = () => {
   const addCount = () => {
     setTimesClicked(timesClicked + 1);
   };
-  const getTimeOfDay = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) {
-      return "morning";
-    } else if (hour < 18) {
-      return "afternoon";
-    } else {
-      return "evening";
-    }
-  };
   if (timesClicked >= 10) {
     console.log("You have clicked the button more than 10 times");
     setIsOpen(true);
   }
+  const getDate = () => {
+    let d = new Date(Date.now());
+    return d.getHours() <= 12 ? "Morning" : "Afternoon";
+  };
+
   return (
     <div id="klausen">
       <div className={styles.navContainer}>
@@ -98,11 +93,11 @@ const Explore: NextPage = () => {
         </div>
       </div>
       <div className={styles.mainText}>
-        Good {getTimeOfDay()}!
+        Good {getDate()}!
         <br />
-      <h2 className={styles.mainText}>
-        We&apos;re working on this part. Come back later.
-      </h2>
+        <h2 className={styles.mainText}>
+          We&apos;re working on this part. Come back later.
+        </h2>
       </div>
     </div>
   );

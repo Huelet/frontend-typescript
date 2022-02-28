@@ -5,7 +5,7 @@ import styles from "../../styles/Signup.module.css";
 import ReactTooltip from "react-tooltip";
 import { FontWeights, ColorClassNames } from "@fluentui/react";
 
-const AuthUp: NextPage = () => {
+const AuthIn: NextPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [accessCode, setAccessCode] = useState("");
@@ -25,17 +25,10 @@ const AuthUp: NextPage = () => {
   }) => {
     setAccessCode(event.target.value);
   };
-  function getRandomPassword() {
-    fetch("https://www.random.org/passwords/?num=1&len=12&format=plain&rnd=new")
-      .then((res) => res.text())
-      .then((res) => {
-        navigator.clipboard.writeText(res);
-        setPwgResponse("Copied to clipboard!");
-      });
-  }
+
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const resp = await fetch("https://api.huelet.net/auth/up", {
+    const resp = await fetch("https://api.huelet.net/auth/in", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -59,13 +52,9 @@ const AuthUp: NextPage = () => {
         <div className="sp-1-eo">
           <div className="sp-1-io p-5">
             <div className={styles.mainText}>
-              <h2 className="klausen-title">Sign up for Huelet!</h2>
+              <h2 className="klausen-title">Sign into Huelet</h2>
             </div>
-            <div className={styles.mainText}>
-              <p className="klausen-subtitle">
-                We only need a username and password{" "}
-              </p>
-            </div>
+
             <form id="form" onSubmit={handleSubmit}>
               <input
                 className={styles.input}
@@ -105,80 +94,13 @@ const AuthUp: NextPage = () => {
               </div>
               <div className="spacer-sm"></div>
               <ReactTooltip />
-              <div className="flex">
-                <input
-                  className={styles.input}
-                  id="accessCode"
-                  type="div"
-                  name="accessCode"
-                  placeholder="Alpha code"
-                  onChange={handleAccessCodeChange}
-                  value={accessCode}
-                />
-                <div
-                  className={"cursor"}
-                  data-tip="We will have sent you a DM with this code. If you don't have it, please let us know."
-                >
-                  <Image
-                    src={"https://cdn.huelet.net/assets/icons/info.svg"}
-                    alt="Open tooltip"
-                    width={15}
-                    height={15}
-                    loader={() => {
-                      return "https://cdn.huelet.net/assets/icons/info.svg";
-                    }}
-                    className={styles.pwgTriggerIcon}
-                  />
-                </div>
-              </div>
+
               <div className="spacer"></div>
               <button className={styles.submit} id="submit" type="submit">
-                Sign up
+                Sign In
               </button>
               <div id="error-box"></div>
             </form>
-          </div>
-        </div>
-      </div>
-      <div className={styles.pwgModal} id="pwg-modal">
-        <a href="#">
-          <div className={styles.pwgModalClose}>
-            <Image
-              src={"https://cdn.huelet.net/assets/icons/close.svg"}
-              alt="Close password generate modal"
-              loader={() => {
-                return "https://cdn.huelet.net/assets/icons/close.svg";
-              }}
-              width={10}
-              height={10}
-            />
-          </div>
-        </a>
-        <div className={styles.pwgModalContent}>
-          <div className="sp-1-eo">
-            <div className="sp-1-io p-5">
-              <div className={styles.mainText}>
-                <h2>Generate a password</h2>
-              </div>
-              <div className={styles.mainText}>
-                <p className="pwg-subtitle">
-                  Generate a password for your account
-                </p>
-              </div>
-              <button
-                className={styles.submit}
-                id="pwg-submit"
-                onClick={getRandomPassword}
-              >
-                Generate
-              </button>
-              <div className="spacer.sm"></div>
-              <div className="sp-1-io">
-                <div className="p-5" id="pwg-response">
-                  <div className={styles.mainText}>{pwgResponse}</div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -186,4 +108,4 @@ const AuthUp: NextPage = () => {
   );
 };
 
-export default AuthUp;
+export default AuthIn;
