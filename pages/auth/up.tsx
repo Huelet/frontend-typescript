@@ -35,23 +35,27 @@ const AuthUp: NextPage = () => {
   }
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const resp = await fetch("https://api.huelet.net/auth/up", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-        accessCode: accessCode,
-      }),
-    });
-    const data = await resp.json();
-    console.log(data);
-    if (resp.status === 200) {
-      location.assign("/explore");
+    try {
+      const resp = await fetch("https://api.huelet.net/auth/up", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          accessCode: accessCode,
+        }),
+      });
+      const data = await resp.json();
+      console.log(data);
+      if (resp.status === 200) {
+        location.assign("/explore");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
