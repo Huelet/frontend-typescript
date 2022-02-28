@@ -48,7 +48,8 @@ const AuthUp: NextPage = () => {
         accessCode: accessCode,
       }),
     });
-    console.log(resp.json());
+    const json = resp.json()
+    console.log(json);
     if (resp.status === 200) {
       location.assign("/explore");
     }
