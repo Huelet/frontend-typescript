@@ -4,8 +4,14 @@ import styles from "../styles/Home.module.css";
 import { FontSizes, FontWeights, ColorClassNames } from "@fluentui/react";
 import Footer from "../components/footer";
 import Link from "next/link";
+import { useCookies } from "react-cookie"
 
 const Home: NextPage = () => {
+  const [cookie, setCookie] = useCookies(["_hltoken"]);
+  console.log(cookie);
+  if (cookie) {
+    console.log("cookie exists");
+  }
   return (
     <div id="klausen">
       <div className={styles.mainText}>
