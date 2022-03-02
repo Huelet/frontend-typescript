@@ -5,8 +5,10 @@ import { FontSizes, FontWeights, ColorClassNames } from "@fluentui/react";
 import Footer from "../components/footer";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const checkCookie = async () => {
     const token = cookie._hltoken;
@@ -24,7 +26,7 @@ const Home: NextPage = () => {
       console.log(data);
       if (resp.status === 200) {
         console.log(data);
-        location.assign("/explore");
+        router.push("/explore");
         return true;
       } else {
         return false;

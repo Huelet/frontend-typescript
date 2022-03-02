@@ -2,8 +2,10 @@ import type { NextPage } from "next";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import { useCookies } from "react-cookie";
+import { useRouter } from "next/router";
 
 const AuthIn: NextPage = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
@@ -42,7 +44,7 @@ const AuthIn: NextPage = () => {
           {
             path: "/"
         });
-        location.assign("/explore");
+        router.push("/explore");
       }
     } catch (error) {
       console.log(error);

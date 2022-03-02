@@ -4,8 +4,10 @@ import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import ReactTooltip from "react-tooltip";
 import { useCookies } from "react-cookie";
+import { useRouter } from "next/router";
 
 const AuthUp: NextPage = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [accessCode, setAccessCode] = useState("");
@@ -59,7 +61,7 @@ const AuthUp: NextPage = () => {
           {
             path: "/"
         });
-        location.assign("/explore");
+        router.push("/explore");
       }
     } catch (error) {
       console.log(error);
