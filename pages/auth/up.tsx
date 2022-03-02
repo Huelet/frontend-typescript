@@ -3,13 +3,14 @@ import Image from "next/image";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import ReactTooltip from "react-tooltip";
-import { FontWeights, ColorClassNames } from "@fluentui/react";
+import { useCookies } from "react-cookie";
 
 const AuthUp: NextPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [accessCode, setAccessCode] = useState("");
   const [pwgResponse, setPwgResponse] = useState("");
+  const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
   const handleUsernameChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -52,6 +53,12 @@ const AuthUp: NextPage = () => {
       const data = await resp.json();
       console.log(data);
       if (resp.status === 200) {
+        setJWTCookie(
+          "_hltoken",
+          data.token, 
+          {
+            path: "/"
+        });
         location.assign("/explore");
       }
     } catch (error) {
