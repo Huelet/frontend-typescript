@@ -1,15 +1,12 @@
 import type { NextPage } from "next";
-import Image from "next/image";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
-import ReactTooltip from "react-tooltip";
-import { FontWeights, ColorClassNames } from "@fluentui/react";
+import { useCookies } from "react-cookie";
 
 const AuthIn: NextPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [accessCode, setAccessCode] = useState("");
-  const [pwgResponse, setPwgResponse] = useState("");
+  const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
   const handleUsernameChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -20,30 +17,35 @@ const AuthIn: NextPage = () => {
   }) => {
     setPassword(event.target.value);
   };
-  const handleAccessCodeChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setAccessCode(event.target.value);
-  };
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const resp = await fetch("https://api.huelet.net/auth/in", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-        accessCode: accessCode,
-      }),
-    });
-    console.log(resp);
-    if (resp.status === 200) {
-      location.assign("/explore");
+    try {
+      const resp = await fetch("https://api.huelet.net/auth/up", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      const data = await resp.json();
+      console.log(data);
+      if (resp.status === 200) {
+        setJWTCookie(
+          "_hltoken",
+          data.token, 
+          {
+            path: "/"
+        });
+        location.assign("/explore");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
@@ -77,24 +79,7 @@ const AuthIn: NextPage = () => {
                   value={password}
                 />
                 <div className="spacer-sm"></div>
-                <a href="#pwg-modal">
-                  <div className={`${styles.pwgTrigger} cursor`}>
-                    <Image
-                      src={"https://cdn.huelet.net/assets/icons/add.svg"}
-                      alt="Open password generate modal"
-                      width={15}
-                      height={15}
-                      loader={() => {
-                        return "https://cdn.huelet.net/assets/icons/add.svg";
-                      }}
-                      className={styles.pwgTriggerIcon}
-                    />
-                  </div>
-                </a>
               </div>
-              <div className="spacer-sm"></div>
-              <ReactTooltip />
-
               <div className="spacer"></div>
               <button className={styles.submit} id="submit" type="submit">
                 Sign In
