@@ -7,14 +7,7 @@ const ViewVideo: NextPage = () => {
   const { vuid } = router.query;
   console.log(vuid);
   const getVideoData = async () => {
-    const resp = await fetch(`https://api.huelet.net/videos/${vuid}`, {
-        method: 'GET',
-        mode: 'cors', 
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer'
-    });
+    const resp = await fetch(`https://api.huelet.net/videos/${vuid}`);
     return resp.json();
   };
   const videoData = getVideoData();
