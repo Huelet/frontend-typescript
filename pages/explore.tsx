@@ -1,11 +1,7 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import styles from "../styles/ExplorePage.module.css";
-import {
-  GlobalNavButtonIcon,
-  SettingsIcon,
-  VideoIcon,
-} from "@fluentui/react-icons-mdl2";
+import Header from "../components/header";
 
 const Explore: NextPage = () => {
   const [timesClicked, setTimesClicked] = useState(0);
@@ -24,46 +20,7 @@ const Explore: NextPage = () => {
 
   return (
     <div id="klausen">
-      <div className={styles.navContainer}>
-        <div className={styles.navBar}>
-          <GlobalNavButtonIcon className={styles.navIcon} />
-          <div>
-            <form action="" method="get">
-              <input
-                className={styles.searchBar}
-                type="text"
-                name="query"
-                placeholder="Search"
-              />
-              <button className={`${styles.searchbutton} cursor`} type="submit">
-                <img
-                  src="https://cdn.huelet.net/assets/icons/search.svg"
-                  className={styles.searchbutton}
-                />
-              </button>
-            </form>
-          </div>
-          <div className={styles.accountIconsContainer}>
-            <div className="hover cursor">
-              <a href="https://dash.huelet.net">
-                <VideoIcon className={styles.navIcon} />
-              </a>
-            </div>
-            <div className="settings--container hover cursor">
-              <SettingsIcon className={styles.navIcon} />
-            </div>
-            <div className="avatar--container hover cursor">
-              <a href="/auth/manage">
-                <img
-                  className="avatar"
-                  src="https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
-                  alt="Default profile picture"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Header />
       <div className="d-2">
         <div
           className={`d-1`}
