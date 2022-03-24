@@ -1,9 +1,14 @@
 /* Globals */
 :root {
-  --white: #ffffff;
-  --hueletColor: #ec8b10;
-  --bgColor: #181718;
   --hoverColor: #605e5c;
+  --hueletColor: rgb(238, 137, 6);
+  --hueletSecondaryColor: #551A8B;
+  --bgColor: rgb(24, 23, 24);
+  --white: rgb(255, 255, 255);
+  --black: rgb(0, 0, 0);
+  --red: rgb(255, 0, 0);
+  --gap: 1em;
+  --fontFamily: 'Segoe Light', -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
 }
 
 ::selection {
@@ -29,6 +34,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
+  font-family: var(--fontFamily);
 }
 
 .footer-container {
@@ -247,4 +253,22 @@ code {
   background-color: #ee8906;
   width: 99px;
   height: 150px;
+}
+
+article {
+  margin-right: 312px;
+  padding: 0 10px
+}
+
+aside {
+  width: 312px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background: var(--bgColor);
+  overflow: hidden;
+  padding-top: 20px;
+  margin-top: 6vh;
+  margin-right: 12px;
 }
