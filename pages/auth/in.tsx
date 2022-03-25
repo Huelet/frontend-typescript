@@ -21,7 +21,7 @@ const AuthIn: NextPage = () => {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     try {
-      const resp = await fetch("https://api.huelet.net/auth/up", {
+      const resp = await fetch("https://api.huelet.net/auth/in", {
         method: "POST",
         mode: "cors",
         cache: "no-cache",

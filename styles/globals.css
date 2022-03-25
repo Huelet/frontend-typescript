@@ -7,6 +7,8 @@
   --white: rgb(255, 255, 255);
   --black: rgb(0, 0, 0);
   --red: rgb(255, 0, 0);
+  --dividerColor: #605e5c;
+  --iconColor: invert(100%) sepia(11%) saturate(2%) hue-rotate(129deg) brightness(109%) contrast(101%);
   --gap: 1em;
   --fontFamily: 'Segoe Light', -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
 }
@@ -20,6 +22,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: var(--fontFamily);
 }
 
 html,
@@ -68,13 +71,9 @@ code {
   -webkit-backdrop-filter: blur(2.0px);
   border-radius: 10px;
   transition: 0.6s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: grid;
   place-items: center;
   padding: 7em;
-  cursor: pointer;
 }
 
 .sp-1-io-inner {
