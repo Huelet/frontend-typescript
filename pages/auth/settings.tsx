@@ -12,9 +12,11 @@ const AuthSettings: NextPage = () => {
   const [pfp, setPfp] = useState("");
   const [bio, setBio] = useState("");
   const [pronouns, setPronouns] = useState([]);
+  const [location, setLocation] = useState("");
   const [updatedBio, setUpdatedBio] = useState("");
   const [updatedPfp, setUpdatedPfp]: any | any = useState(null);
-  const fileInput = useRef(null);
+  const [updatedPronouns, setUpdatedPronouns] = useState("");
+  const [updatedLocation, setUpdatedLocation] = useState("");
   const [privateAcct, setPrivateAcct] = useState(false);
   const checkCookie = () => {
     const token = cookie._hltoken;
@@ -88,6 +90,16 @@ const AuthSettings: NextPage = () => {
   const handlePfpChange = (event: any) => {
     setUpdatedPfp(event.target.files[0]);
   };
+  const handlePronounsChange = (event: {
+    target: { value: SetStateAction<any> };
+  }) => {
+    setPronouns(event.target.value);
+  };
+  const handleLocationChange = (event: {
+    target: { value: SetStateAction<any> };
+  }) => {
+    setUpdatedLocation(event.target.value);
+  };
   const submitNewBio = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const resp = await fetch("https://api.huelet.net/auth/bio", {
@@ -135,9 +147,42 @@ const AuthSettings: NextPage = () => {
           url: respJSON.pfp,
         }),
       });
-      const data = await resp2.json();
       window.location.reload();
     }
+  };
+  const submitNewPronouns = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    const resp = await fetch("https://api.huelet.net/auth/pronouns", {
+      method: "PATCH",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer: ${cookie._hltoken}`,
+      },
+      body: JSON.stringify({
+        pronouns: updatedPronouns.split("/"),
+        username: username,
+      }),
+    });
+    window.location.reload();
+  };
+  const submitNewLocation = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    const resp = await fetch("https://api.huelet.net/auth/location", {
+      method: "PATCH",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer: ${cookie._hltoken}`,
+      },
+      body: JSON.stringify({
+        location: updatedLocation,
+        username: username,
+      }),
+    });
+    window.location.reload();
   };
   getData();
   return (
@@ -216,17 +261,50 @@ const AuthSettings: NextPage = () => {
                     </h2>
                     <div className={`${styles.userDetails} ${styles.column}`}>
                       <p className={`${styles.userDetailsPronouns}`}>
-                        <img
-                          src="https://cdn.huelet.net/assets/icons/avatar.svg"
-                          alt="pronouns icon"
-                        />
+                        <Popup
+                          trigger={
+                            <img
+                              src="https://cdn.huelet.net/assets/icons/avatar.svg"
+                              alt="pronouns icon"
+                              width={16}
+                              height={16}
+                            />
+                          }
+                        >
+                          <div className={`${styles.pronouns}`}>
+                            <form>
+                              <input
+                                type="text"
+                                name="pronouns"
+                                placeholder="Pronouns"
+                                onChange={handleBioChange}
+                                className={`${styles.editPronounsInput}`}
+                              />
+                              <button
+                                type="submit"
+                                className={`${styles.editPronounsButton}`}
+                                onClick={submitNewBio}
+                              >
+                                Save
+                              </button>
+                            </form>
+                          </div>
+                        </Popup>
                         {() => {
                           pronouns.join("/");
                         }}
                       </p>
                       <p className={`${styles.userDetailsBio}`}>
-                        {bio}
-                        <Popup trigger={<p>(edit)</p>}>
+                        <Popup
+                          trigger={
+                            <img
+                              src="https://cdn.huelet.net/assets/icons/bullet_list.svg"
+                              alt="bio icon"
+                              width={16}
+                              height={16}
+                            />
+                          }
+                        >
                           <div className={`${styles.editBio}`}>
                             <form id="editBioForm" onSubmit={submitNewBio}>
                               <input
@@ -240,6 +318,40 @@ const AuthSettings: NextPage = () => {
                                 type="submit"
                                 className={`${styles.editBioButton}`}
                                 onClick={submitNewBio}
+                              >
+                                Save
+                              </button>
+                            </form>
+                          </div>
+                        </Popup>
+                        {bio}
+                      </p>
+                      <p className={`${styles.userDetailsLocation}`}>
+                        <Popup
+                          trigger={
+                            <img
+                              src="https://cdn.huelet.net/assets/icons/location.svg"
+                              alt="location icon"
+                              width={16}
+                              height={16}
+                            ></img>
+                          }
+                        >
+                          <div className={`${styles.editLocation}`}>
+                            <form
+                              id="editLocationForm"
+                              onSubmit={submitNewLocation}
+                            >
+                              <input
+                                type="text"
+                                name="location"
+                                placeholder="Location"
+                                onChange={handleLocationChange}
+                                className={`${styles.editLocationInput}`}
+                              />
+                              <button
+                                type="submit"
+                                className={`${styles.editLocationButton}`}
                               >
                                 Save
                               </button>
