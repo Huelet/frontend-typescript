@@ -81,6 +81,19 @@ const AuthSettings: NextPage = () => {
     );
     const pronounDataJSON = await pronounData.json();
     setPronouns(pronounDataJSON.pronouns);
+    const locationData = await fetch(
+      `https://api.huelet.net/auth/location?username=${username}`,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const locationDataJSON = await locationData.json();
+    setLocation(locationDataJSON.location);
   };
   const handleBioChange = (event: {
     target: { value: SetStateAction<string> };
@@ -358,6 +371,7 @@ const AuthSettings: NextPage = () => {
                             </form>
                           </div>
                         </Popup>
+                        {location}
                       </p>
                     </div>
                   </div>
