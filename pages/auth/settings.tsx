@@ -106,7 +106,7 @@ const AuthSettings: NextPage = () => {
   const handlePronounsChange = (event: {
     target: { value: SetStateAction<any> };
   }) => {
-    setPronouns(event.target.value);
+    setUpdatedPronouns(event.target.value);
   };
   const handleLocationChange = (event: {
     target: { value: SetStateAction<any> };
