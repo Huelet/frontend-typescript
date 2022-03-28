@@ -83,14 +83,6 @@
     height: 100%;
 }
 
-.userDetailsBio {
-    display: flex;
-    flex-direction: column;
-    word-wrap: break-word;
-    width: 200%;
-    height: 100%;
-}
-
 .editBioInput {
     background-color: #303245;
     border-radius: 12px;

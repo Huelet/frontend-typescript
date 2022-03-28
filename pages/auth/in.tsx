@@ -17,7 +17,6 @@ const AuthIn: NextPage = () => {
   }) => {
     setPassword(event.target.value);
   };
-
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     try {
