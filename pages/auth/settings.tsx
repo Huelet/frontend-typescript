@@ -290,13 +290,13 @@ const AuthSettings: NextPage = () => {
                                 type="text"
                                 name="pronouns"
                                 placeholder="Pronouns"
-                                onChange={handleBioChange}
+                                onChange={handlePronounsChange}
                                 className={`${styles.editPronounsInput}`}
                               />
                               <button
                                 type="submit"
                                 className={`${styles.editPronounsButton}`}
-                                onClick={submitNewBio}
+                                onClick={submitNewPronouns}
                               >
                                 Save
                               </button>
