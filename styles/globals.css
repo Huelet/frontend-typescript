@@ -25,6 +25,11 @@
   font-family: var(--fontFamily);
 }
 
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
