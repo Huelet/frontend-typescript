@@ -99,8 +99,12 @@ const ViewVideo: NextPage = () => {
     );
     console.log(resp);
   };
-  getUserData();
-  getData();
+  if (loading === true) {
+    getUserData();
+    getData();
+  } else {
+    null;
+  }
   return (
     <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
       <div id="klausen">
