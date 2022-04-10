@@ -1,7 +1,11 @@
 /* Globals */
 :root {
   --hoverColor: #605e5c;
-  --hueletColor: rgb(238, 137, 6);
+  --hueletColor: linear-gradient(
+    25deg,
+    rgb(243, 128, 32),
+    rgb(248, 173, 76)
+  );;
   --hueletSecondaryColor: #551A8B;
   --bgColor: rgb(24, 23, 24);
   --white: rgb(255, 255, 255);

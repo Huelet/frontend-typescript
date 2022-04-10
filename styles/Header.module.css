@@ -22,7 +22,7 @@
 .searchbutton {
     padding: 0.5rem;
     border: none;
-    background-color: #ee8906;
+    background: var(--hueletColor);
 }
 
 .navContainer {
