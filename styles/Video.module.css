@@ -150,6 +150,10 @@
     width: 100%;
 }
 
+.videoCommentsList {
+    padding: 4em;
+}
+
 .videoAttributesTitle {
     font-size: 2em;
 }

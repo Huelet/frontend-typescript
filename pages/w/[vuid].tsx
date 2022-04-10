@@ -213,7 +213,27 @@ const ViewVideo: NextPage = () => {
                 </button>
               </div>
             </div>
-            <div></div>
+            <div>
+              {loading ? (
+                <Skeleton width={870} height={50} />
+              ) : (
+                <div className={`${styles.videoCommentsList}`}>
+                  {/*comments.map((comment) => (
+                    <div className={`${styles.videoCommentsListItem}`}>
+                      <div className={`${styles.videoCommentsListItemAuthor}`}>
+                        <Link href={`https://huelet.net/c/${comment.authorId}`} passHref>
+                          <a>{comment.authorUsername}</a>
+                        </Link>
+                      </div>
+                        <div className={`${styles.videoCommentsListItemAuthorDate}`}>
+                          {comment.date}
+                        </div>
+                        <div className={}></div>
+                    </div>
+                  )) */}
+                </div>
+              )}
+            </div>
           </div>
         </article>
         <aside>
