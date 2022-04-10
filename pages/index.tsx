@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { Lock, Shield } from "react-feather";
 import styles from "../styles/Home.module.css";
-import { FontSizes, FontWeights, ColorClassNames } from "@fluentui/react";
 import Footer from "../components/footer";
 import Link from "next/link";
 import { useCookies } from "react-cookie";

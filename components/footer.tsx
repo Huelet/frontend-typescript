@@ -1,6 +1,5 @@
 import next from "next";
 import styles from "../styles/Footer.module.css";
-import { Text, Link } from "@fluentui/react";
 
 
 const Footer = () => {
