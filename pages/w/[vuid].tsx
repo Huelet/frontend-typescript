@@ -55,7 +55,7 @@ const ViewVideo: NextPage = () => {
             .then((data: any) => {
               setAuthorUsername(data.username);
             });
-            setLoading(false);
+          setLoading(false);
         }, 100);
       });
   }
@@ -183,17 +183,17 @@ const ViewVideo: NextPage = () => {
             {loading ? (
               <Skeleton width={100} height={20} />
             ) : (
-            <div className={styles.videoAttributes}>
-              <span className={`${styles.videoAttributes1}`}>
-                Uploaded: {uploadedDate}
-              </span>
-              <span className={`${styles.videoAttributesSpacerText}`}>
-                &nbsp;|&nbsp;
-              </span>
-              <span className={`${styles.videoAttributes2}`}>
-                Views: {views}
-              </span>
-            </div>
+              <div className={styles.videoAttributes}>
+                <span className={`${styles.videoAttributes1}`}>
+                  Uploaded: {uploadedDate}
+                </span>
+                <span className={`${styles.videoAttributesSpacerText}`}>
+                  &nbsp;|&nbsp;
+                </span>
+                <span className={`${styles.videoAttributes2}`}>
+                  Views: {views}
+                </span>
+              </div>
             )}
           </div>
           <div className={`${styles.videoComments}`}>
