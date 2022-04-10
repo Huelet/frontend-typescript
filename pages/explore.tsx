@@ -1,11 +1,27 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import styles from "../styles/ExplorePage.module.css";
-import Header from "../components/header";
+import { useCookies } from "react-cookie";
+import { Header } from "../components/header";
 
 const Explore: NextPage = () => {
+  const [cookie, setCookie] = useCookies(["_hltoken"]);
+  const [username, setUsername] = useState("");
   const [timesClicked, setTimesClicked] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const getUsername = () => {
+    fetch("https://api.huelet.net/auth/token", {
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${cookie._hltoken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUsername(data.username);
+      });
+  }
+  getUsername();
   const addCount = () => {
     setTimesClicked(timesClicked + 1);
   };
@@ -20,7 +36,7 @@ const Explore: NextPage = () => {
 
   return (
     <div id="klausen">
-      <Header />
+      <Header username={username} />
       <div className="d-2">
         <div
           className={`d-1`}

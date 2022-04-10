@@ -2,13 +2,14 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useState } from "react";
 import { Player } from "video-react";
-import Header from "../../components/header";
+import { Header } from "../../components/header";
 import styles from "../../styles/Video.module.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 
 const ViewVideo: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
+  const [username, setUsername] = useState("");
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [authorId, setAuthorId] = useState("");
@@ -20,6 +21,17 @@ const ViewVideo: NextPage = () => {
   const [shares, setShares] = useState(0);
   const router = useRouter();
   const { vuid } = router.query;
+  const getUserData = () => {
+    fetch(`https://api.huelet.net/auth/token`, {
+      headers: {
+        Authorization: `Bearer ${cookie._hltoken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUsername(data.username);
+      });
+  };
   function getData() {
     fetch(`https://api.huelet.net/videos/${vuid}`)
       .then((resp: Response) => resp.json())
@@ -38,7 +50,7 @@ const ViewVideo: NextPage = () => {
             setAuthorId(data.uid);
             setAuthorUsername(data.username);
           });
-      })
+      });
   }
   const addClap = async () => {
     const resp = await fetch(
@@ -81,6 +93,7 @@ const ViewVideo: NextPage = () => {
     console.log(resp);
   };
   getData();
+  getUserData();
   return (
     <div id="klausen">
       <Header />

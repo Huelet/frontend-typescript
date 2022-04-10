@@ -1,8 +1,22 @@
 import next from "next";
 import Link from "next/link";
+import { useState } from "react";
 import styles from "../styles/Header.module.css";
 
-const Header = () => {
+export interface HeaderProps {
+  username?: string;
+}
+
+export const Header = ({ username }: HeaderProps) => {
+  const [pfp, setPfp] = useState("");
+  const getUserData = () => {
+    fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPfp(data.pfp);
+      });
+  };
+  getUserData();
   return (
     <div className={styles.navContainer}>
       <div className={styles.navBar}>
@@ -47,18 +61,16 @@ const Header = () => {
             </Link>
           </div>
           <div className="avatar--container hover cursor">
-            <a href="/auth/manage">
+            <Link href="/auth/settings">
               <img
-                className="avatar"
-                src="https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
-                alt="Default profile picture"
+                className="avatar--image"
+                src={pfp ? pfp : "https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"}
+                alt="Profile image"
               />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-export default Header;

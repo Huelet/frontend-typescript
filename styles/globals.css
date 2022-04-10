@@ -205,7 +205,12 @@ code {
 .cursor {
   cursor: pointer;
 }
-
+.avatar--image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .h2-1 {
   color: #fff;
   font-weight: lighter;

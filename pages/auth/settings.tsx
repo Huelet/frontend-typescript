@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import styles from "../../styles/Settings.module.css";
 import { SetStateAction, useState, useRef } from "react";
 import { useCookies } from "react-cookie";
-import Header from "../../components/header";
+import { Header } from "../../components/header";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -210,7 +210,7 @@ const AuthSettings: NextPage = () => {
   return (
     <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
       <div id="klausen">
-        <Header />
+        <Header username={username} />
         <div className="main-si cursor">
           <div className="sp-1-eo">
             <div className="sp-1-io p-5">
