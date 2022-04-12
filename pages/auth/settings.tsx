@@ -7,6 +7,7 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Avatar, BulletList, Upload, Location } from "@fdn-ui/icons-react";
 
 const AuthSettings: NextPage = () => {
   const [loading, setLoading] = useState(true);
@@ -239,11 +240,9 @@ const AuthSettings: NextPage = () => {
                         <Popup
                           trigger={
                             <div className={`${styles.profileImageUploadIcon}`}>
-                              <img
-                                src="https://cdn.huelet.net/assets/icons/upload.svg"
-                                alt="upload"
-                                className={`${styles.icon}`}
-                              />
+                              <div className={`${styles.icon}`}>
+                                <Upload fill={"white"} />
+                              </div>
                             </div>
                           }
                         >
@@ -261,10 +260,7 @@ const AuthSettings: NextPage = () => {
                                 htmlFor="file"
                                 className={`${styles.profileImageUploadLabel}`}
                               >
-                                <img
-                                  src="https://cdn.huelet.net/assets/icons/upload.svg"
-                                  alt="upload"
-                                />
+                                <Upload fill={"black"} />
                                 Choose an image
                               </label>
                               <input
@@ -301,12 +297,7 @@ const AuthSettings: NextPage = () => {
                                 <span>
                                   <Popup
                                     trigger={
-                                      <img
-                                        src="https://cdn.huelet.net/assets/icons/avatar.svg"
-                                        alt="pronouns icon"
-                                        width={16}
-                                        height={16}
-                                      />
+                                      <Avatar fill={"black"} />
                                     }
                                   >
                                     <div className={`${styles.pronouns}`}>
@@ -348,12 +339,7 @@ const AuthSettings: NextPage = () => {
                             <span>
                               <Popup
                                 trigger={
-                                  <img
-                                    src="https://cdn.huelet.net/assets/icons/bullet_list.svg"
-                                    alt="bio icon"
-                                    width={16}
-                                    height={16}
-                                  />
+                                  <BulletList fill={"black"} />
                                 }
                               >
                                 <div className={`${styles.editBio}`}>
@@ -389,12 +375,7 @@ const AuthSettings: NextPage = () => {
                             <span>
                               <Popup
                                 trigger={
-                                  <img
-                                    src="https://cdn.huelet.net/assets/icons/location.svg"
-                                    alt="location icon"
-                                    width={16}
-                                    height={16}
-                                  ></img>
+                                  <Location fill={"black"} />
                                 }
                               >
                                 <div className={`${styles.editLocation}`}>

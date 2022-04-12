@@ -1,11 +1,7 @@
 /* Globals */
 :root {
   --hoverColor: #605e5c;
-  --hueletColor: linear-gradient(
-    25deg,
-    rgb(243, 128, 32),
-    rgb(248, 173, 76)
-  );;
+  --hueletColor: #7600ff;
   --hueletSecondaryColor: #551A8B;
   --bgColor: rgb(24, 23, 24);
   --white: rgb(255, 255, 255);
@@ -75,9 +71,7 @@ code {
 .sp-1-io {
   color: #FFFFFF;
   background: rgba(255, 255, 255, 0.20);
-  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.20);
-  backdrop-filter: blur(2.0px);
-  -webkit-backdrop-filter: blur(2.0px);
+  border: 0.1em solid rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   transition: 0.6s;
   display: grid;
@@ -89,14 +83,6 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.sp-1-io:hover {
-  background: rgba(255, 255, 255, 0.20);
-  box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.50);
-  backdrop-filter: blur(2.0px);
-  -webkit-backdrop-filter: blur(2.0px);
-  border-radius: 10px;
 }
 
 .sp-option-io {
@@ -182,7 +168,7 @@ code {
 
 /* Misc. */
 ::selection {
-  background: #EE8906;
+  background: #7600ff;
 }
 
 .spacer {
@@ -263,7 +249,7 @@ code {
 }
 
 .d-1 {
-  background-color: #ee8906;
+  background-color: #7600ff;
   width: 99px;
   height: 150px;
 }

@@ -4,6 +4,7 @@ import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import ReactTooltip from "react-tooltip";
 import { useCookies } from "react-cookie";
+import { Add, Info } from "@fdn-ui/icons-react";
 
 const AuthUp: NextPage = () => {
   const [username, setUsername] = useState("");
@@ -102,16 +103,7 @@ const AuthUp: NextPage = () => {
                 <div className="spacer-sm"></div>
                 <a href="#pwg-modal">
                   <div className={`${styles.pwgTrigger} cursor`}>
-                    <Image
-                      src={"https://cdn.huelet.net/assets/icons/add.svg"}
-                      alt="Open password generate modal"
-                      width={15}
-                      height={15}
-                      loader={() => {
-                        return "https://cdn.huelet.net/assets/icons/add.svg";
-                      }}
-                      className={styles.pwgTriggerIcon}
-                    />
+                    <Add fill={"white"} />
                   </div>
                 </a>
               </div>
@@ -131,16 +123,7 @@ const AuthUp: NextPage = () => {
                   className={"cursor"}
                   data-tip="We will have sent you a DM with this code. If you don't have it, please let us know."
                 >
-                  <Image
-                    src={"https://cdn.huelet.net/assets/icons/info.svg"}
-                    alt="Open tooltip"
-                    width={15}
-                    height={15}
-                    loader={() => {
-                      return "https://cdn.huelet.net/assets/icons/info.svg";
-                    }}
-                    className={styles.pwgTriggerIcon}
-                  />
+                  <Info fill={"white"} />
                 </div>
               </div>
               <div className="spacer"></div>
@@ -155,15 +138,7 @@ const AuthUp: NextPage = () => {
       <div className={styles.pwgModal} id="pwg-modal">
         <a href="#">
           <div className={styles.pwgModalClose}>
-            <Image
-              src={"https://cdn.huelet.net/assets/icons/close.svg"}
-              alt="Close password generate modal"
-              loader={() => {
-                return "https://cdn.huelet.net/assets/icons/close.svg";
-              }}
-              width={10}
-              height={10}
-            />
+            <Info fill={"white"} />
           </div>
         </a>
         <div className={styles.pwgModalContent}>

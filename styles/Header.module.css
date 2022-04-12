@@ -40,8 +40,6 @@
 .navIcon {
     width: 52px;
     height: 52px;
-    color: #fff;
-    filter: var(--iconColor);
 }
 
 .accountIconsContainer {

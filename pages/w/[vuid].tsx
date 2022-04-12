@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useCookies } from "react-cookie";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Forward } from "@fdn-ui/icons-react";
 
 const ViewVideo: NextPage = () => {
   const [loading, setLoading] = useState(true);
@@ -164,13 +165,7 @@ const ViewVideo: NextPage = () => {
                 <div
                   className={`${styles.videoDetailsOptionsShare} ${styles.videoDetailsOptionsReaction}`}
                 >
-                  <img
-                    src="https://cdn.huelet.net/assets/icons/forward.svg"
-                    alt="A forward-facing arrow"
-                    className={`${styles.videoDetailsOptionsShareImg}`}
-                    draggable="false"
-                    data-type="icon"
-                  ></img>
+                  <Forward fill={"white"} />
                   <span>{shares}</span>
                 </div>
               )}
