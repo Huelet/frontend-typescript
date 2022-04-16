@@ -151,7 +151,7 @@ const ViewVideo: NextPage = () => {
           />
           <meta property="twitter:image" content={thumbnail} />
         </Head>
-        <ConsentGate>
+        <ConsentGate micropolicy="advanced-analytics">
           <Script id="clarity-as">
             {`
               (function(c,l,a,r,i,t,y){
@@ -162,7 +162,7 @@ const ViewVideo: NextPage = () => {
           `}
           </Script>
         </ConsentGate>
-        <ConsentGate>
+        <ConsentGate micropolicy="basic-analytics">
           <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
         </ConsentGate>
         <noscript>
