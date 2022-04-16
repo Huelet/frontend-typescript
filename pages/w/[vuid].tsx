@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
+import Script from "next/script";
 import type { NextPage } from "next";
 import { useState } from "react";
+import { ConsentGate } from "@confirmic/react";
 import { Player } from "video-react";
 import { Header } from "../../components/header";
 import styles from "../../styles/Video.module.css";
@@ -15,6 +18,7 @@ const ViewVideo: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const [username, setUsername] = useState("");
   const [url, setUrl] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
   const [title, setTitle] = useState("");
   const [authorId, setAuthorId] = useState("");
   const [authorUsername, setAuthorUsername] = useState("");
@@ -109,6 +113,66 @@ const ViewVideo: NextPage = () => {
   return (
     <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
       <div id="klausen">
+        <Head>
+          <title>
+            {title} by {authorUsername} - Huelet, the video platform for humans
+          </title>
+          <meta
+            name="title"
+            content={`${title} by ${authorUsername} - Huelet, the video platform for humans`}
+          />
+          <meta
+            name="description"
+            content={`${title} is a video posted on Huelet, the video platform for humans. Start watching now!"`}
+          />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={`https://huelet.net/w/${vuid}`} />
+          <meta
+            property="og:title"
+            content={`${title} by ${authorUsername} - Huelet, the video platform for humans`}
+          />
+          <meta
+            property="og:description"
+            content={`${title} is a video posted on Huelet, the video platform for humans. Start watching now!`}
+          />
+          <meta property="og:image" content={thumbnail} />
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta
+            property="twitter:url"
+            content={`https://huelet.net/w/${vuid}`}
+          />
+          <meta
+            property="twitter:title"
+            content={`${title} by ${authorUsername} - Huelet, the video platform for humans`}
+          />
+          <meta
+            property="twitter:description"
+            content={`${title} is a video posted on Huelet, the video platform for humans. Start watching now!`}
+          />
+          <meta property="twitter:image" content={thumbnail} />
+        </Head>
+        <ConsentGate>
+          <Script id="clarity-as">
+            {`
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "6pivjnysm5");
+          `}
+          </Script>
+        </ConsentGate>
+        <ConsentGate>
+          <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+        </ConsentGate>
+        <noscript>
+          {/* eslint-disable @next/next/no-img-element */}
+          <img
+            src="https://queue.simpleanalyticscdn.com/noscript.gif"
+            alt=""
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </noscript>
         <Header username={username} />
         <div className="spacer-sm"></div>
         <article>

@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
 import Head from 'next/head'
+import Script from "next/script";
+import { ConsentGate } from "@confirmic/react";
 import styles from "../styles/Home.module.css";
 import Footer from "../components/footer";
 import { Secure, Eye } from "@fdn-ui/icons-react";
@@ -54,6 +56,28 @@ const Home: NextPage = () => {
         <meta property="og:url" content="https://huelet.net" />
         <meta property="og:type" content="website" />
       </Head>
+      <ConsentGate>
+          <Script id="clarity-as">
+            {`
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "6pivjnysm5");
+          `}
+          </Script>
+        </ConsentGate>
+        <ConsentGate>
+          <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+        </ConsentGate>
+        <noscript>
+          {/* eslint-disable @next/next/no-img-element */}
+          <img
+            src="https://queue.simpleanalyticscdn.com/noscript.gif"
+            alt=""
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </noscript>
       <div className={styles.mainText}>
         <h2>Hi, we&apos;re Huelet</h2>
       </div>
