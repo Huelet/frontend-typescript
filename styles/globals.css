@@ -79,6 +79,12 @@ code {
   padding: 7em;
 }
 
+@media screen and (max-width: 400px) {
+  .sp-1-io {
+    padding: 3em;
+  }
+}
+
 .sp-1-io-inner {
   display: flex;
   align-items: center;

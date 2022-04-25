@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
-import Head from 'next/head'
+import Head from "next/head";
 import Script from "next/script";
 import { ConsentGate } from "@confirmic/react";
 import styles from "../styles/Home.module.css";
 import Footer from "../components/footer";
-import { Secure, Eye } from "@fdn-ui/icons-react";
+import { Secure, Eye, Close } from "@fdn-ui/icons-react";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 
@@ -36,6 +36,11 @@ const Home: NextPage = () => {
   checkCookie();
   return (
     <div id="klausen">
+      <div id="i-privacy-modal" className={styles.privacyModal}>
+        <div className={styles.closeModal}>
+          <Close className="icon-lg privacy-icon" fill={"white"} />
+        </div>
+      </div>
       <Head>
         <title>Huelet - The video platform for humans</title>
         <link rel="preload" href="https://cdn.huelet.net" />
@@ -52,39 +57,40 @@ const Home: NextPage = () => {
           property="og:description"
           content="Huelet is a video platform for humans. It's a place where you can share your videos with the world."
         />
-        <meta property="og:image" content="https://cdn.huelet.net/assets/logo.png" />
+        <meta
+          property="og:image"
+          content="https://cdn.huelet.net/assets/logo.png"
+        />
         <meta property="og:url" content="https://huelet.net" />
         <meta property="og:type" content="website" />
       </Head>
       <ConsentGate micropolicy="advanced-analytics">
-          <Script id="clarity-as">
-            {`
+        <Script id="clarity-as">
+          {`
               (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
             })(window, document, "clarity", "script", "6pivjnysm5");
           `}
-          </Script>
-        </ConsentGate>
-        <ConsentGate micropolicy="basic-analytics">
-          <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
-        </ConsentGate>
-        <noscript>
-          {/* eslint-disable @next/next/no-img-element */}
-          <img
-            src="https://queue.simpleanalyticscdn.com/noscript.gif"
-            alt=""
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </noscript>
+        </Script>
+      </ConsentGate>
+      <ConsentGate micropolicy="basic-analytics">
+        <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+      </ConsentGate>
+      <noscript>
+        {/* eslint-disable @next/next/no-img-element */}
+        <img
+          src="https://queue.simpleanalyticscdn.com/noscript.gif"
+          alt=""
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </noscript>
       <div className={styles.mainText}>
         <h2>Hi, we&apos;re Huelet</h2>
       </div>
       <div className={styles.mainText}>
-        <h1 className="ms-divAlignCenter ms-fontWeight-light ms-fontSize-68 ms-fontColor-white">
-          A smart video platform for creators, viewers, and advertisers.
-        </h1>
+        <h1>The video platform for humans</h1>
       </div>
       <div className="watch-now-clears">
         <div className="watch-now-link">
@@ -93,9 +99,9 @@ const Home: NextPage = () => {
           </Link>
         </div>
       </div>
-      <div id="desktop">
-        <div className="main-si">
-          <div className="sp-1-io">
+      <div className="main-si">
+        <div className="sp-1-io">
+          <a href="#i-privacy-modal" style={{ textDecoration: "none" }}>
             <div className="sp-1-io-inner">
               <Secure className="icon-lg privacy-icon" fill={"white"} />
               <div className="spacer"></div>
@@ -106,19 +112,18 @@ const Home: NextPage = () => {
             <div className={styles.xCardText}>
               <p>Click on me to learn more!</p>
             </div>
-          </div>
-          <div className="spacer"></div>
-          <div className="sp-1-io">
-            <div className="sp-1-io-inner">
-              <Eye className="icon-lg mod-icon" fill={"white"} />
-              <div className="spacer"></div>
-              <div className={styles.xCardText}>
-                <h2 className="ms-divAlignCenter ms-fontSize-42">Moderation</h2>
-              </div>
-            </div>
+          </a>
+        </div>
+        <div className="sp-1-io">
+          <div className="sp-1-io-inner">
+            <Eye className="icon-lg mod-icon" fill={"white"} />
+            <div className="spacer"></div>
             <div className={styles.xCardText}>
-              <p>Click on me to learn more!</p>
+              <h2 className="ms-divAlignCenter ms-fontSize-42">Moderation</h2>
             </div>
+          </div>
+          <div className={styles.xCardText}>
+            <p>Click on me to learn more!</p>
           </div>
         </div>
       </div>

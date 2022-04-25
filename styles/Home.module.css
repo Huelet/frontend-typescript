@@ -11,3 +11,24 @@
     font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
     color: white;
 }
+
+/* Modals */
+.closeModal {
+    display: flex;
+    justify-content: flex-end
+}
+
+.privacyModal {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: #464546;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.privacyModal:target {
+    visibility: visible;
+    opacity: 1;
+}
