@@ -11,11 +11,13 @@ export interface HeaderProps {
 export const Header = ({ username }: HeaderProps) => {
   const [pfp, setPfp] = useState("");
   const getUserData = () => {
-    fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPfp(data.pfp);
-      });
+    if (username) {
+      fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setPfp(data.pfp);
+        });
+    }
   };
   getUserData();
   return (
