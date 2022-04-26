@@ -4,8 +4,9 @@ import "../styles/globals.css";
 import "../styles/adstyles.css";
 import "../styles/VideoPlayer.css";
 import type { AppProps } from "next/app";
+import { MantineProvider } from '@mantine/core';
 import { CookiesProvider } from "react-cookie";
-import { ConsentGate, ConfirmicProvider } from "@confirmic/react";
+import { ConfirmicProvider } from "@confirmic/react";
 
 function HueletWebapp({ Component, pageProps }: AppProps) {
   return (
@@ -53,7 +54,9 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <CookiesProvider>
-        <Component {...pageProps} />
+        <MantineProvider theme={{ fontFamily: "Source Sans Pro", colorScheme: "dark" }}>
+          <Component {...pageProps} />
+        </MantineProvider>
       </CookiesProvider>
     </ConfirmicProvider>
   );

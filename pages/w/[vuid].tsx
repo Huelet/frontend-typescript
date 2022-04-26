@@ -1,13 +1,15 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Script from "next/script";
+import dynamic from "next/dynamic";
+import Link from "next/link";
 import type { NextPage } from "next";
 import { useState } from "react";
 import { ConsentGate } from "@confirmic/react";
 import { Player } from "video-react";
 import { Header } from "../../components/header";
 import styles from "../../styles/Video.module.css";
-import Link from "next/link";
+import { RichTextEditor } from "@mantine/rte";
 import { useCookies } from "react-cookie";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -23,6 +25,7 @@ const ViewVideo: NextPage = () => {
   const [authorId, setAuthorId] = useState("");
   const [authorUsername, setAuthorUsername] = useState("");
   const [uploadedDate, setUploadedDate] = useState("");
+  const [comment, changeComment] = useState("");
   const [views, setViews] = useState(0);
   const [upvotes, setUpvotes] = useState(0);
   const [downvotes, setDownvotes] = useState(0);
@@ -104,6 +107,9 @@ const ViewVideo: NextPage = () => {
     );
     console.log(resp);
   };
+  const Editor = dynamic(() => import("@mantine/rte"), {
+    ssr: false,
+  });
   if (loading === true) {
     getUserData();
     getData();
@@ -262,7 +268,15 @@ const ViewVideo: NextPage = () => {
           <div className={`${styles.videoComments}`}>
             <h2 className={`${styles.videoCommentsHeading}`}>Comments</h2>
             <div className={`${styles.videoCommentsBox}`}>
-              <textarea className={`${styles.videoCommentsBoxText}`}></textarea>
+              <Editor
+                value={comment}
+                onChange={changeComment}
+                controls={[
+                  ["bold", "italic", "underline"],
+                  ["unorderedList", "orderedList"],
+                  ["sup", "sub"],
+                ]}
+              />
               <div className={`${styles.videoCommentsBoxSubmit}`}>
                 <button
                   type="submit"

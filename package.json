@@ -16,7 +16,7 @@
     "@mantine/hooks": "^4.0.9",
     "@mantine/modals": "^4.0.9",
     "@mantine/next": "^4.0.9",
-    "@mantine/rte": "^4.0.9",
+    "@mantine/rte": "^4.1.5",
     "axios": "^0.26.1",
     "huelet-video-react": "^0.1.0",
     "next": "12.1.0",
