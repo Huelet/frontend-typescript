@@ -6,6 +6,7 @@ import { ConsentGate } from "@confirmic/react";
 import styles from "../styles/ExplorePage.module.css";
 import { useCookies } from "react-cookie";
 import { Header } from "../components/header";
+import { Modal } from "../components/modal";
 
 const Explore: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
@@ -129,6 +130,11 @@ const Explore: NextPage = () => {
           We&apos;re working on this part. Come back later.
         </h2>
       </div>
+      <Modal light={false}>
+        <div>
+          <p>Im not a dumbass but you are</p>
+        </div>
+      </Modal>
     </div>
   );
 };
