@@ -41,9 +41,7 @@ const Explore: NextPage = () => {
   return (
     <div id="klausen">
       <Head>
-        <title>
-          Explore - Huelet - The video platform for humans
-        </title>
+        <title>Explore - Huelet - The video platform for humans</title>
         <meta
           name="title"
           content="Explore - Huelet - The video platform for humans"
@@ -130,11 +128,6 @@ const Explore: NextPage = () => {
           We&apos;re working on this part. Come back later.
         </h2>
       </div>
-      <Modal light={false}>
-        <div>
-          <p>Im not a dumbass but you are</p>
-        </div>
-      </Modal>
     </div>
   );
 };
