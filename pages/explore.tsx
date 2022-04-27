@@ -11,6 +11,7 @@ import { Modal } from "../components/modal";
 const Explore: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const [username, setUsername] = useState("");
+  const [todayVideos, setTodayVideos] = useState([]);
   const [timesClicked, setTimesClicked] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const getUsername = () => {
@@ -93,16 +94,18 @@ const Explore: NextPage = () => {
         />
       </noscript>
       <Header username={username} />
-      <div className="d-2">
+      <div className={styles.exploreContainer}>
         <div
-          className={`d-1`}
           onClick={() => {
             addCount();
           }}
+          className={`${styles.exploreWelcome}`}
         >
           <img
-            src="https://cdn.huelet.net/assets/hlogo.jpg"
+            src="https://cdn.huelet.net/assets/logo.png"
             alt="Huelet logo"
+            width={32}
+            height={32}
           />
           <div>
             {isOpen ? (
@@ -119,14 +122,17 @@ const Explore: NextPage = () => {
               </div>
             )}
           </div>
+          <h2>Good {getDate()}!</h2>
         </div>
-      </div>
-      <div className={styles.mainText}>
-        Good {getDate()}!
-        <br />
-        <h2 className={styles.mainText}>
-          We&apos;re working on this part. Come back later.
-        </h2>
+        <div className={styles.mainText}>
+          <h2 className={styles.mainText}>
+            We&apos;re working on this part. Come back later.
+          </h2>
+        </div>
+        <div className={styles.exploreVideoList}>
+          <h2 className={styles.exploreVideoListText}>Today&apos;s videos</h2>
+          <div className={styles.videoList}>{todayVideos}</div>
+        </div>
       </div>
     </div>
   );

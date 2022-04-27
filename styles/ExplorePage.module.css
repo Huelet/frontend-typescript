@@ -1,3 +1,27 @@
+.exploreContainer {
+  padding: 2em;
+}
+
+.exploreWelcome {
+  display: flex;
+  flex-direction: row
+}
+
+.exploreVideoList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1em;
+}
+
+.exploreVideoListText {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+}
+
 .hover:hover {
   background-color: var(--hoverColor);
 }
