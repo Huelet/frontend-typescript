@@ -1,14 +1,17 @@
 import type { NextPage } from "next";
+import { useState } from "react";
 import Head from "next/head";
 import Script from "next/script";
 import { ConsentGate } from "@confirmic/react";
 import styles from "../styles/Home.module.css";
 import Footer from "../components/footer";
+import { Modal } from "../components/modal";
 import { Secure, Eye, Close } from "@fdn-ui/icons-react";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 
 const Home: NextPage = () => {
+  const [interactivePrivacyDemoOpen, setInteractivePrivacyDemoOpen] = useState(false);
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const checkCookie = async () => {
     const token = cookie._hltoken;
@@ -100,8 +103,9 @@ const Home: NextPage = () => {
         </div>
       </div>
       <div className="main-si">
+          <Modal modalType={"fullscreen"} light={false} trigger={
+            <>
         <div className="sp-1-io">
-          <a href="#i-privacy-modal" style={{ textDecoration: "none" }}>
             <div className="sp-1-io-inner">
               <Secure className="icon-lg privacy-icon" fill={"white"} />
               <div className="spacer"></div>
@@ -112,8 +116,15 @@ const Home: NextPage = () => {
             <div className={styles.xCardText}>
               <p>Click on me to learn more!</p>
             </div>
-          </a>
         </div>
+            </>
+          }>
+            <h1>
+              Read my lips: We dont want your data.
+            </h1>
+          </Modal>
+        <Modal modalType={"fullscreen"} light={false} trigger={
+        <>
         <div className="sp-1-io">
           <div className="sp-1-io-inner">
             <Eye className="icon-lg mod-icon" fill={"white"} />
@@ -127,6 +138,9 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
+          </>
+        }>
+        </Modal>
       <Footer />
     </div>
   );
