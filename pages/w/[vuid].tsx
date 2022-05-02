@@ -1,28 +1,32 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Script from "next/script";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useState } from "react";
 import { ConsentGate } from "@confirmic/react";
 import { Player } from "video-react";
 import { Header } from "../../components/header";
+import { Editor } from "../../components/editor";
 import styles from "../../styles/Video.module.css";
-import { RichTextEditor } from "@mantine/rte";
 import { useCookies } from "react-cookie";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Forward } from "@fdn-ui/icons-react";
+import { Forward, WarningFilled } from "@fdn-ui/icons-react";
+import Loader from "../../components/loader";
+import { Popover } from "@mantine/core";
 
 const ViewVideo: NextPage = () => {
   const [loading, setLoading] = useState(true);
+  const [commentSubmitted, setCommentSubmitted] = useState(false);
+  const [safeComment, setSafeComment] = useState(false);
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const [username, setUsername] = useState("");
   const [url, setUrl] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [title, setTitle] = useState("");
   const [authorId, setAuthorId] = useState("");
+  const [comments, setComments] = useState([]);
   const [authorUsername, setAuthorUsername] = useState("");
   const [uploadedDate, setUploadedDate] = useState("");
   const [comment, changeComment] = useState("");
@@ -47,7 +51,6 @@ const ViewVideo: NextPage = () => {
     fetch(`https://api.huelet.net/videos/${vuid}`)
       .then((resp: Response) => resp.json())
       .then((data: any) => {
-        console.log(data);
         setUrl(data.vurl);
         setTitle(data.vtitle);
         // date tends to have issues so i added a catch, please do not edit this!
@@ -57,14 +60,13 @@ const ViewVideo: NextPage = () => {
         setDownvotes(data.vcraps);
         setShares(data.vshares);
         setAuthorId(data.vauthor);
-        setTimeout(() => {
-          fetch(`https://api.huelet.net/auth/user/${data.authorId}`)
-            .then((resp: Response) => resp.json())
-            .then((data: any) => {
-              setAuthorUsername(data.username);
-            });
-          setLoading(false);
-        }, 100);
+        setComments(data.vcomments || ["no comments yet"]);
+        fetch(`https://api.huelet.net/auth/user/${data.authorId}`)
+          .then((resp: Response) => resp.json())
+          .then((data: any) => {
+            setAuthorUsername(data.username);
+          });
+        setLoading(false);
       });
   }
   const addClap = async () => {
@@ -85,7 +87,6 @@ const ViewVideo: NextPage = () => {
         }),
       }
     );
-    console.log(resp);
   };
   const addCrap = async () => {
     const resp = await fetch(
@@ -105,20 +106,73 @@ const ViewVideo: NextPage = () => {
         }),
       }
     );
-    console.log(resp);
   };
-  const Editor = dynamic(() => import("@mantine/rte"), {
-    ssr: false,
-  });
+  const submitComment = async () => {
+    setCommentSubmitted(true);
+    const safetyCheck = await fetch(
+      `https://westus.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessText/Screen?autocorrect=true&PII=true&classify=true&language=eng`,
+      {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        headers: {
+          "Content-Type": "text/plain",
+          "Ocp-Apim-Subscription-Key": "0bb07c0b41e149edaf8bde43f83bc3c5",
+        },
+        body: comment,
+      }
+    );
+    const safetyCheckData = await safetyCheck.json();
+    if (
+      safetyCheckData.Classification.Category1.Score >= 0.9 ||
+      safetyCheckData.Classification.Category2.Score >= 0.9 ||
+      safetyCheckData.Classification.Category3.Score >= 0.98
+    ) {
+      setSafeComment(true);
+    } else {
+      setSafeComment(false);
+      await pushComment();
+    }
+    setCommentSubmitted(false);
+  };
+  const pushComment = async () => {
+    const resp = await fetch(
+      `https://api.huelet.net/videos/interact/comments/${vuid}`,
+      {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookie._hltoken}`,
+        },
+        body: JSON.stringify({
+          username: username,
+          content: comment,
+        }),
+      }
+    );
+    const data = await resp.json();
+    if (data.success === true) {
+      window.location.reload();
+    }
+  };
   if (loading === true) {
     getUserData();
     getData();
   } else {
     null;
   }
+  console.log(comments.map((comment: any) => comment[0].content));
   return (
-    <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
-      <div id="klausen">
+    <div id="klausen">
+      <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
         <Head>
           <title>
             {title} by {authorUsername} - Huelet, the video platform for humans
@@ -268,22 +322,78 @@ const ViewVideo: NextPage = () => {
           <div className={`${styles.videoComments}`}>
             <h2 className={`${styles.videoCommentsHeading}`}>Comments</h2>
             <div className={`${styles.videoCommentsBox}`}>
-              <Editor
-                value={comment}
-                onChange={changeComment}
-                controls={[
-                  ["bold", "italic", "underline"],
-                  ["unorderedList", "orderedList"],
-                  ["sup", "sub"],
-                ]}
-              />
+              <Editor value={comment} update={changeComment} />
               <div className={`${styles.videoCommentsBoxSubmit}`}>
-                <button
-                  type="submit"
+                <div
                   className={`${styles.videoCommentsBoxSubmitButton}`}
+                  onClick={submitComment}
                 >
-                  Post
-                </button>
+                  <div
+                    className={
+                      commentSubmitted
+                        ? "video-details-comments-box-submit-button-text"
+                        : "hidden"
+                    }
+                  >
+                    <Loader />
+                  </div>
+                  <p
+                    className={
+                      commentSubmitted
+                        ? "hidden"
+                        : "video-details-comments-box-submit-button-text"
+                    }
+                  >
+                    Post
+                  </p>
+                  <Popover
+                    opened={safeComment}
+                    onClose={() => setSafeComment(false)}
+                    width={260}
+                    position="bottom"
+                    withArrow
+                    target={undefined}
+                  >
+                    <div className={`${styles.unsafeContentPopup}`}>
+                      <div className={`${styles.unsafeContentPopupIcon}`}>
+                        <WarningFilled fill="white" />
+                      </div>
+                      <div className={`${styles.unsafeContentPopupText}`}>
+                        <h2 className={`${styles.unsafeContentPopupTextTitle}`}>
+                          Are you sure you want to post this comment?
+                        </h2>
+                        <p
+                          className={`${styles.unsafeContentPopupTextDescription}`}
+                        >
+                          Want to double-check this comment? We&apos;re asking
+                          people to review content that may be sensitive.
+                          <br />
+                          <p
+                            className={`${styles.unsafeContentPopupTextDescriptionHighlighted}`}
+                          >
+                            Please remember the human behind the screen.
+                          </p>
+                          <br />
+                          <span
+                            className={`${styles.unsafeContentPopupTextDescriptionMore}`}
+                          >
+                            If you&apos;re sure, click the button below.
+                            <div
+                              className={`${styles.videoCommentsBoxSubmitButton}`}
+                              onClick={pushComment}
+                            >
+                              I&apos;m sure
+                            </div>
+                            <br />
+                            <Link href="https://docs.huelet.net/users/comment-verification">
+                              Read more.
+                            </Link>
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </Popover>
+                </div>
               </div>
             </div>
             <div>
@@ -291,19 +401,9 @@ const ViewVideo: NextPage = () => {
                 <Skeleton width={870} height={50} />
               ) : (
                 <div className={`${styles.videoCommentsList}`}>
-                  {/*comments.map((comment) => (
-                    <div className={`${styles.videoCommentsListItem}`}>
-                      <div className={`${styles.videoCommentsListItemAuthor}`}>
-                        <Link href={`https://huelet.net/c/${comment.authorId}`} passHref>
-                          <a>{comment.authorUsername}</a>
-                        </Link>
-                      </div>
-                        <div className={`${styles.videoCommentsListItemAuthorDate}`}>
-                          {comment.date}
-                        </div>
-                        <div className={}></div>
-                    </div>
-                  )) */}
+                  {comments.map((comment: any) => (
+                    comment[0].content
+                  ))}
                 </div>
               )}
             </div>
@@ -312,8 +412,8 @@ const ViewVideo: NextPage = () => {
         <aside>
           <div className="adFrame--rightAsideColumn">hi!! i&apos;m an ad!</div>
         </aside>
-      </div>
-    </SkeletonTheme>
+      </SkeletonTheme>
+    </div>
   );
 };
 

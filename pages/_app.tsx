@@ -4,7 +4,7 @@ import "../styles/globals.css";
 import "../styles/adstyles.css";
 import "../styles/VideoPlayer.css";
 import type { AppProps } from "next/app";
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider } from "@mantine/core";
 import { CookiesProvider } from "react-cookie";
 import { ConfirmicProvider } from "@confirmic/react";
 

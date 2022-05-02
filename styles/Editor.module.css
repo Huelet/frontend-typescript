@@ -1,0 +1,42 @@
+.editor {
+    width: 40em;
+    height: auto;
+    background: rgb(33, 45, 65);
+    border: 5px solid rgb(27, 37, 58);
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.editor__content {
+    padding: 0.5em;
+}
+.editor__contentOptions {
+    width: 1em;
+    height: 3em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 0.5em;
+    align-items: center;
+}
+.editor__contentOptionsItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    border: 5px solid rgb(27, 37, 58);
+    background: rgb(30, 43, 71);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+.editor__contentBodyEditor {
+    font-size: 1.2em;
+    color: rgb(255, 255, 255);
+    background: rgb(33, 45, 65);
+    width: 100%;
+    height: 2em;
+    border: 1px dotted rgb(255, 255, 255);
+}
+.editor__contentBodyEditor:focus {
+    border: 1px dotted rgb(255, 255, 255);
+}
