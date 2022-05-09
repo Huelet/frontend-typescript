@@ -15,7 +15,7 @@ const AuthSettings: NextPage = () => {
   const [username, setUsername] = useState("");
   const [pfp, setPfp] = useState("");
   const [bio, setBio] = useState("");
-  const [pronouns, setPronouns] = useState([]);
+  const [pronouns, setPronouns]: any = useState([]);
   const [location, setLocation] = useState("");
   const [updatedBio, setUpdatedBio] = useState("");
   const [updatedPfp, setUpdatedPfp]: any | any = useState(null);
@@ -290,46 +290,31 @@ const AuthSettings: NextPage = () => {
                           {loading ? (
                             <Skeleton width={256} />
                           ) : (
-                            () => {
-                              if (!pronouns) {
-                                return;
-                              } else {
-                                <span>
-                                  <Popup
-                                    trigger={
-                                      <Avatar fill={"black"} />
-                                    }
-                                  >
-                                    <div className={`${styles.pronouns}`}>
-                                      <form>
-                                        <input
-                                          type="text"
-                                          name="pronouns"
-                                          placeholder="Pronouns"
-                                          onChange={handlePronounsChange}
-                                          className={`${styles.editPronounsInput}`}
-                                        />
-                                        <button
-                                          type="submit"
-                                          className={`${styles.editPronounsButton}`}
-                                          onClick={submitNewPronouns}
-                                        >
-                                          Save
-                                        </button>
-                                      </form>
-                                    </div>
-                                  </Popup>
-                                  <p>
-                                    {() => {
-                                      if (!pronouns) {
-                                        return;
-                                      }
-                                      pronouns.join("/");
-                                    }}
-                                  </p>
-                                </span>;
-                              }
-                            }
+                            <span>
+                              <Popup trigger={<Avatar fill={"black"} />}>
+                                <div className={`${styles.pronouns}`}>
+                                  <form>
+                                    <input
+                                      type="text"
+                                      name="pronouns"
+                                      placeholder="Pronouns"
+                                      onChange={handlePronounsChange}
+                                      className={`${styles.editPronounsInput}`}
+                                    />
+                                    <button
+                                      type="submit"
+                                      className={`${styles.editPronounsButton}`}
+                                      onClick={submitNewPronouns}
+                                    >
+                                      Save
+                                    </button>
+                                  </form>
+                                </div>
+                              </Popup>
+                              <p>
+                                {pronouns ? "Add pronouns!" : pronouns.join("/")}
+                              </p>
+                            </span>
                           )}
                         </p>
                         <p className={`${styles.userDetailsBio}`}>
@@ -337,11 +322,7 @@ const AuthSettings: NextPage = () => {
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <Popup
-                                trigger={
-                                  <BulletList fill={"black"} />
-                                }
-                              >
+                              <Popup trigger={<BulletList fill={"black"} />}>
                                 <div className={`${styles.editBio}`}>
                                   <form
                                     id="editBioForm"
@@ -373,11 +354,7 @@ const AuthSettings: NextPage = () => {
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <Popup
-                                trigger={
-                                  <Location fill={"black"} />
-                                }
-                              >
+                              <Popup trigger={<Location fill={"black"} />}>
                                 <div className={`${styles.editLocation}`}>
                                   <form
                                     id="editLocationForm"
