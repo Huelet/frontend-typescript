@@ -127,7 +127,7 @@ const AuthUp: NextPage = () => {
                 </div>
               </div>
               <div className="spacer"></div>
-              <button className={styles.submit} id="submit" type="submit">
+              <button className={"button-primary"} id="submit" type="submit">
                 Sign up
               </button>
               <div id="error-box"></div>

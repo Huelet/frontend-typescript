@@ -131,6 +131,20 @@ code {
 }
 
 /* Buttons */
+.button-primary {
+  background-color: var(--hueletColor);
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  margin-top: 38px;
+  outline: 0;
+  text-align: center;
+  width: 100%;
+}
 .main-btn {
   background-color: black;
   color: white;
