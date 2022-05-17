@@ -1,5 +1,5 @@
 /* Globals */
-@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display&family=Red+Hat+Text&family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Red+Hat+Display&family=Red+Hat+Text&family=Source+Sans+Pro&display=swap');
 
 :root {
   --hoverColor: #605e5c;
@@ -158,7 +158,9 @@ code {
   background-color: white;
   color: black;
 }
-
+.link--unmasked {
+  text-decoration: none;
+}
 /* Icons */
 .privacy-icon {
   display: flex;

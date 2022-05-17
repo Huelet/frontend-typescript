@@ -1,55 +1,70 @@
 /* Text */
+.heroTextBig {
+  font-family: "Inter", sans-serif;
+  font-size: 4em;
+  /* this is the magic css rule */
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(302deg,
+      rgba(218, 0, 255, 1) 0%,
+      rgba(114, 0, 219, 1) 25%,
+      rgba(0, 1, 255, 1) 50%,
+      rgba(0, 99, 255, 1) 75%,
+      rgba(0, 211, 255, 1) 100%);
+}
+
 .mainText {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
-    font-size: 32px;
-    font-weight: 100;
-    display: inline;
-    text-align: center;
+  font-family: "Source Sans Pro", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 32px;
+  font-weight: 100;
+  display: inline;
+  text-align: center;
 }
 
 .xCardText {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
-    color: white;
+  font-family: "Source Sans Pro", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
+  color: white;
 }
 
-/* Modals */
-.closeModal {
-    display: flex;
-    justify-content: flex-end
+/* Containers */
+.homeContainer {
+  padding: 2em;
+  width: 100vw;
+  height: 100vh;
 }
 
-.privacyModal {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background: #464546;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.5s linear;
+.hero {
+  display: grid;
+  place-content: center;
+  width: 100vw;
+  height: 100vh;
 }
 
-.privacyDemoClosed {
-  display: hidden
-}
-.privacyDemo {
-  width: 25em;
-  height: 20em;
-  background: #242424;
-}
-.privacyDemoBothText {
-  color: #1a58ff;
-  font-weight: bold;
-}
-.privacyDemoYouTubeText {
-  color: #ff0000;
-  font-weight: bold;
-}
-.privacyDemoHueletText {
-  color: ;
-  font-weight: bold;
+.heroText {
+  font-family: "Source Sans Pro", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
+  width: 60em;
+  margin-bottom: 2em;
+  margin-left: 2em;
 }
 
-.privacyModal:target {
-    visibility: visible;
-    opacity: 1;
+/* Buttons */
+.acceptSignup {
+  display: grid;
+  place-content: center;
+  font-family: sans-serif;
+  font-size: 1.2em;
+  padding: 1em 2em;
+  background: rgb(152, 0, 218);
+  box-shadow: 4px 4px 60px rgb(0 0 0 / 20%);
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 20%);
+  background: linear-gradient(90deg, rgba(152, 0, 218, 1) 0%, rgb(161, 0, 214) 100%);
+  text-decoration: none;
+  color: #ffffff;
+  border-radius: 85px;
+  border: none;
+}
+
+.acceptSignup:hover {
+  cursor: pointer;
 }

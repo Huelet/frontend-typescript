@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
-import ReactTooltip from "react-tooltip";
+import { Popover } from "@mantine/core";
 import { useCookies } from "react-cookie";
 import { Add, Info } from "@fdn-ui/icons-react";
 
@@ -11,6 +11,7 @@ const AuthUp: NextPage = () => {
   const [password, setPassword] = useState("");
   const [accessCode, setAccessCode] = useState("");
   const [pwgResponse, setPwgResponse] = useState("");
+  const [accessCodeModal, toggleAccessCodeModal] = useState(false);
   const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
   const handleUsernameChange = (event: {
     target: { value: SetStateAction<string> };
@@ -54,11 +55,8 @@ const AuthUp: NextPage = () => {
       const data = await resp.json();
       console.log(data);
       if (resp.status === 200) {
-        setJWTCookie(
-          "_hltoken",
-          data.token, 
-          {
-            path: "/"
+        setJWTCookie("_hltoken", data.token, {
+          path: "/",
         });
         location.assign("/explore");
       }
@@ -108,7 +106,6 @@ const AuthUp: NextPage = () => {
                 </a>
               </div>
               <div className="spacer-sm"></div>
-              <ReactTooltip />
               <div className="flex">
                 <input
                   className={styles.input}
@@ -121,10 +118,21 @@ const AuthUp: NextPage = () => {
                 />
                 <div
                   className={"cursor"}
-                  data-tip="We will have sent you a DM with this code. If you don't have it, please let us know."
+                  onClick={() => toggleAccessCodeModal(true)}
                 >
                   <Info fill={"white"} />
                 </div>
+                <Popover
+                  opened={accessCodeModal}
+                  onClose={() => toggleAccessCodeModal(false)}
+                  width={260}
+                  position="bottom"
+                  withArrow
+                  target={undefined}
+                >
+                  We will have sent you a DM with this code. If you don&apos;t
+                  have it, please let us know.
+                </Popover>
               </div>
               <div className="spacer"></div>
               <button className={"button-primary"} id="submit" type="submit">
