@@ -3,8 +3,7 @@ import styles from "../../styles/Settings.module.css";
 import { SetStateAction, useState, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { Header } from "../../components/header";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
+import { Modal } from "@mantine/core";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Avatar, BulletList, Upload, Location } from "@fdn-ui/icons-react";
@@ -22,6 +21,11 @@ const AuthSettings: NextPage = () => {
   const [updatedPronouns, setUpdatedPronouns] = useState("");
   const [updatedLocation, setUpdatedLocation] = useState("");
   const [privateAcct, setPrivateAcct] = useState(false);
+  /* Modals */
+  const [pfpModal, togglePfpModal] = useState(false);
+  const [pronounsModal, togglePronounsModal] = useState(false);
+  const [bioModal, toggleBioModal] = useState(false);
+  const [locationModal, toggleLocationModal] = useState(false);
   const checkCookie = () => {
     const token = cookie._hltoken;
     if (token) {
@@ -237,48 +241,53 @@ const AuthSettings: NextPage = () => {
                       {loading ? (
                         <Skeleton width={128} height={64} />
                       ) : (
-                        <Popup
-                          trigger={
-                            <div className={`${styles.profileImageUploadIcon}`}>
-                              <div className={`${styles.icon}`}>
-                                <Upload fill={"white"} />
-                              </div>
+                        <>
+                          <div
+                            className={`${styles.profileImageUploadIcon}`}
+                            onClick={() => togglePfpModal(true)}
+                          >
+                            <div className={`${styles.icon}`}>
+                              <Upload fill={"white"} />
                             </div>
-                          }
-                        >
-                          <div className={`${styles.profileImageUpload}`}>
-                            <form>
-                              <input
-                                type="file"
-                                name="file"
-                                id="file"
-                                accept="image/*"
-                                onChange={handlePfpChange}
-                                className={`${styles.profileImageUploadInput}`}
-                              />
-                              <label
-                                htmlFor="file"
-                                className={`${styles.profileImageUploadLabel}`}
-                              >
-                                <Upload fill={"black"} />
-                                Choose an image
-                              </label>
-                              <input
-                                type="text"
-                                name="username"
-                                defaultValue={username}
-                                hidden
-                              />
-                              <button
-                                type="submit"
-                                className={`${styles.profileImageUploadButton}`}
-                                onClick={submitNewPfp}
-                              >
-                                Upload
-                              </button>
-                            </form>
                           </div>
-                        </Popup>
+                          <Modal
+                            opened={pfpModal}
+                            onClose={() => togglePfpModal(false)}
+                          >
+                            <div className={`${styles.profileImageUpload}`}>
+                              <form>
+                                <input
+                                  type="file"
+                                  name="file"
+                                  id="file"
+                                  accept="image/*"
+                                  onChange={handlePfpChange}
+                                  className={`${styles.profileImageUploadInput}`}
+                                />
+                                <label
+                                  htmlFor="file"
+                                  className={`${styles.profileImageUploadLabel}`}
+                                >
+                                  <Upload fill={"black"} />
+                                  Choose an image
+                                </label>
+                                <input
+                                  type="text"
+                                  name="username"
+                                  defaultValue={username}
+                                  hidden
+                                />
+                                <button
+                                  type="submit"
+                                  className={`${styles.profileImageUploadButton}`}
+                                  onClick={submitNewPfp}
+                                >
+                                  Upload
+                                </button>
+                              </form>
+                            </div>
+                          </Modal>
+                        </>
                       )}
                     </div>
                     <div className={`${styles.profileInfo} ${styles.column}`}>
@@ -291,7 +300,13 @@ const AuthSettings: NextPage = () => {
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <Popup trigger={<Avatar fill={"black"} />}>
+                              <span onClick={() => togglePronounsModal(true)}>
+                                <Avatar fill={"black"} />
+                              </span>
+                              <Modal
+                                opened={pronounsModal}
+                                onClose={() => togglePronounsModal(false)}
+                              >
                                 <div className={`${styles.pronouns}`}>
                                   <form>
                                     <input
@@ -310,9 +325,11 @@ const AuthSettings: NextPage = () => {
                                     </button>
                                   </form>
                                 </div>
-                              </Popup>
+                              </Modal>
                               <p>
-                                {pronouns ? "Add pronouns!" : pronouns.join("/")}
+                                {pronouns
+                                  ? "Add pronouns!"
+                                  : pronouns.join("/")}
                               </p>
                             </span>
                           )}
@@ -322,7 +339,13 @@ const AuthSettings: NextPage = () => {
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <Popup trigger={<BulletList fill={"black"} />}>
+                              <span onClick={() => toggleBioModal(true)}>
+                                <BulletList fill={"black"} />
+                              </span>
+                              <Modal
+                                opened={bioModal}
+                                onClose={() => toggleBioModal(false)}
+                              >
                                 <div className={`${styles.editBio}`}>
                                   <form
                                     id="editBioForm"
@@ -344,7 +367,7 @@ const AuthSettings: NextPage = () => {
                                     </button>
                                   </form>
                                 </div>
-                              </Popup>
+                              </Modal>
                               <p>{bio}</p>
                             </span>
                           )}
@@ -354,7 +377,13 @@ const AuthSettings: NextPage = () => {
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <Popup trigger={<Location fill={"black"} />}>
+                              <span>
+                                <Location fill={"black"} />
+                              </span>
+                              <Modal
+                                opened={locationModal}
+                                onClose={() => toggleLocationModal(false)}
+                              >
                                 <div className={`${styles.editLocation}`}>
                                   <form
                                     id="editLocationForm"
@@ -375,7 +404,7 @@ const AuthSettings: NextPage = () => {
                                     </button>
                                   </form>
                                 </div>
-                              </Popup>
+                              </Modal>
                               <p>{location}</p>
                             </span>
                           )}
