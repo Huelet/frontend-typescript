@@ -5,6 +5,9 @@ import type { NextPage } from "next";
 import styles from "../../styles/Creator.module.css";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import { Location } from "@fdn-ui/icons-react";
+import { Header } from "../../components/header";
+import { Follow } from "../../components/Buttons/follow";
 
 const ViewCreator: NextPage = () => {
   const [loading, setLoading] = useState(true);
@@ -81,6 +84,7 @@ const ViewCreator: NextPage = () => {
   }
   return (
     <div id="klausen">
+      <Header username="" />
       <div className={`${styles.creatorHeader}`}>
         <img
           src={header ? header : "https://cdn.huelet.net/assets/logo.png"}
@@ -121,10 +125,14 @@ const ViewCreator: NextPage = () => {
                 <p>{pronouns}</p>
               </div>
               <div className={`${styles.creatorBodyBioLocation}`}>
+                <Location fill={"white"} />
                 <p>{location}</p>
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          
         </div>
         <div className={`${styles.creatorBodySocials}`}>
           <div className={`${styles.creatorBodySocialsItems}`}>
@@ -142,7 +150,11 @@ const ViewCreator: NextPage = () => {
             )}
             <div className={styles.nullModeToggle} hidden={true}></div>
           </div>
+          <Follow />
         </div>
+      </div>
+      <div className={`${styles.creatorVideos}`}>
+        
       </div>
     </div>
   );
