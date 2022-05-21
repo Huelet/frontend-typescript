@@ -27,18 +27,13 @@ const Explore: NextPage = () => {
       });
   };
   getUsername();
-  const addCount = () => {
-    setTimesClicked(timesClicked + 1);
-  };
   if (timesClicked >= 10) {
-    console.log("You have clicked the button more than 10 times");
     setIsOpen(true);
   }
   const getDate = () => {
     let d = new Date(Date.now());
     return d.getHours() <= 12 ? "Morning" : "Afternoon";
   };
-
   return (
     <div id="klausen">
       <Head>
@@ -97,7 +92,7 @@ const Explore: NextPage = () => {
       <div className={styles.exploreContainer}>
         <div
           onClick={() => {
-            addCount();
+            setTimesClicked(timesClicked + 1);
           }}
           className={`${styles.exploreWelcome}`}
         >
@@ -106,21 +101,15 @@ const Explore: NextPage = () => {
             alt="Huelet logo"
             width={32}
             height={32}
+            className={`${isOpen ? "hidden" : ""}`}
           />
           <div>
-            {isOpen ? (
-              <video controls>
-                <source
-                  src="https://videos.cdn.huelet.net/asset-025cbdd0-eab3-11eb-8743-35f9dd1b924b/You%20Just%20Got%20Coconut%20Mall%E2%80%99d.mp4?sp=r&st=2022-01-08T16:59:10Z&se=2028-11-01T23:59:10Z&sip=0.0.0.0-255.255.255.255&spr=https&sv=2020-08-04&sr=b&sig=M4%2BA1dZiYCrBEHMjBh051kPcjMRHSy3hOtNdmtG4200%3D"
-                  type="video/mp4"
-                />
-              </video>
-            ) : (
-              <div className="hidden">
-                you might get coconut malled. share this with all your friends
-                to totally possibly coconut mall them.
-              </div>
-            )}
+            <video controls className={`${isOpen ? "" : "hidden"}`}>
+              <source
+                src="https://videos.cdn.huelet.net/asset-025cbdd0-eab3-11eb-8743-35f9dd1b924b/You%20Just%20Got%20Coconut%20Mall%E2%80%99d.mp4?sp=r&st=2022-01-08T16:59:10Z&se=2028-11-01T23:59:10Z&sip=0.0.0.0-255.255.255.255&spr=https&sv=2020-08-04&sr=b&sig=M4%2BA1dZiYCrBEHMjBh051kPcjMRHSy3hOtNdmtG4200%3D"
+                type="video/mp4"
+              />
+            </video>
           </div>
           <h2>Good {getDate()}!</h2>
         </div>
