@@ -26,7 +26,7 @@ const ViewVideo: NextPage = () => {
   const [thumbnail, setThumbnail] = useState("");
   const [title, setTitle] = useState("");
   const [authorId, setAuthorId] = useState("");
-  const [comments, setComments] = useState([]);
+  const [comments, setComments]: any = useState([]);
   const [authorUsername, setAuthorUsername] = useState("");
   const [uploadedDate, setUploadedDate] = useState("");
   const [comment, changeComment] = useState("");
@@ -401,9 +401,13 @@ const ViewVideo: NextPage = () => {
                 <Skeleton width={870} height={50} />
               ) : (
                 <div className={`${styles.videoCommentsList}`}>
-                  {comments.map((comment: any) => (
-                    comment[0].content
-                  ))}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: comments.map(
+                        (comment: any) => comment[0].content
+                      ),
+                    }}
+                  ></div>
                 </div>
               )}
             </div>
