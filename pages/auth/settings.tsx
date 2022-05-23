@@ -87,7 +87,7 @@ const AuthSettings: NextPage = () => {
       }
     );
     const pronounDataJSON = await pronounData.json();
-    setPronouns(pronounDataJSON.pronouns);
+    setPronouns(pronounDataJSON.pronouns || []);
     const locationData = await fetch(
       `https://api.huelet.net/auth/location?username=${username}`,
       {
