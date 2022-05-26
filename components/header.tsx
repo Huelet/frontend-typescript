@@ -103,7 +103,7 @@ export const Header = ({ username }: HeaderProps) => {
             </a>
           </div>
           <div className="settings--container hover cursor">
-            <Link href="/auth/settings">
+            <Link href="/auth/settings" passHref={true}>
               <div className={styles.navIcon}>
                 <Settings fill={"white"} width={64} height={64} />
               </div>

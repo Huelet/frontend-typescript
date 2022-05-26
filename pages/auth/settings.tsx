@@ -174,7 +174,7 @@ const AuthSettings: NextPage = () => {
   };
   const submitNewPronouns = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const resp = await fetch("https://api.huelet.net/auth/pronouns", {
+    fetch("https://api.huelet.net/auth/pronouns", {
       method: "PATCH",
       mode: "cors",
       cache: "no-cache",
@@ -191,7 +191,7 @@ const AuthSettings: NextPage = () => {
   };
   const submitNewLocation = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const resp = await fetch("https://api.huelet.net/auth/location", {
+    fetch("https://api.huelet.net/auth/location", {
       method: "PATCH",
       mode: "cors",
       cache: "no-cache",
@@ -377,7 +377,7 @@ const AuthSettings: NextPage = () => {
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <span>
+                              <span onClick={() => toggleLocationModal(true)}>
                                 <Location fill={"black"} />
                               </span>
                               <Modal
