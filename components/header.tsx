@@ -27,7 +27,7 @@ export const Header = ({ username }: HeaderProps) => {
           <Menu fill={"white"} width={52} height={52} />
         </div>
         <div className="searchBox">
-          <form action="" method="get">
+          <form action="/s" method="get">
             <input
               className={styles.searchBar}
               type="text"
