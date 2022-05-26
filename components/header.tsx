@@ -1,6 +1,6 @@
 import next from "next";
 import Link from "next/link";
-import { Menu, Search, Settings, VideoCamera } from "@fdn-ui/icons-react";
+import { Search, Settings, VideoCamera } from "@fdn-ui/icons-react";
 import { useState } from "react";
 import styles from "../styles/components/Header.module.css";
 import { Modal } from "@mantine/core";
@@ -26,7 +26,15 @@ export const Header = ({ username }: HeaderProps) => {
     <div className={styles.navContainer}>
       <div className={styles.navBar}>
         <div className={styles.navIcon}>
-          <Menu fill={"white"} width={64} height={64} />
+          <Link href="/explore">
+            <img
+              src="https://cdn.huelet.net/assets/logo.png"
+              alt="logo"
+              width={64}
+              height={64}
+              style={{ borderRadius: "50%", cursor: "pointer" }}
+            />
+          </Link>
         </div>
         <div className="searchBox">
           <form action="/s" method="get">
