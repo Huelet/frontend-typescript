@@ -1,9 +1,20 @@
 import next from "next";
 import Link from "next/link";
-import { Search, Settings, VideoCamera } from "@fdn-ui/icons-react";
+import {
+  Accessibility,
+  Copy,
+  Help,
+  Notepad,
+  PaintBrush,
+  Search,
+  Settings,
+  Subtitles,
+  VideoCamera,
+} from "@fdn-ui/icons-react";
 import { useState } from "react";
 import styles from "../styles/components/Header.module.css";
-import { Modal } from "@mantine/core";
+import { Modal, Menu } from "@mantine/core";
+import { NextLink } from "@mantine/next";
 
 export interface HeaderProps {
   username?: string;
@@ -99,17 +110,75 @@ export const Header = ({ username }: HeaderProps) => {
             </Link>
           </div>
           <div className="avatar--container hover cursor">
-            <Link href="/auth/settings">
-              <img
-                className="avatar--image"
-                src={
-                  pfp
-                    ? pfp
-                    : "https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
-                }
-                alt="Profile image"
-              />
-            </Link>
+            <Menu
+              control={
+                <img
+                  className="avatar--image"
+                  src={
+                    pfp
+                      ? pfp
+                      : "https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
+                  }
+                  alt="Profile image"
+                />
+              }
+            >
+              <Menu.Label>Your account</Menu.Label>
+              <Menu.Item
+                icon={<Settings fill={"white"} />}
+                component={NextLink}
+                href="/auth/settings"
+              >
+                Settings
+              </Menu.Item>
+              <Menu.Item
+                icon={<PaintBrush fill={"white"} />}
+                component={NextLink}
+                href="/auth/view"
+              >
+                Customization
+              </Menu.Item>
+              <Menu.Item
+                icon={<VideoCamera fill={"white"} />}
+                component={NextLink}
+                href="https://dash.huelet.net/"
+              >
+                Your Videos
+              </Menu.Item>
+              <Menu.Item icon={<Subtitles fill={"white"} />} disabled>
+                Huelet Premium (Coming Soon)
+              </Menu.Item>
+              <Menu.Item
+                icon={<Accessibility fill={"white"} />}
+                component={NextLink}
+                href="https://dash.huelet.net/auth/logout"
+              >
+                Accessibility Settings
+              </Menu.Item>
+              <Menu.Label>Help</Menu.Label>
+              <Menu.Item
+                icon={<Help fill={"white"} />}
+                component={NextLink}
+                href="https://docs.huelet.net/"
+              >
+                Help Center
+              </Menu.Item>
+              <Menu.Item
+                icon={<Notepad fill={"white"} />}
+                component={NextLink}
+                href="https://huelet.net/s/report"
+              >
+                Report a problem
+              </Menu.Item>
+              <Menu.Label>Your data</Menu.Label>
+              <Menu.Item
+                icon={<Copy fill={"white"} />}
+                component={NextLink}
+                href="/auth/data"
+              >
+                Your data in Huelet
+              </Menu.Item>
+            </Menu>
           </div>
         </div>
       </div>
