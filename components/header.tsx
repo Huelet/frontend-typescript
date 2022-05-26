@@ -26,7 +26,7 @@ export const Header = ({ username }: HeaderProps) => {
     <div className={styles.navContainer}>
       <div className={styles.navBar}>
         <div className={styles.navIcon}>
-          <Menu fill={"white"} width={52} height={52} />
+          <Menu fill={"white"} width={64} height={64} />
         </div>
         <div className="searchBox">
           <form action="/s" method="get">
@@ -79,14 +79,14 @@ export const Header = ({ username }: HeaderProps) => {
           <div className="hover cursor">
             <a href="https://dash.huelet.net">
               <div className={styles.navIcon}>
-                <VideoCamera fill={"white"} width={52} height={52} />
+                <VideoCamera fill={"white"} width={64} height={64} />
               </div>
             </a>
           </div>
           <div className="settings--container hover cursor">
             <Link href="/auth/settings">
               <div className={styles.navIcon}>
-                <Settings fill={"white"} width={52} height={52} />
+                <Settings fill={"white"} width={64} height={64} />
               </div>
             </Link>
           </div>
