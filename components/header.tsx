@@ -151,7 +151,7 @@ export const Header = ({ username }: HeaderProps) => {
               <Menu.Item
                 icon={<Accessibility fill={"white"} />}
                 component={NextLink}
-                href="https://dash.huelet.net/auth/logout"
+                href="/auth/settings/accessibility"
               >
                 Accessibility Settings
               </Menu.Item>
