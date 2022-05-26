@@ -1,5 +1,5 @@
 import next from "next";
-import styles from "../styles/Footer.module.css";
+import styles from "../styles/components/Footer.module.css";
 
 
 const Footer = () => {

@@ -145,6 +145,7 @@ code {
   text-align: center;
   width: 100%;
 }
+
 .main-btn {
   background-color: black;
   color: white;
@@ -158,9 +159,11 @@ code {
   background-color: white;
   color: black;
 }
+
 .link--unmasked {
   text-decoration: none;
 }
+
 /* Icons */
 .privacy-icon {
   display: flex;
@@ -296,4 +299,10 @@ aside {
   padding-top: 20px;
   margin-top: 6vh;
   margin-right: 12px;
+}
+
+@media screen and (max-width: 400px) {
+  aside {
+    display: none;
+  }
 }

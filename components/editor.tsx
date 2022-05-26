@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction, ReactNode } from "react";
 import { Bold, Italic, Underline, BulletList } from "@fdn-ui/icons-react";
-import styles from "../styles/Editor.module.css";
+import styles from "../styles/components/Editor.module.css";
 
 export interface EditorProps {
   value: string;

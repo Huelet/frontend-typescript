@@ -1,6 +1,6 @@
 import next from "next";
 import Link from "next/link";
-import styles from "../styles/Loader.module.css";
+import styles from "../styles/components/Loader.module.css";
 
 const Loader = () => {
   return (

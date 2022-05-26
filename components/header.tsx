@@ -2,7 +2,7 @@ import next from "next";
 import Link from "next/link";
 import { Menu, Search, Settings, VideoCamera } from "@fdn-ui/icons-react";
 import { useState } from "react";
-import styles from "../styles/Header.module.css";
+import styles from "../styles/components/Header.module.css";
 
 export interface HeaderProps {
   username?: string;

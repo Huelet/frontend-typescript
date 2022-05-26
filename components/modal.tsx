@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { Close } from "@fdn-ui/icons-react";
-import styles from "../styles/Modal.module.css";
+import styles from "../styles/components/Modal.module.css";
 
 export interface ModalProps {
   children: ReactNode;
