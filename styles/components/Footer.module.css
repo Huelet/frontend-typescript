@@ -13,11 +13,11 @@
 }
 
 .EasterEggSectionImg1 {
-    background-image: url("./../assets/first-waves-est.svg");
+    background-image: url("./../../assets/first-waves-est.svg");
 }
 
 .EasterEggSectionImg2 {
-    background-image: url("./../assets/second-waves-est.svg");
+    background-image: url("./../../assets/second-waves-est.svg");
 }
 
 .EasterEggSectionLong {

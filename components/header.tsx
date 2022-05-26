@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Menu, Search, Settings, VideoCamera } from "@fdn-ui/icons-react";
 import { useState } from "react";
 import styles from "../styles/components/Header.module.css";
+import { Modal } from "@mantine/core";
 
 export interface HeaderProps {
   username?: string;
@@ -10,6 +11,7 @@ export interface HeaderProps {
 
 export const Header = ({ username }: HeaderProps) => {
   const [pfp, setPfp] = useState("");
+  const [searchModal, toggleSearchModal] = useState(false);
   const getUserData = () => {
     if (username) {
       fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
@@ -40,6 +42,38 @@ export const Header = ({ username }: HeaderProps) => {
               </div>
             </button>
           </form>
+          <button className={`${styles.searchbuttonMobile} cursor`}>
+            <div
+              className={`${styles.searchbuttonMobile}`}
+              onClick={() => toggleSearchModal(true)}
+            >
+              <Search fill={"white"} />
+            </div>
+          </button>
+          <Modal
+            opened={searchModal}
+            onClose={() => toggleSearchModal(false)}
+            title="Search"
+          >
+            <div className={styles.searchModal}>
+              <form action="/s" method="get">
+                <input
+                  className={styles.searchBarMobile}
+                  type="text"
+                  name="query"
+                  placeholder="Search"
+                />
+                <button
+                  className={`${styles.searchbuttonMobile} cursor`}
+                  type="submit"
+                >
+                  <div className={`${styles.searchbuttonMobile}`}>
+                    <Search fill={"white"} />
+                  </div>
+                </button>
+              </form>
+            </div>
+          </Modal>
         </div>
         <div className={styles.accountIconsContainer}>
           <div className="hover cursor">
