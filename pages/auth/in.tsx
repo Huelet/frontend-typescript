@@ -4,6 +4,7 @@ import styles from "../../styles/Signup.module.css";
 import { useCookies } from "react-cookie";
 
 const AuthIn: NextPage = () => {
+  const [resp, setResp] = useState<string>("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
@@ -34,12 +35,12 @@ const AuthIn: NextPage = () => {
       });
       const data = await resp.json();
       console.log(data);
+      if (resp.status === 401) {
+        setResp("Invalid username or password");
+      }
       if (resp.status === 200) {
-        setJWTCookie(
-          "_hltoken",
-          data.token, 
-          {
-            path: "/"
+        setJWTCookie("_hltoken", data.token, {
+          path: "/",
         });
         location.assign("/explore");
       }
@@ -83,7 +84,9 @@ const AuthIn: NextPage = () => {
               <button className={"button-primary"} id="submit" type="submit">
                 Sign In
               </button>
-              <div id="error-box"></div>
+              <div className={"error-box sp-1-io"}>
+                <p className="error-text">{resp}</p>
+              </div>
             </form>
           </div>
         </div>
