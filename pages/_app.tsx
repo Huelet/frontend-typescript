@@ -4,6 +4,7 @@ import Twemoji from 'react-twemoji';
 import "../styles/globals.css";
 import "../styles/adstyles.css";
 import "../styles/VideoPlayer.css";
+import "../styles/components/rte.css";
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 import { CookiesProvider } from "react-cookie";

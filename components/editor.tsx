@@ -1,54 +1,27 @@
-import type { Dispatch, SetStateAction, ReactNode } from "react";
-import { Bold, Italic, Underline, BulletList } from "@fdn-ui/icons-react";
-import styles from "../styles/components/Editor.module.css";
+import React, { Dispatch, SetStateAction } from "react";
+import { listener, listenerCtx } from "@milkdown/plugin-listener";
+import { Editor, rootCtx } from "@milkdown/core";
+import { nord } from "@milkdown/theme-nord";
+import { ReactEditor, useEditor } from "@milkdown/react";
+import { commonmark } from "@milkdown/preset-commonmark";
 
 export interface EditorProps {
-  value: string;
-  update: Dispatch<SetStateAction<string>>; // yikes
-  gfm?: boolean;
-  style?: "light" | "dark";
-  editable?: boolean;
-  children?: ReactNode;
-  classNames?: string;
+  output: Dispatch<SetStateAction<string>>;
 }
 
-export const Editor = ({
-  value,
-  update,
-  gfm,
-  style,
-  editable,
-  children,
-  classNames,
-}: EditorProps) => {
-  const changeContent = (e: any) => {
-    update(e.target.value);
-  };
-  return (
-    <>
-      <div className={styles.editor}>
-        <div className={`${styles.editor__content} ${classNames}`}>
-          <div className={styles.editor__contentOptions}>
-            <div className={styles.editor__contentOptionsItem}>
-              <Bold fill={"white"} />
-            </div>
-            <div className={styles.editor__contentOptionsItem}>
-              <Italic fill={"white"} />
-            </div>
-            <div className={styles.editor__contentOptionsItem}>
-              <BulletList fill={"white"} />
-            </div>
-          </div>
-          <div className={styles.editor__contentBody}>
-            <input
-              contentEditable={true}
-              onChange={changeContent}
-              className={styles.editor__contentBodyEditor}
-            />
-          </div>
-          {children}
-        </div>
-      </div>
-    </>
+export const MilkdownEditor = ({ output }: EditorProps) => {
+  const editor = useEditor((root) =>
+    Editor.make()
+      .config((ctx) => {
+        ctx.set(rootCtx, root);
+        ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
+          output(markdown);
+        });
+      })
+      .use(nord)
+      .use(listener)
+      .use(commonmark)
   );
+
+  return <ReactEditor editor={editor} />;
 };

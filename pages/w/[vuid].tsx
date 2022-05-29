@@ -6,7 +6,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import { Player } from "video-react";
 import { Header } from "../../components/header";
-import { Editor } from "../../components/editor";
+import { MilkdownEditor } from "../../components/editor";
 import styles from "../../styles/Video.module.css";
 import { useCookies } from "react-cookie";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -308,7 +308,7 @@ const ViewVideo: NextPage = () => {
           <div className={`${styles.videoComments}`}>
             <h2 className={`${styles.videoCommentsHeading}`}>Comments</h2>
             <div className={`${styles.videoCommentsBox}`}>
-              <Editor value={comment} update={changeComment} />
+              <MilkdownEditor output={changeComment} />
               <div className={`${styles.videoCommentsBoxSubmit}`}>
                 <div
                   className={`${styles.videoCommentsBoxSubmitButton}`}
