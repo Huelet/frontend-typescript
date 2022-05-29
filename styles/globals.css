@@ -12,7 +12,7 @@
   --dividerColor: #605e5c;
   --iconColor: invert(100%) sepia(11%) saturate(2%) hue-rotate(129deg) brightness(109%) contrast(101%);
   --gap: 1em;
-  --fontFamily: Source Sans Pro, -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+  --fontFamily: 'Red Hat Display', 'Red Hat Text', 'Source Sans Pro', -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
 }
 
 ::selection {
