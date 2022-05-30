@@ -1,4 +1,7 @@
 @charset "UTF-8";
+.video-react {
+  border-radius: 15px;
+}
 .video-react .video-react-control:before, .video-react .video-react-big-play-button:before {
   position: absolute;
   top: 0;
@@ -620,8 +623,7 @@ body.video-react-full-window .video-react-fullscreen {
   left: 0;
   right: 0;
   height: 3em;
-  background-color: #2B333F;
-  background-color: rgba(43, 51, 63, 0.7);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .video-react-has-started .video-react-control-bar {
@@ -880,6 +882,7 @@ body.video-react-full-window .video-react-fullscreen {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
+  display: none
 }
 .video-react .video-react-volume-control {
   width: 5em;

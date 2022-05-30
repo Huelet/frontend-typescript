@@ -4,14 +4,20 @@ import Script from "next/script";
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useState } from "react";
-import { Player } from "video-react";
+import {
+  Player,
+  ControlBar,
+  VolumeMenuButton,
+  LoadingSpinner,
+  PlayToggle,
+} from "video-react";
 import { Header } from "../../components/header";
 import { MilkdownEditor } from "../../components/editor";
 import styles from "../../styles/Video.module.css";
 import { useCookies } from "react-cookie";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Forward, WarningFilled } from "@fdn-ui/icons-react";
+import { Forward, Play, Pause, WarningFilled } from "@fdn-ui/icons-react";
 import Loader from "../../components/loader";
 import { Popover } from "@mantine/core";
 import { useSound } from "use-sound";
@@ -37,9 +43,18 @@ const ViewVideo: NextPage = () => {
   const router = useRouter();
 
   /* sounds */
-  const [playBgSound] = useSound("https://cdn.huelet.net/assets/sounds/Windows%20Background.wav", { volume: 1 });
-  const [playClickSound] = useSound("https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav", { volume: 1 });
-  const [playSubmitSound] = useSound("https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Insert.wav", { volume: 1 });
+  const [playBgSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Background.wav",
+    { volume: 1 }
+  );
+  const [playClickSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav",
+    { volume: 1 }
+  );
+  const [playSubmitSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Insert.wav",
+    { volume: 1 }
+  );
   const { vuid } = router.query;
   const getUserData = () => {
     fetch(`https://api.huelet.net/auth/token`, {
@@ -227,7 +242,25 @@ const ViewVideo: NextPage = () => {
             <Skeleton width={800} height={430} />
           ) : (
             <div className={styles.videoWrapper}>
-              <Player src={url} playsInline fluid={false} width={830} height={400} className={styles.videoPlayer} />
+              <Player
+                src={url}
+                playsInline
+                fluid={false}
+                width={830}
+                height={400}
+                className={styles.videoPlayer}
+              >
+                <LoadingSpinner>
+                  <Loader />
+                </LoadingSpinner>
+                <ControlBar>
+                  <PlayToggle>
+                    <Play />
+                    <Pause />
+                  </PlayToggle>
+                  <VolumeMenuButton disabled />
+                </ControlBar>
+              </Player>
             </div>
           )}
           <div className={`${styles.videoDetails}`}>
@@ -241,7 +274,10 @@ const ViewVideo: NextPage = () => {
                   style={{
                     backgroundColor: "#436072",
                   }}
-                  onClick={() => { addClap; playClickSound() }}
+                  onClick={() => {
+                    addClap;
+                    playClickSound();
+                  }}
                 >
                   <img
                     src="https://cdn.huelet.net/assets/emoji/1F44F.svg"
@@ -258,7 +294,10 @@ const ViewVideo: NextPage = () => {
               ) : (
                 <div
                   className={`${styles.videoDetailsOptionsReactionNegative} ${styles.videoDetailsOptionsReaction}`}
-                  onClick={() => {addCrap; playClickSound()}}
+                  onClick={() => {
+                    addCrap;
+                    playClickSound();
+                  }}
                 >
                   <img
                     src="https://cdn.huelet.net/assets/emoji/1F4A9.svg"
@@ -313,7 +352,10 @@ const ViewVideo: NextPage = () => {
               <div className={`${styles.videoCommentsBoxSubmit}`}>
                 <div
                   className={`${styles.videoCommentsBoxSubmitButton}`}
-                  onClick={() => {submitComment; playSubmitSound()}}
+                  onClick={() => {
+                    submitComment;
+                    playSubmitSound();
+                  }}
                 >
                   <div
                     className={
