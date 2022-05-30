@@ -66,11 +66,6 @@ const ViewVideo: NextPage = () => {
         setShares(data.vshares);
         setAuthorId(data.vauthor);
         setComments(data.vcomments || ["no comments yet"]);
-        fetch(`https://api.huelet.net/auth/user/${data.authorId}`)
-          .then((resp: Response) => resp.json())
-          .then((data: any) => {
-            setAuthorUsername(data.username);
-          });
         setLoading(false);
       });
   }
