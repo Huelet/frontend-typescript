@@ -227,7 +227,7 @@ const ViewVideo: NextPage = () => {
             <Skeleton width={800} height={430} />
           ) : (
             <div className={styles.videoWrapper}>
-              <Player src={url} playsInline className={styles.videoPlayer} />
+              <Player src={url} playsInline fluid={false} width={830} height={400} className={styles.videoPlayer} />
             </div>
           )}
           <div className={`${styles.videoDetails}`}>
