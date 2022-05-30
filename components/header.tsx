@@ -15,12 +15,15 @@ import { useState } from "react";
 import styles from "../styles/components/Header.module.css";
 import { Modal, Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
+import { useSound } from "use-sound";
 
 export interface HeaderProps {
   username?: string;
 }
 
 export const Header = ({ username }: HeaderProps) => {
+  const [playBgSound] = useSound("https://cdn.huelet.net/assets/sounds/Windows%20Background.wav", { volume: 1 });
+  const [playClickSound] = useSound("https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav", { volume: 1 });
   const [pfp, setPfp] = useState("");
   const [searchModal, toggleSearchModal] = useState(false);
   const getUserData = () => {
@@ -36,7 +39,7 @@ export const Header = ({ username }: HeaderProps) => {
   return (
     <div className={styles.navContainer}>
       <div className={styles.navBar}>
-        <div className={styles.navIcon}>
+        <div className={styles.navIcon} onClick={() => playBgSound()}>
           <Link href="/explore">
             <img
               src="https://cdn.huelet.net/assets/logo.png"
@@ -102,14 +105,14 @@ export const Header = ({ username }: HeaderProps) => {
               </div>
             </a>
           </div>
-          <div className="settings--container hover cursor">
+          <div className="settings--container hover cursor" onClick={() => playClickSound()}>
             <Link href="/auth/settings" passHref={true}>
               <div className={styles.navIcon}>
                 <Settings fill={"white"} width={64} height={64} />
               </div>
             </Link>
           </div>
-          <div className="avatar--container hover cursor">
+          <div className="avatar--container hover cursor" onClick={() => playClickSound()}>
             <Menu
               control={
                 <img
