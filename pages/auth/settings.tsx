@@ -272,6 +272,13 @@ const AuthSettings: NextPage = () => {
                             onClose={() => togglePfpModal(false)}
                           >
                             <div className={`${styles.profileImageUpload}`}>
+                              <img
+                                src={pfp}
+                                alt="profile image"
+                                width={128}
+                                height={128}
+                                className={`${styles.profileImageInner}`}
+                              />
                               <form>
                                 <input
                                   type="file"

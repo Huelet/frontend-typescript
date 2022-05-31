@@ -43,6 +43,12 @@
     width: 100%;
 }
 
+.profileImageUpload {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
 .profileImageUploadInput {
     display: none;
 }
@@ -112,6 +118,7 @@
     outline: 0;
     width: 100%;
 }
+
 .editLocationInput {
     background-color: #303245;
     border-radius: 12px;
@@ -124,6 +131,7 @@
     padding: 4px 20px 0;
     width: 100%;
 }
+
 .editLocationButton {
     display: flex;
     justify-content: center;
@@ -140,6 +148,7 @@
     outline: 0;
     width: 100%;
 }
+
 .editPronounsInput {
     background-color: #303245;
     border-radius: 12px;
@@ -152,6 +161,7 @@
     padding: 4px 20px 0;
     width: 100%;
 }
+
 .editPronounsButton {
     display: flex;
     justify-content: center;
