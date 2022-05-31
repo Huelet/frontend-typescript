@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
-import Head from "next/head";
-import Script from "next/script";
 import type { NextPage } from "next";
 import styles from "../../styles/Creator.module.css";
 import { useState } from "react";
+import { ColorExtractor } from "react-color-extractor";
 import { useCookies } from "react-cookie";
 import { Location } from "@fdn-ui/icons-react";
 import { Header } from "../../components/header";
@@ -18,6 +17,7 @@ const ViewCreator: NextPage = () => {
   const [pronouns, setPronouns] = useState("");
   const [location, setLocation] = useState("");
   const [hydrinDot, setHydrinDot] = useState("");
+  const [imageColor, setImageColor] = useState("");
   const router = useRouter();
   const { username } = router.query;
   const uname = username?.toString().replace("@", "");
@@ -96,20 +96,34 @@ const ViewCreator: NextPage = () => {
           }`}
         />
       </div>
-      <div className={`${styles.creatorBody}`}>
+      <div
+        className={`${styles.creatorBody} ${loading ? "hidden" : ""}`}
+        style={{
+          boxShadow: `0px -120px 120px 0px ${
+            imageColor ? imageColor : "#1ed760"
+          } !important`,
+        }}
+      >
         <div className={`${styles.creatorBodyDetails}`}>
           <div className={`${styles.creatorBodyProfileImage}`}>
-            <img
-              src={
-                pfp
-                  ? pfp
-                  : "https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
-              }
-              alt="Profile"
-              className={`${styles.creatorBodyProfileImage}`}
-              width={128}
-              height={128}
-            />
+            <ColorExtractor
+              rgb={false}
+              getColors={(colors) => {
+                setImageColor(colors[3]);
+              }}
+            >
+              <img
+                src={
+                  pfp
+                    ? pfp
+                    : "https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
+                }
+                alt="Profile"
+                className={`${styles.creatorBodyProfileImage}`}
+                width={128}
+                height={128}
+              />
+            </ColorExtractor>
           </div>
           <div className={`${styles.creatorBodyDetailsText}`}>
             <div className={`${styles.creatorBodyTitle}`}>
@@ -131,9 +145,7 @@ const ViewCreator: NextPage = () => {
             </div>
           </div>
         </div>
-        <div>
-          
-        </div>
+        <div></div>
         <div className={`${styles.creatorBodySocials}`}>
           <div className={`${styles.creatorBodySocialsItems}`}>
             {hydrinDot ? (
@@ -153,9 +165,7 @@ const ViewCreator: NextPage = () => {
           <Follow />
         </div>
       </div>
-      <div className={`${styles.creatorVideos}`}>
-        
-      </div>
+      <div className={`${styles.creatorVideos}`}></div>
     </div>
   );
 };
