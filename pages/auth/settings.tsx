@@ -354,11 +354,7 @@ const AuthSettings: NextPage = () => {
                                   </form>
                                 </div>
                               </Modal>
-                              <p>
-                                {pronouns
-                                  ? "Add pronouns!"
-                                  : pronouns.join("/")}
-                              </p>
+                              <p>{pronouns.join("/")}</p>
                             </span>
                           )}
                         </div>
