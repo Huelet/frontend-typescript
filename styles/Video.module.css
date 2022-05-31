@@ -80,6 +80,31 @@
     padding: 0.3em;
 }
 
+.videoDetailsOptionsShareModal {
+    display: flex;
+    flex-direction: row;
+}
+
+.videoDetailsShareReaction {
+    display: flex;
+    align-items: center;
+    border-radius: 5rem;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin-right: .25rem;
+    margin-bottom: .25rem;
+    user-select: none;
+    border-color: #bde6fb;
+    border: 0.1em solid;
+    padding: 1em;
+    background-color: #BDE6FB30;
+    transition: 100ms;
+}
+
+.videoDetailsShareReaction:hover {
+    background-color: #262e33;
+}
+
 .videoAttributes {
     padding: 1em;
 }
@@ -175,6 +200,7 @@
     border-radius: 50%;
     background: #ff0077;
 }
+
 .unsafeContentPopupText {
     display: flex;
     justify-content: center;
@@ -184,10 +210,12 @@
     height: 100%;
     padding-left: 1em;
 }
+
 .unsafeContentPopupTextDescriptionHighlighted {
     padding-top: 0.5em;
     font-weight: 900;
 }
+
 .videoAttributesTitle {
     font-size: 2em;
 }

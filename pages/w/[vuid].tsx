@@ -17,9 +17,16 @@ import styles from "../../styles/Video.module.css";
 import { useCookies } from "react-cookie";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Forward, Play, Pause, WarningFilled } from "@fdn-ui/icons-react";
+import {
+  Forward,
+  Play,
+  Pause,
+  WarningFilled,
+  Copy,
+  Mail,
+} from "@fdn-ui/icons-react";
 import Loader from "../../components/loader";
-import { Popover } from "@mantine/core";
+import { Modal, Popover, Popper } from "@mantine/core";
 import { useSound } from "use-sound";
 
 const ViewVideo: NextPage = () => {
@@ -41,7 +48,12 @@ const ViewVideo: NextPage = () => {
   const [downvotes, setDownvotes] = useState(0);
   const [shares, setShares] = useState(0);
   const router = useRouter();
-
+  const [shareModal, toggleShareModal] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
+  const [copyPopover, toggleCopyPopover] = useState(false);
+  const [mailPopover, toggleMailPopover] = useState(false);
+  const [facebookPopover, toggleFacebookPopover] = useState(false);
+  const [twitterPopover, toggleTwitterPopover] = useState(false);
   /* sounds */
   const [playBgSound] = useSound(
     "https://cdn.huelet.net/assets/sounds/Windows%20Background.wav",
@@ -314,11 +326,123 @@ const ViewVideo: NextPage = () => {
               ) : (
                 <div
                   className={`${styles.videoDetailsOptionsShare} ${styles.videoDetailsOptionsReaction}`}
+                  onClick={() => {
+                    playClickSound();
+                    toggleShareModal(true);
+                  }}
                 >
                   <Forward fill={"white"} />
                   <span>{shares}</span>
                 </div>
               )}
+              <Modal
+                opened={shareModal}
+                onClose={() => toggleShareModal(false)}
+                title="Share this video"
+              >
+                <div className={`${styles.videoDetailsOptionsShareModal}`}>
+                  <div className={`${styles.videoDetailsShareReaction}`}>
+                    <Popover
+                      opened={copyPopover}
+                      onClose={() => toggleCopyPopover(false)}
+                      target={
+                        <Copy
+                          fill={"white"}
+                          onMouseEnter={() => toggleCopyPopover(true)}
+                          onMouseLeave={() => toggleCopyPopover(false)}
+                        />
+                      }
+                      position="bottom"
+                      placement="center"
+                      trapFocus={false}
+                      closeOnEscape={false}
+                      transition="pop-top-left"
+                    >
+                      <span>Copy link</span>
+                    </Popover>
+                  </div>
+                  <div className={`${styles.videoDetailsShareReaction}`}>
+                    <Popover
+                      opened={mailPopover}
+                      onClose={() => toggleMailPopover(false)}
+                      target={
+                        <Mail
+                          fill={"white"}
+                          onMouseEnter={() => toggleMailPopover(true)}
+                          onMouseLeave={() => toggleMailPopover(false)}
+                        />
+                      }
+                      position="bottom"
+                      placement="center"
+                      trapFocus={false}
+                      closeOnEscape={false}
+                      transition="pop-top-left"
+                    >
+                      <span>Email</span>
+                    </Popover>
+                  </div>
+                  <div className={`${styles.videoDetailsShareReaction}`}>
+                    <Popover
+                      opened={facebookPopover}
+                      onClose={() => toggleFacebookPopover(false)}
+                      target={
+                        <svg
+                          onMouseEnter={() => toggleFacebookPopover(true)}
+                          onMouseLeave={() => toggleFacebookPopover(false)}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                      }
+                      position="bottom"
+                      placement="center"
+                      trapFocus={false}
+                      closeOnEscape={false}
+                      transition="pop-top-left"
+                    >
+                      <span>Facebook</span>
+                    </Popover>
+                  </div>
+                  <div className={`${styles.videoDetailsShareReaction}`}>
+                    <Popover
+                      opened={twitterPopover}
+                      onClose={() => toggleTwitterPopover(false)}
+                      target={
+                        <svg
+                          onMouseEnter={() => toggleTwitterPopover(true)}
+                          onMouseLeave={() => toggleTwitterPopover(false)}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+                        </svg>
+                      }
+                      position="bottom"
+                      placement="center"
+                      trapFocus={false}
+                      closeOnEscape={false}
+                      transition="pop-top-left"
+                    >
+                      <span>Twitter</span>
+                    </Popover>
+                  </div>
+                </div>
+              </Modal>
             </div>
             {loading ? (
               <Skeleton width={870} height={50} />
