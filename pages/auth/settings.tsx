@@ -292,7 +292,7 @@ const AuthSettings: NextPage = () => {
                                   htmlFor="file"
                                   className={`${styles.profileImageUploadLabel}`}
                                 >
-                                  <Upload fill={"black"} />
+                                  <Upload fill={"white"} />
                                   Choose an image
                                 </label>
                                 <input

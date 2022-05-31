@@ -56,7 +56,7 @@
 .profileImageUploadLabel {
     width: 15em;
     height: 15em;
-    color: #000000;
+    color: var(--white);
 }
 
 .profileImageUploadButton {
