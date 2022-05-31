@@ -4,6 +4,7 @@ import { SetStateAction, useState, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { Header } from "../../components/header";
 import { Modal } from "@mantine/core";
+import { useSound } from "use-sound";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Avatar, BulletList, Upload, Location } from "@fdn-ui/icons-react";
@@ -26,6 +27,19 @@ const AuthSettings: NextPage = () => {
   const [pronounsModal, togglePronounsModal] = useState(false);
   const [bioModal, toggleBioModal] = useState(false);
   const [locationModal, toggleLocationModal] = useState(false);
+  /* sounds */
+  const [playBgSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Background.wav",
+    { volume: 1 }
+  );
+  const [playClickSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav",
+    { volume: 1 }
+  );
+  const [playSubmitSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Insert.wav",
+    { volume: 1 }
+  );
   const checkCookie = () => {
     const token = cookie._hltoken;
     if (token) {
@@ -122,24 +136,6 @@ const AuthSettings: NextPage = () => {
   }) => {
     setUpdatedLocation(event.target.value);
   };
-  const submitNewBio = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    const resp = await fetch("https://api.huelet.net/auth/bio", {
-      method: "PATCH",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer: ${cookie._hltoken}`,
-      },
-      body: JSON.stringify({
-        bio: updatedBio,
-        username: username,
-      }),
-    });
-    const data = await resp.json();
-    window.location.reload();
-  };
   const submitNewPfp = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const formData = new FormData();
@@ -171,6 +167,24 @@ const AuthSettings: NextPage = () => {
       });
       window.location.reload();
     }
+  };
+  const submitNewBio = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    const resp = await fetch("https://api.huelet.net/auth/bio", {
+      method: "PATCH",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer: ${cookie._hltoken}`,
+      },
+      body: JSON.stringify({
+        bio: updatedBio,
+        username: username,
+      }),
+    });
+    const data = await resp.json();
+    window.location.reload();
   };
   const submitNewPronouns = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -244,7 +258,10 @@ const AuthSettings: NextPage = () => {
                         <>
                           <div
                             className={`${styles.profileImageUploadIcon}`}
-                            onClick={() => togglePfpModal(true)}
+                            onClick={() => {
+                              togglePfpModal(true);
+                              playClickSound();
+                            }}
                           >
                             <div className={`${styles.icon}`}>
                               <Upload fill={"white"} />
@@ -280,7 +297,10 @@ const AuthSettings: NextPage = () => {
                                 <button
                                   type="submit"
                                   className={`${styles.profileImageUploadButton}`}
-                                  onClick={submitNewPfp}
+                                  onClick={() => {
+                                    submitNewPfp;
+                                    playSubmitSound();
+                                  }}
                                 >
                                   Upload
                                 </button>
@@ -295,12 +315,17 @@ const AuthSettings: NextPage = () => {
                         {loading ? <Skeleton width={256} /> : username}
                       </h2>
                       <div className={`${styles.userDetails} ${styles.column}`}>
-                        <p className={`${styles.userDetailsPronouns}`}>
+                        <div className={`${styles.userDetailsPronouns}`}>
                           {loading ? (
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <span onClick={() => togglePronounsModal(true)}>
+                              <span
+                                onClick={() => {
+                                  togglePronounsModal(true);
+                                  playClickSound();
+                                }}
+                              >
                                 <Avatar fill={"black"} />
                               </span>
                               <Modal
@@ -319,7 +344,10 @@ const AuthSettings: NextPage = () => {
                                     <button
                                       type="submit"
                                       className={`${styles.editPronounsButton}`}
-                                      onClick={submitNewPronouns}
+                                      onClick={() => {
+                                        submitNewPronouns;
+                                        playSubmitSound();
+                                      }}
                                     >
                                       Save
                                     </button>
@@ -333,13 +361,18 @@ const AuthSettings: NextPage = () => {
                               </p>
                             </span>
                           )}
-                        </p>
-                        <p className={`${styles.userDetailsBio}`}>
+                        </div>
+                        <div className={`${styles.userDetailsBio}`}>
                           {loading ? (
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <span onClick={() => toggleBioModal(true)}>
+                              <span
+                                onClick={() => {
+                                  toggleBioModal(true);
+                                  playClickSound();
+                                }}
+                              >
                                 <BulletList fill={"black"} />
                               </span>
                               <Modal
@@ -361,7 +394,10 @@ const AuthSettings: NextPage = () => {
                                     <button
                                       type="submit"
                                       className={`${styles.editBioButton}`}
-                                      onClick={submitNewBio}
+                                      onClick={() => {
+                                        submitNewBio;
+                                        playSubmitSound();
+                                      }}
                                     >
                                       Save
                                     </button>
@@ -371,13 +407,18 @@ const AuthSettings: NextPage = () => {
                               <p>{bio}</p>
                             </span>
                           )}
-                        </p>
-                        <p className={`${styles.userDetailsLocation}`}>
+                        </div>
+                        <div className={`${styles.userDetailsLocation}`}>
                           {loading ? (
                             <Skeleton width={256} />
                           ) : (
                             <span>
-                              <span onClick={() => toggleLocationModal(true)}>
+                              <span
+                                onClick={() => {
+                                  toggleLocationModal(true);
+                                  playClickSound();
+                                }}
+                              >
                                 <Location fill={"black"} />
                               </span>
                               <Modal
@@ -397,8 +438,11 @@ const AuthSettings: NextPage = () => {
                                       className={`${styles.editLocationInput}`}
                                     />
                                     <button
-                                      type="submit"
                                       className={`${styles.editLocationButton}`}
+                                      onClick={() => {
+                                        submitNewLocation;
+                                        playSubmitSound();
+                                      }}
                                     >
                                       Save
                                     </button>
@@ -408,7 +452,7 @@ const AuthSettings: NextPage = () => {
                               <p>{location}</p>
                             </span>
                           )}
-                        </p>
+                        </div>
                       </div>
                     </div>
                   </div>
