@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import styles from "../../styles/Settings.module.css";
-import { SetStateAction, useState, useRef } from "react";
+import { SetStateAction, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Header } from "../../components/header";
 import { Modal } from "@mantine/core";
