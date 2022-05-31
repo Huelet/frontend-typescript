@@ -30,7 +30,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(238, 137, 6);
+    background-color: var(--hueletColor);
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
@@ -63,7 +63,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(238, 137, 6);
+    background-color: var(--hueletColor);
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
@@ -106,7 +106,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(238, 137, 6);
+    background-color: var(--hueletColor);
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
@@ -136,7 +136,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(238, 137, 6);
+    background-color: var(--hueletColor);
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
@@ -166,7 +166,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(238, 137, 6);
+    background-color: var(--hueletColor);
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
