@@ -8,6 +8,7 @@ import { useSound } from "use-sound";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Avatar, BulletList, Upload, Location } from "@fdn-ui/icons-react";
+import Loader from "../../components/loader";
 
 const AuthSettings: NextPage = () => {
   const [loading, setLoading] = useState(true);
@@ -27,6 +28,11 @@ const AuthSettings: NextPage = () => {
   const [pronounsModal, togglePronounsModal] = useState(false);
   const [bioModal, toggleBioModal] = useState(false);
   const [locationModal, toggleLocationModal] = useState(false);
+  /* loaders */
+  const [pfpUploading, setPfpUploading] = useState(false);
+  const [bioLoading, setBioLoading] = useState(false);
+  const [pronounsLoading, setPronounsLoading] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
   /* sounds */
   const [playBgSound] = useSound(
     "https://cdn.huelet.net/assets/sounds/Windows%20Background.wav",
@@ -305,11 +311,17 @@ const AuthSettings: NextPage = () => {
                                   type="submit"
                                   className={`${styles.profileImageUploadButton}`}
                                   onClick={() => {
-                                    submitNewPfp;
+                                    setPfpUploading(true);
                                     playSubmitSound();
+                                    submitNewPfp;
                                   }}
                                 >
-                                  Upload
+                                  <div className={pfpUploading ? "hidden" : ""}>
+                                    Upload
+                                  </div>
+                                  <div className={pfpUploading ? "" : "hidden"}>
+                                    <Loader />
+                                  </div>
                                 </button>
                               </form>
                             </div>
@@ -352,11 +364,25 @@ const AuthSettings: NextPage = () => {
                                       type="submit"
                                       className={`${styles.editPronounsButton}`}
                                       onClick={() => {
-                                        submitNewPronouns;
+                                        setPronounsLoading(true);
                                         playSubmitSound();
+                                        submitNewPronouns;
                                       }}
                                     >
-                                      Save
+                                      <div
+                                        className={
+                                          pronounsLoading ? "hidden" : ""
+                                        }
+                                      >
+                                        Save
+                                      </div>
+                                      <div
+                                        className={
+                                          pronounsLoading ? "" : "hidden"
+                                        }
+                                      >
+                                        <Loader />
+                                      </div>
                                     </button>
                                   </form>
                                 </div>
@@ -398,11 +424,21 @@ const AuthSettings: NextPage = () => {
                                       type="submit"
                                       className={`${styles.editBioButton}`}
                                       onClick={() => {
-                                        submitNewBio;
+                                        setBioLoading(true);
                                         playSubmitSound();
+                                        submitNewBio;
                                       }}
                                     >
-                                      Save
+                                      <div
+                                        className={bioLoading ? "hidden" : ""}
+                                      >
+                                        Save
+                                      </div>
+                                      <div
+                                        className={bioLoading ? "" : "hidden"}
+                                      >
+                                        <Loader />
+                                      </div>
                                     </button>
                                   </form>
                                 </div>
@@ -443,11 +479,25 @@ const AuthSettings: NextPage = () => {
                                     <button
                                       className={`${styles.editLocationButton}`}
                                       onClick={() => {
-                                        submitNewLocation;
+                                        setLocationLoading(true);
                                         playSubmitSound();
+                                        submitNewLocation;
                                       }}
                                     >
-                                      Save
+                                      <div
+                                        className={
+                                          locationLoading ? "hidden" : ""
+                                        }
+                                      >
+                                        Save
+                                      </div>
+                                      <div
+                                        className={
+                                          locationLoading ? "" : "hidden"
+                                        }
+                                      >
+                                        <Loader />
+                                      </div>
                                     </button>
                                   </form>
                                 </div>
