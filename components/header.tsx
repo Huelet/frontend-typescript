@@ -22,8 +22,14 @@ export interface HeaderProps {
 }
 
 export const Header = ({ username }: HeaderProps) => {
-  const [playBgSound] = useSound("https://cdn.huelet.net/assets/sounds/Windows%20Background.wav", { volume: 1 });
-  const [playClickSound] = useSound("https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav", { volume: 1 });
+  const [playBgSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Background.wav",
+    { volume: 1 }
+  );
+  const [playClickSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav",
+    { volume: 1 }
+  );
   const [pfp, setPfp] = useState("");
   const [searchModal, toggleSearchModal] = useState(false);
   const getUserData = () => {
@@ -105,14 +111,20 @@ export const Header = ({ username }: HeaderProps) => {
               </div>
             </a>
           </div>
-          <div className="settings--container hover cursor" onClick={() => playClickSound()}>
+          <div
+            className="settings--container hover cursor"
+            onClick={() => playClickSound()}
+          >
             <Link href="/auth/settings" passHref={true}>
               <div className={styles.navIcon}>
                 <Settings fill={"white"} width={64} height={64} />
               </div>
             </Link>
           </div>
-          <div className="avatar--container hover cursor" onClick={() => playClickSound()}>
+          <div
+            className="avatar--container hover cursor"
+            onClick={() => playClickSound()}
+          >
             <Menu
               control={
                 <img
@@ -137,7 +149,7 @@ export const Header = ({ username }: HeaderProps) => {
               <Menu.Item
                 icon={<PaintBrush fill={"white"} />}
                 component={NextLink}
-                href="/auth/view"
+                href="/auth/settings/view"
               >
                 Customization
               </Menu.Item>

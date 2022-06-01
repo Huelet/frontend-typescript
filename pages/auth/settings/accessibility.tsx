@@ -9,6 +9,7 @@ import { Header } from "../../../components/header";
 const Accessibility: NextPage = () => {
   const [loading, setLoading] = useState(true);
   const [cookie, setCookie] = useCookies(["_hltoken"]);
+  const [soundCookie, setSoundCookie] = useCookies(["_hlsound"]);
   const [username, setUsername] = useState("");
 
   /* settings */
@@ -59,7 +60,10 @@ const Accessibility: NextPage = () => {
                   size="md"
                   color="violet"
                   checked={soundsOn}
-                  onChange={(event) => setSoundsOn(event.currentTarget.checked)}
+                  onChange={(event) => {
+                    setSoundsOn(event.currentTarget.checked);
+                    setSoundCookie("_hlsound", event.currentTarget.checked);
+                  }}
                 />
               </div>
             </div>
