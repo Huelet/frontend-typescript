@@ -14,7 +14,6 @@ const AuthSettings: NextPage = () => {
   const [loading, setLoading] = useState(true);
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const [username, setUsername] = useState("");
-  const [pfp, setPfp] = useState("");
   const [bio, setBio] = useState("");
   const [pronouns, setPronouns]: any = useState([]);
   const [location, setLocation] = useState("");
@@ -69,19 +68,6 @@ const AuthSettings: NextPage = () => {
     }
   };
   const getData = async () => {
-    const profileImageData = await fetch(
-      `https://api.huelet.net/auth/pfp?username=${username}`,
-      {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const profileImage = await profileImageData.json();
-    setPfp(profileImage.pfp);
     const bioData = await fetch(
       `https://api.huelet.net/auth/bio?username=${username}`,
       {
@@ -250,13 +236,7 @@ const AuthSettings: NextPage = () => {
                       {loading ? (
                         <Skeleton width={128} height={128} circle={true} />
                       ) : (
-                        <img
-                          src={pfp}
-                          alt="profile image"
-                          width={128}
-                          height={128}
-                          className={`${styles.profileImageInner}`}
-                        />
+                        <Avatar username={username} chonky={true} />
                       )}
                       {loading ? (
                         <Skeleton width={128} height={64} />
@@ -278,13 +258,7 @@ const AuthSettings: NextPage = () => {
                             onClose={() => togglePfpModal(false)}
                           >
                             <div className={`${styles.profileImageUpload}`}>
-                              <img
-                                src={pfp}
-                                alt="profile image"
-                                width={128}
-                                height={128}
-                                className={`${styles.profileImageInner}`}
-                              />
+                              <Avatar username={username} chonky={true} />
                               <form>
                                 <input
                                   type="file"

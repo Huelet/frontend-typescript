@@ -31,18 +31,7 @@ export const Header = ({ username }: HeaderProps) => {
     "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav",
     { volume: 1 }
   );
-  const [pfp, setPfp] = useState("");
   const [searchModal, toggleSearchModal] = useState(false);
-  const getUserData = () => {
-    if (username) {
-      fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setPfp(data.pfp);
-        });
-    }
-  };
-  getUserData();
   return (
     <div className={styles.navContainer}>
       <div className={styles.navBar}>

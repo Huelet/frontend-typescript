@@ -7,12 +7,12 @@ import { useCookies } from "react-cookie";
 import { Location } from "@fdn-ui/icons-react";
 import { Header } from "../../components/header";
 import { Follow } from "../../components/Buttons/follow";
+import { Avatar } from "@mantine/core";
 
 const ViewCreator: NextPage = () => {
   const [loading, setLoading] = useState(true);
   const [hydrinClicked, setHydrinClicked] = useState(false);
   const [header, setHeader] = useState("");
-  const [pfp, setPfp] = useState("");
   const [bio, setBio] = useState("");
   const [pronouns, setPronouns] = useState("");
   const [location, setLocation] = useState("");
@@ -22,19 +22,6 @@ const ViewCreator: NextPage = () => {
   const { username } = router.query;
   const uname = username?.toString().replace("@", "");
   const getData = async () => {
-    const profileImageData = await fetch(
-      `https://api.huelet.net/auth/pfp?username=${uname}`,
-      {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const profileImage = await profileImageData.json();
-    setPfp(profileImage.pfp);
     const bioData = await fetch(
       `https://api.huelet.net/auth/bio?username=${uname}`,
       {
@@ -106,24 +93,7 @@ const ViewCreator: NextPage = () => {
       >
         <div className={`${styles.creatorBodyDetails}`}>
           <div className={`${styles.creatorBodyProfileImage}`}>
-            <ColorExtractor
-              rgb={false}
-              getColors={(colors) => {
-                setImageColor(colors[3]);
-              }}
-            >
-              <img
-                src={
-                  pfp
-                    ? pfp
-                    : "https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
-                }
-                alt="Profile"
-                className={`${styles.creatorBodyProfileImage}`}
-                width={128}
-                height={128}
-              />
-            </ColorExtractor>
+            <Avatar username={uname} chonky={true} />
           </div>
           <div className={`${styles.creatorBodyDetailsText}`}>
             <div className={`${styles.creatorBodyTitle}`}>
