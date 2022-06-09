@@ -16,6 +16,7 @@ import styles from "../styles/components/Header.module.css";
 import { Modal, Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { useSound } from "use-sound";
+import { Avatar } from "./avatar";
 
 export interface HeaderProps {
   username?: string;
@@ -125,19 +126,7 @@ export const Header = ({ username }: HeaderProps) => {
             className="avatar--container hover cursor"
             onClick={() => playClickSound()}
           >
-            <Menu
-              control={
-                <img
-                  className="avatar--image"
-                  src={
-                    pfp
-                      ? pfp
-                      : "https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
-                  }
-                  alt="Profile image"
-                />
-              }
-            >
+            <Menu control={<Avatar username={username} />}>
               <Menu.Label>Your account</Menu.Label>
               <Menu.Item
                 icon={<Settings fill={"white"} />}

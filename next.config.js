@@ -4,7 +4,7 @@ module.exports = {
   compress: true,
   trailingSlash: true,
   images: {
-    domains: ["cdn.huelet.net"],
+    domains: ["cdn.huelet.net", "avatars.hueletusercontent.com"],
     loader: "custom"
   }
 }
