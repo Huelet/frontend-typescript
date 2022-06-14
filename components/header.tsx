@@ -16,7 +16,6 @@ import styles from "../styles/components/Header.module.css";
 import { Modal, Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { useSound } from "use-sound";
-import { Avatar } from "./avatar";
 
 export interface HeaderProps {
   username?: string;
@@ -32,6 +31,16 @@ export const Header = ({ username }: HeaderProps) => {
     { volume: 1 }
   );
   const [searchModal, toggleSearchModal] = useState(false);
+  const [pfp, setPfp] = useState("");
+
+  const getData = async () => {
+    const res = await fetch(
+      `https://api.huelet.net/auth/pfp?username=${username}`
+    );
+    const data = await res.json();
+    setPfp(data.pfp);
+  };
+  getData();
   return (
     <div className={styles.navContainer}>
       <div className={styles.navBar}>
@@ -115,7 +124,16 @@ export const Header = ({ username }: HeaderProps) => {
             className="avatar--container hover cursor"
             onClick={() => playClickSound()}
           >
-            <Menu control={<Avatar username={username} />}>
+            <Menu
+              control={
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={pfp}
+                  alt={`${username}'s profile image`}
+                  className={"avatar avatar--image"}
+                />
+              }
+            >
               <Menu.Label>Your account</Menu.Label>
               <Menu.Item
                 icon={<Settings fill={"white"} />}
