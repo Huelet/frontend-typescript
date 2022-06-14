@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import { Location } from "@fdn-ui/icons-react";
 import { Header } from "../../components/header";
 import { Follow } from "../../components/Buttons/follow";
-import { Avatar } from "@mantine/core";
+import { Avatar } from "../../components/avatar";
 
 const ViewCreator: NextPage = () => {
   const [loading, setLoading] = useState(true);
