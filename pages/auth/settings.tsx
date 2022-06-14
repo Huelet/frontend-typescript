@@ -8,6 +8,7 @@ import { useSound } from "use-sound";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Avatar, BulletList, Upload, Location } from "@fdn-ui/icons-react";
+import { Avatar as AvatarImage } from "../../components/avatar";
 import Loader from "../../components/loader";
 
 const AuthSettings: NextPage = () => {
@@ -236,7 +237,7 @@ const AuthSettings: NextPage = () => {
                       {loading ? (
                         <Skeleton width={128} height={128} circle={true} />
                       ) : (
-                        <Avatar username={username} chonky={true} />
+                        <AvatarImage username={username} chonky={true} />
                       )}
                       {loading ? (
                         <Skeleton width={128} height={64} />
@@ -258,7 +259,7 @@ const AuthSettings: NextPage = () => {
                             onClose={() => togglePfpModal(false)}
                           >
                             <div className={`${styles.profileImageUpload}`}>
-                              <Avatar username={username} chonky={true} />
+                              <AvatarImage username={username} chonky={true} />
                               <form>
                                 <input
                                   type="file"
