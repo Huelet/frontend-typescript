@@ -10,6 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Avatar, BulletList, Upload, Location } from "@fdn-ui/icons-react";
 import { Avatar as AvatarImage } from "../../components/avatar";
 import Loader from "../../components/loader";
+import { Card } from "../../components/card";
 
 const AuthSettings: NextPage = () => {
   const [loading, setLoading] = useState(true);
@@ -223,272 +224,249 @@ const AuthSettings: NextPage = () => {
     <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
       <div id="klausen">
         <Header username={username} />
-        <div className="main-si cursor">
-          <div className="sp-1-eo">
-            <div className="sp-1-io p-5">
-              <div className="mainText">
-                <h2 className={`${styles.mainText}`}>Settings</h2>
-              </div>
-              <div className={styles.divider}></div>
-              <div className={`${styles.profile}`}>
-                <div className={`${styles.profileInner}`}>
-                  <div className={`flex`}>
-                    <div className={`${styles.profileImage}`}>
+        <Card title={"Settings"} full={true}>
+          <div className={`${styles.profile}`}>
+            <div className={`${styles.profileInner}`}>
+              <div className={`flex`}>
+                <div className={`${styles.profileImage}`}>
+                  {loading ? (
+                    <Skeleton width={128} height={128} circle={true} />
+                  ) : (
+                    <AvatarImage username={username} chonky={true} />
+                  )}
+                  {loading ? (
+                    <Skeleton width={128} height={64} />
+                  ) : (
+                    <>
+                      <div
+                        className={`${styles.profileImageUploadIcon}`}
+                        onClick={() => {
+                          togglePfpModal(true);
+                          playClickSound();
+                        }}
+                      >
+                        <div className={`${styles.icon}`}>
+                          <Upload fill={"white"} />
+                        </div>
+                      </div>
+                      <Modal
+                        opened={pfpModal}
+                        onClose={() => togglePfpModal(false)}
+                      >
+                        <div className={`${styles.profileImageUpload}`}>
+                          <AvatarImage username={username} chonky={true} />
+                          <form>
+                            <input
+                              type="file"
+                              name="file"
+                              id="file"
+                              accept="image/*"
+                              onChange={handlePfpChange}
+                              className={`${styles.profileImageUploadInput}`}
+                            />
+                            <label
+                              htmlFor="file"
+                              className={`${styles.profileImageUploadLabel}`}
+                            >
+                              <Upload fill={"white"} />
+                              Choose an image
+                            </label>
+                            <input
+                              type="text"
+                              name="username"
+                              defaultValue={username}
+                              hidden
+                            />
+                            <button
+                              type="submit"
+                              className={`${styles.profileImageUploadButton}`}
+                              onClick={() => {
+                                setPfpUploading(true);
+                                playSubmitSound();
+                                submitNewPfp;
+                              }}
+                            >
+                              <div className={pfpUploading ? "hidden" : ""}>
+                                Upload
+                              </div>
+                              <div className={pfpUploading ? "" : "hidden"}>
+                                <Loader />
+                              </div>
+                            </button>
+                          </form>
+                        </div>
+                      </Modal>
+                    </>
+                  )}
+                </div>
+                <div className={`${styles.profileInfo} ${styles.column}`}>
+                  <h2 className={`${styles.usernameText} ${styles.column}`}>
+                    {loading ? <Skeleton width={256} /> : username}
+                  </h2>
+                  <div className={`${styles.userDetails} ${styles.column}`}>
+                    <div className={`${styles.userDetailsPronouns}`}>
                       {loading ? (
-                        <Skeleton width={128} height={128} circle={true} />
+                        <Skeleton width={256} />
                       ) : (
-                        <AvatarImage username={username} chonky={true} />
-                      )}
-                      {loading ? (
-                        <Skeleton width={128} height={64} />
-                      ) : (
-                        <>
-                          <div
-                            className={`${styles.profileImageUploadIcon}`}
+                        <span>
+                          <span
                             onClick={() => {
-                              togglePfpModal(true);
+                              togglePronounsModal(true);
                               playClickSound();
                             }}
                           >
-                            <div className={`${styles.icon}`}>
-                              <Upload fill={"white"} />
-                            </div>
-                          </div>
+                            <Avatar fill={"black"} />
+                          </span>
                           <Modal
-                            opened={pfpModal}
-                            onClose={() => togglePfpModal(false)}
+                            opened={pronounsModal}
+                            onClose={() => togglePronounsModal(false)}
                           >
-                            <div className={`${styles.profileImageUpload}`}>
-                              <AvatarImage username={username} chonky={true} />
+                            <div className={`${styles.pronouns}`}>
                               <form>
                                 <input
-                                  type="file"
-                                  name="file"
-                                  id="file"
-                                  accept="image/*"
-                                  onChange={handlePfpChange}
-                                  className={`${styles.profileImageUploadInput}`}
-                                />
-                                <label
-                                  htmlFor="file"
-                                  className={`${styles.profileImageUploadLabel}`}
-                                >
-                                  <Upload fill={"white"} />
-                                  Choose an image
-                                </label>
-                                <input
                                   type="text"
-                                  name="username"
-                                  defaultValue={username}
-                                  hidden
+                                  name="pronouns"
+                                  placeholder="Pronouns"
+                                  onChange={handlePronounsChange}
+                                  className={`${styles.editPronounsInput}`}
                                 />
                                 <button
                                   type="submit"
-                                  className={`${styles.profileImageUploadButton}`}
+                                  className={`${styles.editPronounsButton}`}
                                   onClick={() => {
-                                    setPfpUploading(true);
+                                    setPronounsLoading(true);
                                     playSubmitSound();
-                                    submitNewPfp;
+                                    submitNewPronouns;
                                   }}
                                 >
-                                  <div className={pfpUploading ? "hidden" : ""}>
-                                    Upload
+                                  <div
+                                    className={pronounsLoading ? "hidden" : ""}
+                                  >
+                                    Save
                                   </div>
-                                  <div className={pfpUploading ? "" : "hidden"}>
+                                  <div
+                                    className={pronounsLoading ? "" : "hidden"}
+                                  >
                                     <Loader />
                                   </div>
                                 </button>
                               </form>
                             </div>
                           </Modal>
-                        </>
+                          <p>{pronouns.join("/")}</p>
+                        </span>
                       )}
                     </div>
-                    <div className={`${styles.profileInfo} ${styles.column}`}>
-                      <h2 className={`${styles.usernameText} ${styles.column}`}>
-                        {loading ? <Skeleton width={256} /> : username}
-                      </h2>
-                      <div className={`${styles.userDetails} ${styles.column}`}>
-                        <div className={`${styles.userDetailsPronouns}`}>
-                          {loading ? (
-                            <Skeleton width={256} />
-                          ) : (
-                            <span>
-                              <span
-                                onClick={() => {
-                                  togglePronounsModal(true);
-                                  playClickSound();
-                                }}
+                    <div className={`${styles.userDetailsBio}`}>
+                      {loading ? (
+                        <Skeleton width={256} />
+                      ) : (
+                        <span>
+                          <span
+                            onClick={() => {
+                              toggleBioModal(true);
+                              playClickSound();
+                            }}
+                          >
+                            <BulletList fill={"black"} />
+                          </span>
+                          <Modal
+                            opened={bioModal}
+                            onClose={() => toggleBioModal(false)}
+                          >
+                            <div className={`${styles.editBio}`}>
+                              <form id="editBioForm" onSubmit={submitNewBio}>
+                                <input
+                                  type="text"
+                                  name="bio"
+                                  placeholder="Bio"
+                                  onChange={handleBioChange}
+                                  className={`${styles.editBioInput}`}
+                                />
+                                <button
+                                  type="submit"
+                                  className={`${styles.editBioButton}`}
+                                  onClick={() => {
+                                    setBioLoading(true);
+                                    playSubmitSound();
+                                    submitNewBio;
+                                  }}
+                                >
+                                  <div className={bioLoading ? "hidden" : ""}>
+                                    Save
+                                  </div>
+                                  <div className={bioLoading ? "" : "hidden"}>
+                                    <Loader />
+                                  </div>
+                                </button>
+                              </form>
+                            </div>
+                          </Modal>
+                          <p>{bio}</p>
+                        </span>
+                      )}
+                    </div>
+                    <div className={`${styles.userDetailsLocation}`}>
+                      {loading ? (
+                        <Skeleton width={256} />
+                      ) : (
+                        <span>
+                          <span
+                            onClick={() => {
+                              toggleLocationModal(true);
+                              playClickSound();
+                            }}
+                          >
+                            <Location fill={"black"} />
+                          </span>
+                          <Modal
+                            opened={locationModal}
+                            onClose={() => toggleLocationModal(false)}
+                          >
+                            <div className={`${styles.editLocation}`}>
+                              <form
+                                id="editLocationForm"
+                                onSubmit={submitNewLocation}
                               >
-                                <Avatar fill={"black"} />
-                              </span>
-                              <Modal
-                                opened={pronounsModal}
-                                onClose={() => togglePronounsModal(false)}
-                              >
-                                <div className={`${styles.pronouns}`}>
-                                  <form>
-                                    <input
-                                      type="text"
-                                      name="pronouns"
-                                      placeholder="Pronouns"
-                                      onChange={handlePronounsChange}
-                                      className={`${styles.editPronounsInput}`}
-                                    />
-                                    <button
-                                      type="submit"
-                                      className={`${styles.editPronounsButton}`}
-                                      onClick={() => {
-                                        setPronounsLoading(true);
-                                        playSubmitSound();
-                                        submitNewPronouns;
-                                      }}
-                                    >
-                                      <div
-                                        className={
-                                          pronounsLoading ? "hidden" : ""
-                                        }
-                                      >
-                                        Save
-                                      </div>
-                                      <div
-                                        className={
-                                          pronounsLoading ? "" : "hidden"
-                                        }
-                                      >
-                                        <Loader />
-                                      </div>
-                                    </button>
-                                  </form>
-                                </div>
-                              </Modal>
-                              <p>{pronouns.join("/")}</p>
-                            </span>
-                          )}
-                        </div>
-                        <div className={`${styles.userDetailsBio}`}>
-                          {loading ? (
-                            <Skeleton width={256} />
-                          ) : (
-                            <span>
-                              <span
-                                onClick={() => {
-                                  toggleBioModal(true);
-                                  playClickSound();
-                                }}
-                              >
-                                <BulletList fill={"black"} />
-                              </span>
-                              <Modal
-                                opened={bioModal}
-                                onClose={() => toggleBioModal(false)}
-                              >
-                                <div className={`${styles.editBio}`}>
-                                  <form
-                                    id="editBioForm"
-                                    onSubmit={submitNewBio}
+                                <input
+                                  type="text"
+                                  name="location"
+                                  placeholder="Location"
+                                  onChange={handleLocationChange}
+                                  className={`${styles.editLocationInput}`}
+                                />
+                                <button
+                                  className={`${styles.editLocationButton}`}
+                                  onClick={() => {
+                                    setLocationLoading(true);
+                                    playSubmitSound();
+                                    submitNewLocation;
+                                  }}
+                                >
+                                  <div
+                                    className={locationLoading ? "hidden" : ""}
                                   >
-                                    <input
-                                      type="text"
-                                      name="bio"
-                                      placeholder="Bio"
-                                      onChange={handleBioChange}
-                                      className={`${styles.editBioInput}`}
-                                    />
-                                    <button
-                                      type="submit"
-                                      className={`${styles.editBioButton}`}
-                                      onClick={() => {
-                                        setBioLoading(true);
-                                        playSubmitSound();
-                                        submitNewBio;
-                                      }}
-                                    >
-                                      <div
-                                        className={bioLoading ? "hidden" : ""}
-                                      >
-                                        Save
-                                      </div>
-                                      <div
-                                        className={bioLoading ? "" : "hidden"}
-                                      >
-                                        <Loader />
-                                      </div>
-                                    </button>
-                                  </form>
-                                </div>
-                              </Modal>
-                              <p>{bio}</p>
-                            </span>
-                          )}
-                        </div>
-                        <div className={`${styles.userDetailsLocation}`}>
-                          {loading ? (
-                            <Skeleton width={256} />
-                          ) : (
-                            <span>
-                              <span
-                                onClick={() => {
-                                  toggleLocationModal(true);
-                                  playClickSound();
-                                }}
-                              >
-                                <Location fill={"black"} />
-                              </span>
-                              <Modal
-                                opened={locationModal}
-                                onClose={() => toggleLocationModal(false)}
-                              >
-                                <div className={`${styles.editLocation}`}>
-                                  <form
-                                    id="editLocationForm"
-                                    onSubmit={submitNewLocation}
+                                    Save
+                                  </div>
+                                  <div
+                                    className={locationLoading ? "" : "hidden"}
                                   >
-                                    <input
-                                      type="text"
-                                      name="location"
-                                      placeholder="Location"
-                                      onChange={handleLocationChange}
-                                      className={`${styles.editLocationInput}`}
-                                    />
-                                    <button
-                                      className={`${styles.editLocationButton}`}
-                                      onClick={() => {
-                                        setLocationLoading(true);
-                                        playSubmitSound();
-                                        submitNewLocation;
-                                      }}
-                                    >
-                                      <div
-                                        className={
-                                          locationLoading ? "hidden" : ""
-                                        }
-                                      >
-                                        Save
-                                      </div>
-                                      <div
-                                        className={
-                                          locationLoading ? "" : "hidden"
-                                        }
-                                      >
-                                        <Loader />
-                                      </div>
-                                    </button>
-                                  </form>
-                                </div>
-                              </Modal>
-                              <p>{location}</p>
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                                    <Loader />
+                                  </div>
+                                </button>
+                              </form>
+                            </div>
+                          </Modal>
+                          <p>{location}</p>
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     </SkeletonTheme>
   );
