@@ -4,6 +4,7 @@ import Script from "next/script";
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import {
   Player,
   ControlBar,
@@ -263,7 +264,7 @@ const ViewVideo: NextPage = () => {
               <Player
                 src={url}
                 playsInline
-                fluid={false}
+                fluid={isMobile ? true : false}
                 width={830}
                 height={400}
                 className={styles.videoPlayer}

@@ -8,6 +8,10 @@
     padding-top: 56% !important;
 }
 
+.videoDetails {
+    padding: 1.3em 4.3em;
+}
+
 .videoDetailsTitle {
     font-size: 3em;
 }
@@ -21,9 +25,7 @@
     font-size: 1em;
 }
 
-.videoDetails {
-    padding: 1.3em 4.3em;
-}
+
 
 .videoDetailsOptions {
     display: flex;
@@ -218,4 +220,15 @@
 
 .videoAttributesTitle {
     font-size: 2em;
+}
+
+@media screen and (max-width: 600px) {
+    .videoWrapper {
+        width: 100%;
+        height: auto;
+        padding: 1em 1em 2em 2em;
+    }
+    .videoDetails {
+        padding: 0 2em;
+    }
 }
