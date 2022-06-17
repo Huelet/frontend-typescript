@@ -2,9 +2,10 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
-import { Popover } from "@mantine/core";
+import { Modal, Popover } from "@mantine/core";
 import { useCookies } from "react-cookie";
 import { Add, Info } from "@fdn-ui/icons-react";
+import { Card } from "../../components/card";
 
 const AuthUp: NextPage = () => {
   const [username, setUsername] = useState("");
@@ -13,6 +14,8 @@ const AuthUp: NextPage = () => {
   const [pwgResponse, setPwgResponse] = useState("");
   const [accessCodeModal, toggleAccessCodeModal] = useState(false);
   const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
+  /* modals */
+  const [pwgModal, togglePwgModal] = useState(false);
   const handleUsernameChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -66,117 +69,108 @@ const AuthUp: NextPage = () => {
   };
   return (
     <div id="klausen">
-      <div className="main-si">
-        <div className="sp-1-eo">
-          <div className="sp-1-io p-5">
-            <div className={styles.mainText}>
-              <h2 className="klausen-title">Sign up for Huelet!</h2>
-            </div>
-            <div className={styles.mainText}>
-              <p className="klausen-subtitle">
-                We only need a username and password{" "}
-              </p>
-            </div>
-            <form id="form" onSubmit={handleSubmit}>
-              <input
-                className={styles.input}
-                id="username"
-                type="div"
-                name="username"
-                placeholder="Username"
-                onChange={handleUsernameChange}
-                value={username}
-              />
-              <div className="spacer-sm"></div>
-              <div className="pwd-input flex">
-                <input
-                  className={styles.input}
-                  id="password"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  onChange={handlePasswordChange}
-                  value={password}
-                />
-                <div className="spacer-sm"></div>
-                <a href="#pwg-modal">
-                  <div className={`${styles.pwgTrigger} cursor`}>
-                    <Add fill={"white"} />
-                  </div>
-                </a>
-              </div>
-              <div className="spacer-sm"></div>
-              <div className="flex">
-                <input
-                  className={styles.input}
-                  id="accessCode"
-                  type="div"
-                  name="accessCode"
-                  placeholder="Alpha code"
-                  onChange={handleAccessCodeChange}
-                  value={accessCode}
-                />
-                <div
-                  className={"cursor"}
-                  onClick={() => toggleAccessCodeModal(true)}
-                >
-                  <Info fill={"white"} />
-                </div>
-                <Popover
-                  opened={accessCodeModal}
-                  onClose={() => toggleAccessCodeModal(false)}
-                  width={260}
-                  position="bottom"
-                  withArrow
-                  target={undefined}
-                >
-                  We will have sent you a DM with this code. If you don&apos;t
-                  have it, please let us know.
-                </Popover>
-              </div>
-              <div className="spacer"></div>
-              <button className={"button-primary"} id="submit" type="submit">
-                Sign up
-              </button>
-              <div id="error-box"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div className={styles.pwgModal} id="pwg-modal">
-        <a href="#">
-          <div className={styles.pwgModalClose}>
-            <Info fill={"white"} />
-          </div>
-        </a>
-        <div className={styles.pwgModalContent}>
-          <div className="sp-1-eo">
-            <div className="sp-1-io p-5">
-              <div className={styles.mainText}>
-                <h2>Generate a password</h2>
-              </div>
-              <div className={styles.mainText}>
-                <p className="pwg-subtitle">
-                  Generate a password for your account
-                </p>
-              </div>
-              <button
-                className={styles.submit}
-                id="pwg-submit"
-                onClick={getRandomPassword}
+      <Card
+        title={"Sign up"}
+        subtitle={"We only need a username and password"}
+        full={true}
+      >
+        <form id="form" onSubmit={handleSubmit} className={styles.form}>
+          <input
+            className={styles.input}
+            id="username"
+            type="div"
+            name="username"
+            placeholder="Username"
+            onChange={handleUsernameChange}
+            value={username}
+          />
+          <div className="spacer-sm"></div>
+          <div className="pwd-input flex">
+            <input
+              className={styles.input}
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handlePasswordChange}
+              value={password}
+            />
+            <div className="spacer-sm"></div>
+            <a href="#pwg-modal">
+              <div
+                className={`${styles.pwgTrigger} cursor`}
+                onClick={() => togglePwgModal(true)}
               >
-                Generate
-              </button>
-              <div className="spacer.sm"></div>
-              <div className="sp-1-io">
-                <div className="p-5" id="pwg-response">
-                  <div className={styles.mainText}>{pwgResponse}</div>
-                </div>
+                <Add fill={"white"} />
               </div>
-            </div>
+
+              <Modal opened={pwgModal} onClose={() => togglePwgModal(false)}>
+                <div className={styles.pwgModalContent}>
+                  <div className="sp-1-eo">
+                    <div className="sp-1-io p-5">
+                      <div className={styles.mainText}>
+                        <h2>Generate a password</h2>
+                      </div>
+                      <div className={styles.mainText}>
+                        <p className="pwg-subtitle">
+                          Generate a password for your account
+                        </p>
+                      </div>
+                      <button
+                        className={"button-primary"}
+                        id="pwg-submit"
+                        onClick={getRandomPassword}
+                      >
+                        Generate
+                      </button>
+                      <div className="spacer.sm"></div>
+                      <div className="sp-1-io">
+                        <div className="p-5" id="pwg-response">
+                          <div className={styles.mainText}>{pwgResponse}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+            </a>
           </div>
-        </div>
-      </div>
+          <div className="spacer-sm"></div>
+          <div className="flex">
+            <input
+              className={styles.input}
+              id="accessCode"
+              type="div"
+              name="accessCode"
+              placeholder="Alpha code"
+              onChange={handleAccessCodeChange}
+              value={accessCode}
+            />
+            <div
+              className={"cursor"}
+              onClick={() => toggleAccessCodeModal(true)}
+            >
+              <Info fill={"white"} />
+            </div>
+            <Popover
+              opened={accessCodeModal}
+              onClose={() => toggleAccessCodeModal(false)}
+              width={260}
+              position="bottom"
+              withArrow
+              target={undefined}
+            >
+              We will have sent you a DM with this code. If you don&apos;t have
+              it, please let us know.
+            </Popover>
+          </div>
+          <div className="spacer"></div>
+          <button className={"button-primary"} id="submit" type="submit">
+            Sign up
+          </button>
+          <div id="error-box"></div>
+        </form>
+      </Card>
     </div>
   );
 };
