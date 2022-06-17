@@ -3,7 +3,7 @@ import Head from "next/head";
 import Script from "next/script";
 import Link from "next/link";
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Player,
   ControlBar,
@@ -68,34 +68,46 @@ const ViewVideo: NextPage = () => {
     { volume: 1 }
   );
   const { vuid } = router.query;
-  const getUserData = () => {
-    fetch(`https://api.huelet.net/auth/token`, {
-      headers: {
-        Authorization: `Bearer ${cookie._hltoken}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUsername(data.username);
-      });
-  };
-  function getData() {
-    fetch(`https://api.huelet.net/videos/${vuid}`)
-      .then((resp: Response) => resp.json())
-      .then((data: any) => {
-        setUrl(data.vurl);
-        setTitle(data.vtitle);
-        // date tends to have issues so i added a catch, please do not edit this!
-        setUploadedDate(data.vdata || "undefined");
-        setViews(data.vviews);
-        setUpvotes(data.vclaps);
-        setDownvotes(data.vcraps);
-        setShares(data.vshares);
-        setAuthorId(data.vauthor);
-        setComments(data.vcomments || ["no comments yet"]);
-        setLoading(false);
-      });
-  }
+  useEffect(() => {
+    if (loading) {
+      fetch(`https://api.huelet.net/auth/token`, {
+        headers: {
+          Authorization: `Bearer ${cookie._hltoken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUsername(data.username);
+        });
+      fetch(`https://api.huelet.net/videos/${vuid}`)
+        .then((resp: Response) => resp.json())
+        .then((data: any) => {
+          setUrl(data.vurl);
+          setTitle(data.vtitle);
+          // date tends to have issues so i added a catch, please do not edit this!
+          setUploadedDate(data.vdata || "undefined");
+          setViews(data.vviews);
+          setUpvotes(data.vclaps);
+          setDownvotes(data.vcraps);
+          setShares(data.vshares);
+          setAuthorId(data.vauthor);
+          setComments(data.vcomments || ["no comments yet"]);
+          setLoading(false);
+
+          fetch(`https://api.huelet.net/auth/user?uid=${authorId}`)
+            .then((resp: Response) => resp.json())
+            .then((data: any) => {
+              if (!data.success) {
+                setAuthorUsername("error");
+              }
+              setAuthorUsername(data.data);
+              console.log(data.username);
+            });
+        });
+    } else {
+      null;
+    }
+  });
   const addClap = async () => {
     const resp = await fetch(
       `https://api.huelet.net/videos/interact/upvote/${vuid}`,
@@ -190,12 +202,6 @@ const ViewVideo: NextPage = () => {
       window.location.reload();
     }
   };
-  if (loading === true) {
-    getUserData();
-    getData();
-  } else {
-    null;
-  }
   console.log(comments.map((comment: any) => comment[0].content));
   return (
     <div id="klausen">
