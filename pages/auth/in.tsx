@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import { useCookies } from "react-cookie";
+import { Card } from "../../components/card";
 
 const AuthIn: NextPage = () => {
   const [resp, setResp] = useState<string>("");
@@ -50,47 +51,39 @@ const AuthIn: NextPage = () => {
   };
   return (
     <div id="klausen">
-      <div className="main-si">
-        <div className="sp-1-eo">
-          <div className="sp-1-io p-5">
-            <div className={styles.mainText}>
-              <h2 className="klausen-title">Sign into Huelet</h2>
-            </div>
-
-            <form id="form" onSubmit={handleSubmit}>
-              <input
-                className={styles.input}
-                id="username"
-                type="div"
-                name="username"
-                placeholder="Username"
-                onChange={handleUsernameChange}
-                value={username}
-              />
-              <div className="spacer-sm"></div>
-              <div className="pwd-input flex">
-                <input
-                  className={styles.input}
-                  id="password"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  onChange={handlePasswordChange}
-                  value={password}
-                />
-                <div className="spacer-sm"></div>
-              </div>
-              <div className="spacer"></div>
-              <button className={"button-primary"} id="submit" type="submit">
-                Sign In
-              </button>
-              <div className={"error-box sp-1-io"}>
-                <p className="error-text">{resp}</p>
-              </div>
-            </form>
+      <Card title="Sign in" full={true}>
+        <form id="form" onSubmit={handleSubmit} className={styles.form}>
+          <input
+            className={styles.input}
+            id="username"
+            type="div"
+            name="username"
+            placeholder="Username"
+            onChange={handleUsernameChange}
+            value={username}
+          />
+          <div className="spacer-sm"></div>
+          <div className="pwd-input flex">
+            <input
+              className={styles.input}
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handlePasswordChange}
+              value={password}
+            />
+            <div className="spacer-sm"></div>
           </div>
-        </div>
-      </div>
+          <div className="spacer"></div>
+          <button className={"button-primary"} id="submit" type="submit">
+            Sign In
+          </button>
+          <div className={"error-box sp-1-io"}>
+            <p className="error-text">{resp}</p>
+          </div>
+        </form>
+      </Card>
     </div>
   );
 };
