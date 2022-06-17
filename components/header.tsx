@@ -11,7 +11,7 @@ import {
   Subtitles,
   VideoCamera,
 } from "@fdn-ui/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/components/Header.module.css";
 import { Modal, Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
@@ -32,15 +32,17 @@ export const Header = ({ username }: HeaderProps) => {
   );
   const [searchModal, toggleSearchModal] = useState(false);
   const [pfp, setPfp] = useState("");
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetch(
+        `https://api.huelet.net/auth/pfp?username=${username}`
+      );
+      const data = await res.json();
+      setPfp(data.pfp);
+    };
 
-  const getData = async () => {
-    const res = await fetch(
-      `https://api.huelet.net/auth/pfp?username=${username}`
-    );
-    const data = await res.json();
-    setPfp(data.pfp);
-  };
-  getData();
+    getData();
+  });
   return (
     <div className={styles.navContainer}>
       <div className={styles.navBar}>
