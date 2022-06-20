@@ -203,7 +203,7 @@ const ViewVideo: NextPage = () => {
       window.location.reload();
     }
   };
-  console.log(comments.map((comment: any) => comment[0].content));
+  console.log(comments);
   return (
     <div id="klausen">
       <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
@@ -484,7 +484,7 @@ const ViewVideo: NextPage = () => {
                 <div
                   className={`${styles.videoCommentsBoxSubmitButton}`}
                   onClick={() => {
-                    submitComment;
+                    submitComment();
                     playSubmitSound();
                   }}
                 >
@@ -561,13 +561,22 @@ const ViewVideo: NextPage = () => {
                 <Skeleton width={870} height={50} />
               ) : (
                 <div className={`${styles.videoCommentsList}`}>
-                  <div
+                  <p
                     dangerouslySetInnerHTML={{
-                      __html: comments.map(
-                        (comment: any) => comment[0].content
-                      ),
+                      __html: comments.map(({
+                        content,
+                        id,
+                        upvotes,
+                        downvotes,
+                        commentPublished,
+                        author,
+                      }) => {
+                        return (
+                          <p key={content}>{content}</p>
+                        )
+                      }),
                     }}
-                  ></div>
+                  ></p>
                 </div>
               )}
             </div>

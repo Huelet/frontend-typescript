@@ -7,6 +7,7 @@ import styles from "../styles/ExplorePage.module.css";
 import { useCookies } from "react-cookie";
 import { Header } from "../components/header";
 import { Modal } from "../components/modal";
+import { VideoCard } from "../components/video-card";
 
 const Explore: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
@@ -120,7 +121,9 @@ const Explore: NextPage = () => {
         </div>
         <div className={styles.exploreVideoList}>
           <h2 className={styles.exploreVideoListText}>Today&apos;s videos</h2>
-          <div className={styles.videoList}>{todayVideos}</div>
+          <div className={styles.videoList}>
+            <VideoCard vuid={"x181c2etzrzqvd4o"} />
+          </div>
         </div>
       </div>
     </div>

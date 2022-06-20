@@ -24,7 +24,7 @@
     "@milkdown/prose": "^6.1.3",
     "@milkdown/react": "^6.1.3",
     "@milkdown/theme-nord": "^6.1.3",
-    "axios": "^0.26.1",
+    "axios": "^0.27.2",
     "huelet-video-react": "^0.1.0",
     "next": "12.1.0",
     "react": "17.0.2",
