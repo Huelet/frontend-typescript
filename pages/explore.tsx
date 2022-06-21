@@ -149,6 +149,7 @@ const Explore: NextPage = () => {
           <h2 className={styles.exploreVideoListText}>Today&apos;s videos</h2>
           <div className={styles.videoList}>
             <VideoCard vuid={"x181c2etzrzqvd4o"} />
+            <VideoCard vuid={"15xqiownj1672fjysg"} />
           </div>
         </div>
       </div>
