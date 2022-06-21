@@ -24,6 +24,13 @@
   text-align: center;
 }
 
+.exploreVideoListItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+
 .hover:hover {
   background-color: var(--hoverColor);
 }
