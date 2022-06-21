@@ -7,6 +7,11 @@
   flex-direction: row
 }
 
+.exploreWelcomeText {
+  display: flex;
+  flex-direction: column;
+}
+
 .exploreVideoList {
   display: flex;
   flex-direction: column;

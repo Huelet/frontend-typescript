@@ -8,6 +8,7 @@ import { useCookies } from "react-cookie";
 import { Header } from "../components/header";
 import { Modal } from "../components/modal";
 import { VideoCard } from "../components/video-card";
+import axios from "axios";
 
 const Explore: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
@@ -15,6 +16,8 @@ const Explore: NextPage = () => {
   const [todayVideos, setTodayVideos] = useState([]);
   const [timesClicked, setTimesClicked] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [weather, setWeather] = useState("");
+  const [location, setLocation] = useState("");
   const getUsername = () => {
     fetch("https://api.huelet.net/auth/token", {
       headers: {
@@ -32,6 +35,18 @@ const Explore: NextPage = () => {
     let d = new Date(Date.now());
     return d.getHours() <= 12 ? "Morning" : "Afternoon";
   };
+  useEffect(() => {
+    const getLocation = async () => {
+      const locationData = await axios.get("https://ipapi.co/json");
+      const weatherData = await axios.get(
+        `https://api.weatherapi.com/v1/current.json?key=1e9c6dd478af4f6fa8205430222106&q=${locationData.data.city},%20${locationData.data.region}&aqi=no`
+      );
+      console.log(weatherData.data.current.condition.text);
+      setLocation(`${locationData.data.city}, ${locationData.data.region}`);
+      setWeather(weatherData.data.current.condition.text);
+    };
+    getLocation();
+  });
   useEffect(() => {
     if (timesClicked >= 10) {
       setIsOpen(true);
@@ -102,8 +117,8 @@ const Explore: NextPage = () => {
           <img
             src="https://cdn.huelet.net/assets/logo.png"
             alt="Huelet logo"
-            width={32}
-            height={32}
+            width={64}
+            height={64}
             className={`${isOpen ? "hidden" : ""}`}
           />
           <div>
@@ -118,7 +133,12 @@ const Explore: NextPage = () => {
               />
             </video>
           </div>
-          <h2>Good {getDate()}!</h2>
+          <div className={styles.exploreWelcomeText}>
+            <h2>Good {getDate()}!</h2>
+            <h2>
+              It&apos;s {weather} in {location}
+            </h2>
+          </div>
         </div>
         <div className={styles.mainText}>
           <h2 className={styles.mainText}>
