@@ -32,8 +32,6 @@ export const VideoCard = ({
     const getData = async () => {
       let resp = await axios.get(`https://api.huelet.net/videos/${vuid}`);
       console.log(resp.data);
-      resp.data.vimg =
-        "https://videos.cdn.huelet.net/videoasset-10n3ip7xyvj53eyn0-1647063696/FMPI_05X0AkTWtE.jpeg?sv=2020-02-10&ss=b&srt=sco&sp=r&se=3000-06-27T09:40:10Z&st=2021-06-27T01:40:10Z&sip=0.0.0.0-255.255.255.255&spr=https&sig=LDOCpb7z9CSWk2GkFNlalqVWOhdwmwn2pSBWbSBnVtM%3D";
       setVideo(resp.data);
       // lookup creator
       const creatorResp = await axios.get(
