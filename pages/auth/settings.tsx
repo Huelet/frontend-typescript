@@ -315,7 +315,7 @@ const AuthSettings: NextPage = () => {
                               playClickSound();
                             }}
                           >
-                            <Avatar fill={"black"} />
+                            <Avatar fill={"black"} className={"cursor"} />
                           </span>
                           <Modal
                             opened={pronounsModal}
@@ -368,7 +368,7 @@ const AuthSettings: NextPage = () => {
                               playClickSound();
                             }}
                           >
-                            <BulletList fill={"black"} />
+                            <BulletList fill={"black"} className={"cursor"} />
                           </span>
                           <Modal
                             opened={bioModal}
@@ -417,7 +417,7 @@ const AuthSettings: NextPage = () => {
                               playClickSound();
                             }}
                           >
-                            <Location fill={"black"} />
+                            <Location fill={"black"} className={"cursor"} />
                           </span>
                           <Modal
                             opened={locationModal}
