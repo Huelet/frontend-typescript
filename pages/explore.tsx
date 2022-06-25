@@ -47,11 +47,6 @@ const Explore: NextPage = () => {
     };
     getLocation();
   });
-  useEffect(() => {
-    if (timesClicked >= 10) {
-      setIsOpen(true);
-    }
-  }, [timesClicked]);
   return (
     <div id="klausen">
       <Head>
