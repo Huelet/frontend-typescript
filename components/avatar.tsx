@@ -12,7 +12,7 @@ import {
   Subtitles,
   VideoCamera,
 } from "@fdn-ui/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSound } from "use-sound";
 
 export interface AvatarProps {
@@ -28,16 +28,18 @@ export const Avatar = ({ username, chonky, link, children }: AvatarProps) => {
     { volume: 1 }
   );
   const [pfp, setPfp] = useState<string>("");
-  const getUserData = () => {
-    if (username) {
-      fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setPfp(data.pfp);
-        });
-    }
-  };
-  getUserData();
+  useEffect(() => {
+    const getUserData = () => {
+      if (username) {
+        fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
+          .then((res) => res.json())
+          .then((data) => {
+            setPfp(data.pfp);
+          });
+      }
+    };
+    getUserData();
+  }, [username]);
   return (
     <div className="avatar--container">
       {pfp ? (
