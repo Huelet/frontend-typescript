@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import styles from "../../styles/Settings.module.css";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Header } from "../../components/header";
 import { Modal } from "@mantine/core";
@@ -47,71 +47,79 @@ const AuthSettings: NextPage = () => {
     "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Insert.wav",
     { volume: 1 }
   );
-  const checkCookie = () => {
-    const token = cookie._hltoken;
-    if (token) {
-      fetch("https://api.huelet.net/auth/token", {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.response === "Success!") {
-            setUsername(res.username);
-          } else {
-            console.log("error: ", res);
-          }
-        });
-    }
-  };
-  const getData = async () => {
-    const bioData = await fetch(
-      `https://api.huelet.net/auth/bio?username=${username}`,
-      {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  useEffect(() => {
+    const checkCookie = () => {
+      const token = cookie._hltoken;
+      if (token) {
+        fetch("https://api.huelet.net/auth/token", {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.response === "Success!") {
+              setUsername(res.username);
+            } else {
+              console.log("error: ", res);
+            }
+          });
       }
-    );
-    const bioDataJSON = await bioData.json();
-    setBio(bioDataJSON.bio);
-    const pronounData = await fetch(
-      `https://api.huelet.net/auth/pronouns?username=${username}`,
-      {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const pronounDataJSON = await pronounData.json();
-    setPronouns(pronounDataJSON.pronouns || []);
-    const locationData = await fetch(
-      `https://api.huelet.net/auth/location?username=${username}`,
-      {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const locationDataJSON = await locationData.json();
-    setLocation(locationDataJSON.location);
+    };
+    const getData = async () => {
+      const bioData = await fetch(
+        `https://api.huelet.net/auth/bio?username=${username}`,
+        {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const bioDataJSON = await bioData.json();
+      setBio(bioDataJSON.bio);
+      const pronounData = await fetch(
+        `https://api.huelet.net/auth/pronouns?username=${username}`,
+        {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const pronounDataJSON = await pronounData.json();
+      setPronouns(pronounDataJSON.pronouns || []);
+      const locationData = await fetch(
+        `https://api.huelet.net/auth/location?username=${username}`,
+        {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const locationDataJSON = await locationData.json();
+      setLocation(locationDataJSON.location);
 
-    setLoading(false);
-  };
+      setLoading(false);
+    };
+    if (loading === true) {
+      checkCookie();
+      getData();
+    } else {
+      null;
+    }
+  }, []);
   const handleBioChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -214,12 +222,6 @@ const AuthSettings: NextPage = () => {
     });
     window.location.reload();
   };
-  if (loading === true) {
-    checkCookie();
-    getData();
-  } else {
-    null;
-  }
   return (
     <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
       <div id="klausen">
