@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import styles from "../../styles/Creator.module.css";
-import { useState } from "react";
-import { ColorExtractor } from "react-color-extractor";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Location } from "@fdn-ui/icons-react";
 import { Header } from "../../components/header";
@@ -11,64 +10,60 @@ import { Avatar } from "../../components/avatar";
 
 const ViewCreator: NextPage = () => {
   const [loading, setLoading] = useState(true);
-  const [hydrinClicked, setHydrinClicked] = useState(false);
   const [header, setHeader] = useState("");
+  const [pfp, setPfp] = useState("");
   const [bio, setBio] = useState("");
-  const [pronouns, setPronouns] = useState("");
+  const [pronouns, setPronouns] = useState([]);
   const [location, setLocation] = useState("");
-  const [hydrinDot, setHydrinDot] = useState("");
-  const [imageColor, setImageColor] = useState("");
   const router = useRouter();
   const { username } = router.query;
   const uname = username?.toString().replace("@", "");
-  const getData = async () => {
-    const bioData = await fetch(
-      `https://api.huelet.net/auth/bio?username=${uname}`,
-      {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const bioDataJSON = await bioData.json();
-    setBio(bioDataJSON.bio);
-    const pronounData = await fetch(
-      `https://api.huelet.net/auth/pronouns?username=${uname}`,
-      {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const pronounDataJSON = await pronounData.json();
-    setPronouns(pronounDataJSON.pronouns);
-    const locationData = await fetch(
-      `https://api.huelet.net/auth/location?username=${uname}`,
-      {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const locationDataJSON = await locationData.json();
-    setLocation(locationDataJSON.location);
+  useEffect(() => {
+    const getData = async () => {
+      const bioData = await fetch(
+        `https://api.huelet.net/auth/bio?username=${uname}`,
+        {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const bioDataJSON = await bioData.json();
+      setBio(bioDataJSON.bio);
+      const pronounData = await fetch(
+        `https://api.huelet.net/auth/pronouns?username=${uname}`,
+        {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const pronounDataJSON = await pronounData.json();
+      setPronouns(pronounDataJSON.pronouns);
+      const locationData = await fetch(
+        `https://api.huelet.net/auth/location?username=${uname}`,
+        {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const locationDataJSON = await locationData.json();
+      setLocation(locationDataJSON.location);
 
-    setLoading(false);
-  };
-  if (loading === true) {
+      setLoading(false);
+    };
     getData();
-  } else {
-    null;
-  }
+  }, []);
   return (
     <div id="klausen">
       <Header username="" />
@@ -84,11 +79,10 @@ const ViewCreator: NextPage = () => {
         />
       </div>
       <div
-        className={`${styles.creatorBody} ${loading ? "hidden" : ""}`}
+        className={`${styles.creatorBody}`}
         style={{
-          boxShadow: `0px -120px 120px 0px ${
-            imageColor ? imageColor : "#1ed760"
-          } !important`,
+          // TODO: make this dynamic
+          boxShadow: `0px -120px 120px 0px #1ed760 !important`,
         }}
       >
         <div className={`${styles.creatorBodyDetails}`}>
@@ -106,7 +100,7 @@ const ViewCreator: NextPage = () => {
                 <p>{bio}</p>
               </div>
               <div className={`${styles.creatorBodyBioPronouns}`}>
-                <p>{pronouns}</p>
+                <p>{pronouns.join("/")}</p>
               </div>
               <div className={`${styles.creatorBodyBioLocation}`}>
                 <Location fill={"white"} />
@@ -117,21 +111,6 @@ const ViewCreator: NextPage = () => {
         </div>
         <div></div>
         <div className={`${styles.creatorBodySocials}`}>
-          <div className={`${styles.creatorBodySocialsItems}`}>
-            {hydrinDot ? (
-              <a href={`https://hydr.in/${hydrinDot}`}>
-                <img
-                  src="https://cdn.huelet.net/assets/hydrin_favicon.png"
-                  alt="Hydrin"
-                  width={64}
-                  height={64}
-                />
-              </a>
-            ) : (
-              <div></div>
-            )}
-            <div className={styles.nullModeToggle} hidden={true}></div>
-          </div>
           <Follow />
         </div>
       </div>
