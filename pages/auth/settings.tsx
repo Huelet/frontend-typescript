@@ -3,7 +3,7 @@ import styles from "../../styles/Settings.module.css";
 import { SetStateAction, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Header } from "../../components/header";
-import { Modal } from "@mantine/core";
+import { Modal, RingProgress } from "@mantine/core";
 import { useSound } from "use-sound";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -48,28 +48,26 @@ const AuthSettings: NextPage = () => {
     { volume: 1 }
   );
   useEffect(() => {
-    const checkCookie = () => {
-      const token = cookie._hltoken;
-      if (token) {
-        fetch("https://api.huelet.net/auth/token", {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.response === "Success!") {
-              setUsername(res.username);
-            } else {
-              console.log("error: ", res);
-            }
-          });
-      }
-    };
+    const token = cookie._hltoken;
+    if (token) {
+      fetch("https://api.huelet.net/auth/token", {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.response === "Success!") {
+            setUsername(res.username);
+          } else {
+            console.log("error: ", res);
+          }
+        });
+    }
     const getData = async () => {
       const bioData = await fetch(
         `https://api.huelet.net/auth/bio?username=${username}`,
@@ -113,13 +111,12 @@ const AuthSettings: NextPage = () => {
 
       setLoading(false);
     };
-    if (loading === true) {
-      checkCookie();
-      getData();
-    } else {
-      null;
-    }
-  }, []);
+    getData();
+  }, [cookie._hltoken, username]);
+  // calculate percentage
+  const percentage = (partialValue, totalValue) => {
+    return (100 * partialValue) / totalValue;
+  };
   const handleBioChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -385,6 +382,26 @@ const AuthSettings: NextPage = () => {
                                   onChange={handleBioChange}
                                   className={`${styles.editBioInput}`}
                                 />
+                                <div className={styles.progressBarInputEdit}>
+                                  <p>{updatedBio.length}/256</p>
+                                  <RingProgress
+                                    size={30}
+                                    thickness={4}
+                                    sections={[
+                                      {
+                                        color: `${
+                                          updatedBio.length < 256
+                                            ? "#7600ff"
+                                            : "#ff0000"
+                                        }`,
+                                        value: percentage(
+                                          updatedBio.length,
+                                          256
+                                        ),
+                                      },
+                                    ]}
+                                  />
+                                </div>
                                 <button
                                   type="submit"
                                   className={`${styles.editBioButton}`}
@@ -437,6 +454,26 @@ const AuthSettings: NextPage = () => {
                                   onChange={handleLocationChange}
                                   className={`${styles.editLocationInput}`}
                                 />
+                                <div className={styles.progressBarInputEdit}>
+                                  <p>{updatedLocation.length}/30</p>
+                                  <RingProgress
+                                    size={30}
+                                    thickness={4}
+                                    sections={[
+                                      {
+                                        color: `${
+                                          updatedLocation.length < 30
+                                            ? "#7600ff"
+                                            : "#ff0000"
+                                        }`,
+                                        value: percentage(
+                                          updatedLocation.length,
+                                          30
+                                        ),
+                                      },
+                                    ]}
+                                  />
+                                </div>
                                 <button
                                   className={`${styles.editLocationButton}`}
                                   onClick={() => {
