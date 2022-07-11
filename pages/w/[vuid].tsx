@@ -13,7 +13,7 @@ import {
   PlayToggle,
 } from "video-react";
 import { Header } from "../../components/header";
-import { MilkdownEditor } from "../../components/editor";
+import { Editor } from "../../components/editor";
 import styles from "../../styles/Video.module.css";
 import { useCookies } from "react-cookie";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -438,7 +438,7 @@ const ViewVideo: NextPage = () => {
         <div className={`${styles.videoComments}`}>
           <h2 className={`${styles.videoCommentsHeading}`}>Comments</h2>
           <div className={`${styles.videoCommentsBox}`}>
-            <MilkdownEditor output={changeComment} />
+            <Editor output={changeComment} value={comment} />
             <div className={`${styles.videoCommentsBoxSubmit}`}>
               <div
                 className={`${styles.videoCommentsBoxSubmitButton}`}
