@@ -47,7 +47,6 @@ const ViewVideo: NextPage = () => {
   const [upvotes, setUpvotes] = useState(0);
   const [downvotes, setDownvotes] = useState(0);
   const [shares, setShares] = useState(0);
-  const router = useRouter();
   const [shareModal, toggleShareModal] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
   const [copyPopover, toggleCopyPopover] = useState(false);
@@ -67,7 +66,9 @@ const ViewVideo: NextPage = () => {
     "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Insert.wav",
     { volume: 1 }
   );
+  const router = useRouter();
   const { vuid } = router.query;
+  
   useEffect(() => {
     fetch(`https://api.huelet.net/auth/token`, {
       headers: {
@@ -97,7 +98,7 @@ const ViewVideo: NextPage = () => {
           (resp: Response) => console.log(resp)
         );
       });
-  }, []);
+  }, [authorId, cookie._hltoken, vuid]);
   const addClap = async () => {
     const resp = await fetch(
       `https://api.huelet.net/videos/interact/upvote/${vuid}`,
@@ -192,7 +193,6 @@ const ViewVideo: NextPage = () => {
       window.location.reload();
     }
   };
-  console.log(comments);
   return (
     <div id="klausen">
       <Head>
