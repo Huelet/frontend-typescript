@@ -59,7 +59,16 @@ const Badge: NextPage = () => {
       <Header username={username} />
       <Card full={true} title="Get your badge!">
         <div className={loaded ? "hidden" : ""}>Loading...</div>
-        <div className={loaded ? "" : "hidden"}>
+        <div
+          className={loaded ? "" : "hidden"}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "1rem",
+          }}
+        >
           {/*eslint-disable-next-line @next/next/no-img-element*/}
           <img
             src={dataUrl}
