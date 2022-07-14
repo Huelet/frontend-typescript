@@ -28,7 +28,7 @@ export const Search = ({
             <input
               className={styles.searchBar}
               type="text"
-              name="query"
+              name="q"
               placeholder={placeholder ? placeholder : "Search"}
               defaultValue={defaultValue ? defaultValue : ""}
               autoComplete="off"
