@@ -2,14 +2,6 @@
     background-color: var(--hoverColor);
 }
 
-.searchBar {
-    width: 25rem;
-    height: 58px;
-    border: #767676 solid 2px;
-    background-color: rgb(18, 18, 18);
-    color: #fff;
-}
-
 .mainText {
     font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
         -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
@@ -17,32 +9,6 @@
     font-weight: 100;
     display: inline;
     text-align: center;
-}
-
-.searchbutton {
-    padding: 0.6rem;
-    border: none;
-    background: var(--hueletColor);
-}
-
-.searchbuttonMobile {
-    display: none;
-    padding: 0.5rem;
-    border: none;
-    background: var(--hueletColor);
-}
-
-.searchModal {
-    display: flex;
-    flex-direction: row;
-}
-
-.searchBarMobile {
-    width: 10rem;
-    height: 3rem;
-    border: #767676 solid 2px;
-    background-color: rgb(18, 18, 18);
-    color: #fff;
 }
 
 .navContainer {
@@ -79,16 +45,3 @@
     height: 51.95px;
 }
 
-@media screen and (max-width: 600px) {
-    .searchBar {
-        display: none;
-    }
-
-    .searchbutton {
-        display: none;
-    }
-
-    .searchbuttonMobile {
-        display: flex;
-    }
-}

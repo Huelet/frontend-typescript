@@ -1,11 +1,9 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import Script from "next/script";
 import Head from "next/head";
 import styles from "../styles/ExplorePage.module.css";
 import { useCookies } from "react-cookie";
 import { Header } from "../components/header";
-import { Modal } from "../components/modal";
 import { VideoCard } from "../components/video-card";
 import axios from "axios";
 

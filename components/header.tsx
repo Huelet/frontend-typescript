@@ -6,16 +6,16 @@ import {
   Help,
   Notepad,
   PaintBrush,
-  Search,
   Settings,
   Subtitles,
   VideoCamera,
 } from "@fdn-ui/icons-react";
 import { useEffect, useState } from "react";
 import styles from "../styles/components/Header.module.css";
-import { Modal, Menu } from "@mantine/core";
+import { Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { useSound } from "use-sound";
+import { Search } from "./search";
 
 export interface HeaderProps {
   username?: string;
@@ -58,53 +58,7 @@ export const Header = ({ username }: HeaderProps) => {
             />
           </Link>
         </div>
-        <div className="searchBox">
-          <form action="/s" method="get">
-            <input
-              className={styles.searchBar}
-              type="text"
-              name="query"
-              placeholder="Search"
-            />
-            <button className={`${styles.searchbutton} cursor`} type="submit">
-              <div className={`${styles.searchbutton}`}>
-                <Search fill={"white"} />
-              </div>
-            </button>
-          </form>
-          <button className={`${styles.searchbuttonMobile} cursor`}>
-            <div
-              className={`${styles.searchbuttonMobile}`}
-              onClick={() => toggleSearchModal(true)}
-            >
-              <Search fill={"white"} />
-            </div>
-          </button>
-          <Modal
-            opened={searchModal}
-            onClose={() => toggleSearchModal(false)}
-            title="Search"
-          >
-            <div className={styles.searchModal}>
-              <form action="/s" method="get">
-                <input
-                  className={styles.searchBarMobile}
-                  type="text"
-                  name="query"
-                  placeholder="Search"
-                />
-                <button
-                  className={`${styles.searchbuttonMobile} cursor`}
-                  type="submit"
-                >
-                  <div className={`${styles.searchbuttonMobile}`}>
-                    <Search fill={"white"} />
-                  </div>
-                </button>
-              </form>
-            </div>
-          </Modal>
-        </div>
+        <Search />
         <div className={styles.accountIconsContainer}>
           <div className="hover cursor">
             <a href="https://dash.huelet.net">
