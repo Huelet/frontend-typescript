@@ -79,7 +79,7 @@ const ViewVideo: NextPage = () => {
       .then((data) => {
         setUsername(data.username);
       });
-    fetch(`https://api.huelet.net/videos/${vuid}`)
+    fetch(`https://api.huelet.net/videos/lookup/${vuid}`)
       .then((resp: Response) => resp.json())
       .then((data: any) => {
         setUrl(data.vurl);

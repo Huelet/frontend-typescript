@@ -30,7 +30,7 @@ export const VideoCard = ({
   const router = useRouter();
   useEffect(() => {
     const getData = async () => {
-      let resp = await axios.get(`https://api.huelet.net/videos/${vuid}`);
+      let resp = await axios.get(`https://api.huelet.net/videos/lookup/${vuid}`);
       console.log(resp.data);
       setVideo(resp.data);
       // lookup creator
