@@ -1,52 +1,76 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Header } from "../components/header";
 import { useCookies } from "react-cookie";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { useSound } from "use-sound";
 import "react-loading-skeleton/dist/skeleton.css";
+import axios from "axios";
+import Link from "next/link";
+import { VideoCard } from "../components/video-card";
 
 const Search: NextPage = () => {
   const [loading, setLoading] = useState(true);
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const [username, setUsername] = useState("");
-  const [searchData, setSearchData] = useState([]);
+  const [searchData, setSearchData]: any[] = useState([]);
+  const [response, setResponse] = useState(<></>);
+  const mounted: any = useRef(false);
   const { query } = useRouter();
-  const getUserData = () => {
-    fetch(`https://api.huelet.net/auth/token`, {
-      headers: {
-        Authorization: `Bearer ${cookie._hltoken}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUsername(data.username);
+  /* sounds */
+  const [playBgSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Background.wav",
+    { volume: 1 }
+  );
+  const [playClickSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav",
+    { volume: 1 }
+  );
+  const [playSubmitSound] = useSound(
+    "https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Insert.wav",
+    { volume: 1 }
+  );
+  useEffect(() => {
+    axios
+      .get(`https://api.huelet.net/auth/token`, {
+        headers: {
+          Authorization: `Bearer ${cookie._hltoken}`,
+        },
+      })
+      .then((resp) => {
+        setUsername(resp.data.username);
       });
-  };
-  const getSearchData = () => {
-    fetch(`https://api.huelet.net/search?q=${query.q}`, {
-      headers: {
-        Authorization: `Bearer ${cookie._hltoken}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setSearchData(data);
+  }, [cookie._hltoken]);
+  useEffect(() => {
+    axios
+      .get(`https://api.huelet.net/videos/search?searchContent=${query.q}`)
+      .then((resp) => {
+        setSearchData(resp.data.data);
         setLoading(false);
       });
-  };
-  if (loading === true) {
-    getUserData();
-    getSearchData();
-  } else {
-    null;
-  }
+  }, [query.q]);
+  useEffect(() => {
+    if (mounted.current) {
+      setResponse(
+        searchData.hits.map(({ vuid }) => {
+          return (
+            <div key={vuid}>
+              <VideoCard vuid={vuid} />
+            </div>
+          );
+        })
+      );
+    } else {
+      mounted.current = true;
+    }
+  }, [searchData]);
   return (
     <div id="klausen">
       <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
         <Header username={username} />
         <div className="spacer-sm"></div>
-        <article>{searchData}</article>
+        <article>{response}</article>
         <aside>
           <div className="adFrame--rightAsideColumn">hi!! i&apos;m an ad!</div>
         </aside>
