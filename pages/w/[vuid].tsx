@@ -87,7 +87,7 @@ const ViewVideo: NextPage = () => {
       console.log(videoData);
 
       const authorData = await fetch(
-        `https://api.huelet.net/auth/user?uid=${videoData.data.vauthor}`
+        `https://api.huelet.net/auth/user?uid=${(await videoData.json()).vauthor}`
       );
       setAuthorData((await authorData.json()).data);
     };
