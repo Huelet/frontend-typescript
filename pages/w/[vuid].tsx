@@ -94,6 +94,7 @@ const ViewVideo: NextPage = () => {
       getPageData();
     }
   }, [cookie._hltoken, videoData, vuid]);
+  undefined;
   const addClap = async () => {
     const resp = await fetch(
       `https://api.huelet.net/videos/interact/upvote/${vuid}`,
@@ -279,8 +280,9 @@ const ViewVideo: NextPage = () => {
             </div>
           </div>
           <div className={styles.mobileSuggestions}>
-            <VideoCard vuid={"none"} />
-            <VideoCard vuid={"none"} />
+            <VideoCard vuid={undefined} />
+            <div className="spacer-sm"></div>
+            <VideoCard vuid={undefined} />
           </div>
         </MobileView>
         <BrowserView>
