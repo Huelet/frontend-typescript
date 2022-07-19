@@ -5,7 +5,6 @@ import styles from "../styles/ExplorePage.module.css";
 import { useCookies } from "react-cookie";
 import { Header } from "../components/header";
 import { VideoCard } from "../components/video-card";
-import axios from "axios";
 
 const Explore: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
@@ -33,13 +32,13 @@ const Explore: NextPage = () => {
   };
   useEffect(() => {
     const getLocation = async () => {
-      const locationData = await axios.get("https://ipapi.co/json");
-      const weatherData = await axios.get(
-        `https://api.weatherapi.com/v1/current.json?key=1e9c6dd478af4f6fa8205430222106&q=${locationData.data.city},%20${locationData.data.region}&aqi=no`
+      const locationData = await fetch("https://ipapi.co/json");
+      const weatherData = await fetch(
+        `https://api.weatherapi.com/v1/current.json?key=1e9c6dd478af4f6fa8205430222106&q=${(await locationData.json()).city},%20${(await locationData.json()).region}&aqi=no`
       );
-      console.log(weatherData.data.current.condition.text);
-      setLocation(`${locationData.data.city}, ${locationData.data.region}`);
-      setWeather(weatherData.data.current.condition.text);
+      console.log((await weatherData.json()).current.condition.text);
+      setLocation(`${(await locationData.json()).city}, ${(await locationData.json()).region}`);
+      setWeather((await weatherData.json()).current.condition.text);
     };
     getLocation();
   });

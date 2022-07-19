@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Follow } from "./Buttons/follow";
 import styles from "../styles/components/VideoCard.module.css";
-import axios from "axios";
 import { Avatar } from "./avatar";
 import { Popover } from "@mantine/core";
 import { AvatarFilled, BulletList, Check, Location } from "@fdn-ui/icons-react";
@@ -30,19 +29,19 @@ export const VideoCard = ({
   const router = useRouter();
   useEffect(() => {
     const getData = async () => {
-      let resp = await axios.get(
+      let resp = await fetch(
         `https://api.huelet.net/videos/lookup/${vuid}`
       );
-      console.log(resp.data);
-      setVideo(resp.data);
+      console.log(await resp.json());
+      setVideo(await resp.json());
       // lookup creator
-      const creatorResp = await axios.get(
-        `https://api.huelet.net/auth/user?uid=${resp.data.vauthor}`
+      const creatorResp = await fetch(
+        `https://api.huelet.net/auth/user?uid=${(await resp.json()).vauthor}`
       );
 
-      console.log(creatorResp.data.data);
+      console.log(await creatorResp.json());
 
-      setCreator(creatorResp.data.data);
+      setCreator(await creatorResp.json());
       setIsLoading(false);
     };
     if (typeof vuid === "string") {

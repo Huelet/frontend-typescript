@@ -30,7 +30,6 @@ import { Modal, Popover, Popper } from "@mantine/core";
 import { useSound } from "use-sound";
 import { Card } from "../../components/card";
 import { Avatar } from "../../components/avatar";
-import axios from "axios";
 import { Follow } from "../../components/Buttons/follow";
 import { Pill } from "../../components/pill";
 import { VideoCard } from "../../components/video-card";
@@ -69,28 +68,28 @@ const ViewVideo: NextPage = () => {
 
   useEffect(() => {
     const getUserData = async () => {
-      const userData = await axios.get(`https://api.huelet.net/auth/token`, {
+      const userData = await fetch(`https://api.huelet.net/auth/token`, {
         headers: {
           Authorization: `Bearer ${cookie._hltoken}`,
         },
       });
-      setUsername(userData.data.username);
+      setUsername((await userData.json()).username);
     };
     getUserData();
   }, [cookie._hltoken]);
   useEffect(() => {
     const getPageData = async () => {
-      const videoData = await axios.get(
+      const videoData = await fetch(
         `https://api.huelet.net/videos/lookup/${vuid}`
       );
-      setVideoData(videoData.data);
+      setVideoData((await videoData.json()));
       setLoading(false);
       console.log(videoData);
 
-      const authorData = await axios.get(
+      const authorData = await fetch(
         `https://api.huelet.net/auth/user?uid=${videoData.data.vauthor}`
       );
-      setAuthorData(authorData.data.data);
+      setAuthorData((await authorData.json()).data);
     };
     getPageData();
   }, [vuid]);

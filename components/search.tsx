@@ -2,7 +2,6 @@ import { useState } from "react";
 import styles from "../styles/components/Search.module.css";
 import { Modal } from "@mantine/core";
 import { Search as SearchIcon } from "@fdn-ui/icons-react";
-import axios from "axios";
 
 export interface SearchProps {
   className?: string;

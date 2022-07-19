@@ -29,13 +29,10 @@ export const Avatar = ({ username, chonky, link, children }: AvatarProps) => {
   );
   const [pfp, setPfp] = useState<string>("");
   useEffect(() => {
-    const getUserData = () => {
+    const getUserData = async () => {
       if (username) {
-        fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
-          .then((res) => res.json())
-          .then((data) => {
-            setPfp(data.pfp);
-          });
+        const resp = await fetch(`https://api.huelet.net/auth/pfp?username=${username}`)
+            setPfp((await resp.json()).pfp)
       }
     };
     getUserData();

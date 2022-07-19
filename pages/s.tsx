@@ -6,7 +6,6 @@ import { useCookies } from "react-cookie";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useSound } from "use-sound";
 import "react-loading-skeleton/dist/skeleton.css";
-import axios from "axios";
 import Link from "next/link";
 import { VideoCard } from "../components/video-card";
 
@@ -32,23 +31,22 @@ const Search: NextPage = () => {
     { volume: 1 }
   );
   useEffect(() => {
-    axios
-      .get(`https://api.huelet.net/auth/token`, {
+    const getUserData = async () => {
+    const resp = await fetch(`https://api.huelet.net/auth/token`, {
         headers: {
           Authorization: `Bearer ${cookie._hltoken}`,
         },
       })
-      .then((resp) => {
-        setUsername(resp.data.username);
-      });
+        setUsername((await resp.json()).username);
+    };
+    getUserData();
   }, [cookie._hltoken]);
   useEffect(() => {
-    axios
-      .get(`https://api.huelet.net/videos/search?searchContent=${query.q}`)
-      .then((resp) => {
-        setSearchData(resp.data.data);
+    const getSearchData = async () => {
+    const resp = await fetch(`https://api.huelet.net/videos/search?searchContent=${query.q}`)
+        setSearchData((await resp.json()).data);
         setLoading(false);
-      });
+    }
   }, [query.q]);
   useEffect(() => {
     if (mounted.current) {

@@ -2,7 +2,6 @@ import React from "react";
 import type { NextPage } from "next";
 import { Card } from "../../components/card";
 import { useCookies } from "react-cookie";
-import axios from "axios";
 import { Header } from "../../components/header";
 import Image from "next/image";
 
@@ -35,7 +34,7 @@ const Badge: NextPage = () => {
   }, [cookie._hltoken]);
   React.useEffect(() => {
     const getBadge = async () => {
-      const badge = await axios.get(
+      const badge = await fetch(
         `https://api.huelet.net/auth/badge?username=${username}`,
         {
           headers: {
@@ -44,8 +43,8 @@ const Badge: NextPage = () => {
           },
         }
       );
-      console.log(badge.data.data.badge);
-      setDataUrl(badge.data.data.badge);
+      console.log((await badge.json()).data.badge);
+      setDataUrl((await badge.json()).data.badge);
       setLoaded(true);
     };
     if (username) {
