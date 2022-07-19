@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .video-react {
-  border-radius: 15px;
+  border-radius: 15px !important;
 }
 .video-react .video-react-control:before, .video-react .video-react-big-play-button:before {
   position: absolute;

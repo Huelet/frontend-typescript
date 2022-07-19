@@ -1,11 +1,28 @@
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
 .videoWrapper {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
     padding: 2em;
     width: 800px;
     height: 430px;
 }
 
+.videoFrame {
+    padding: 2em;
+}
+
 .videoPlayer {
     padding-top: 56% !important;
+    border-radius: 15px;
 }
 
 .videoDetails {
@@ -117,6 +134,15 @@
     padding: 3em;
 }
 
+.videoCommentCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    border: 0.25em solid var(--hueletColor) !important;
+}
+
 .videoComments {
     padding: 1.3em 4.3em;
 }
@@ -222,13 +248,47 @@
     font-size: 2em;
 }
 
-@media screen and (max-width: 600px) {
-    .videoWrapper {
-        width: 100%;
-        height: auto;
-        padding: 1em 1em 2em 2em;
-    }
-    .videoDetails {
-        padding: 0 2em;
-    }
+.mobileCreatorInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border: rgb(50, 49, 48) solid 0.1em;
+    border-radius: 0.5em;
+    padding: 1em;
+}
+
+.mobileCreatorInfoAttr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em;
+
+}
+
+.mobileCreatorInfoMoreTrigger_outer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.mobileCreatorInfoMoreTrigger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em;
+    border: #eee solid 0.1em;
+    border-radius: 50%;
+}
+
+.mobileSuggestions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em;
 }

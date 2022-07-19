@@ -23,9 +23,9 @@ export const Card = ({
 }: CardProps) => {
   return (
     <div className={`${full ? "main-si" : ""} ${cursor ? "cursor" : ""}`}>
-      <div className={`${styles.cardOuter} ${className}`}>
+      <div className={styles.cardOuter}>
         <div
-          className={`${styles.cardInner}`}
+          className={`${styles.cardInner} ${className}`}
           style={{ padding: `${padding ? padding : "7em"}` }}
         >
           {title ? (
