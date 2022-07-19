@@ -68,32 +68,32 @@ const ViewVideo: NextPage = () => {
   const { vuid } = router.query;
 
   useEffect(() => {
-    if (vuid) {
-      const getUserData = async () => {
-        const userData = await axios.get(`https://api.huelet.net/auth/token`, {
-          headers: {
-            Authorization: `Bearer ${cookie._hltoken}`,
-          },
-        });
-        setUsername(userData.data.username);
-      };
-      const getPageData = async () => {
-        const videoData = await axios.get(
-          `https://api.huelet.net/videos/lookup/${vuid}`
-        );
-        setVideoData(videoData.data);
-        setLoading(false);
-        console.log(videoData);
+    const getUserData = async () => {
+      const userData = await axios.get(`https://api.huelet.net/auth/token`, {
+        headers: {
+          Authorization: `Bearer ${cookie._hltoken}`,
+        },
+      });
+      setUsername(userData.data.username);
+    };
+    getUserData();
+  }, [cookie._hltoken]);
+  useEffect(() => {
+    const getPageData = async () => {
+      const videoData = await axios.get(
+        `https://api.huelet.net/videos/lookup/${vuid}`
+      );
+      setVideoData(videoData.data);
+      setLoading(false);
+      console.log(videoData);
 
-        const authorData = await axios.get(
-          `https://api.huelet.net/auth/user?uid=${videoData.data.vauthor}`
-        );
-        setAuthorData(authorData.data.data);
-      };
-      getUserData();
-      getPageData();
-    }
-  }, [cookie._hltoken, videoData, vuid]);
+      const authorData = await axios.get(
+        `https://api.huelet.net/auth/user?uid=${videoData.data.vauthor}`
+      );
+      setAuthorData(authorData.data.data);
+    };
+    getPageData();
+  }, [vuid]);
   undefined;
   const addClap = async () => {
     const resp = await fetch(
