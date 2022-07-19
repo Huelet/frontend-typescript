@@ -6,7 +6,7 @@ import axios from "axios";
 import { Avatar } from "./avatar";
 import { Popover } from "@mantine/core";
 import { AvatarFilled, BulletList, Check, Location } from "@fdn-ui/icons-react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { Skeleton } from "@mantine/core";
 
 export interface VideoCardProps {
   className?: string;
@@ -49,7 +49,7 @@ export const VideoCard = ({
     if (typeof vuid === "string") {
       getData();
     }
-  }, [vuid]);
+  }, []);
   return (
     <div
       className={`${styles.videoCard} cursor`}
@@ -59,17 +59,13 @@ export const VideoCard = ({
       }}
     >
       {typeof vuid === "string" ? (
-        <SkeletonTheme baseColor="#4E4E4E" highlightColor="#686868">
-          {isLoading ? (
-            <Skeleton />
-          ) : (
-            <div
-              className={styles.videoCardContentPoster}
-              style={{
-                backgroundImage: `url(${video.vimg})`,
-              }}
-            ></div>
-          )}
+        <>
+          <div
+            className={styles.videoCardContentPoster}
+            style={{
+              backgroundImage: `url(${video.vimg})`,
+            }}
+          ></div>
           <div className={styles.videoCardContentInfo}>
             <div
               className={styles.videoCardContentInfoTitle}
@@ -77,16 +73,16 @@ export const VideoCard = ({
                 padding: padding ? `${padding}em` : "0.5em",
               }}
             >
-              <h2>{isLoading ? <Skeleton width={200} /> : video.vtitle}</h2>
+              <Skeleton visible={isLoading}>
+                <h2>{video.vtitle}</h2>
+              </Skeleton>
               <p>
                 <span>
-                  {isLoading ? (
-                    <Skeleton />
-                  ) : video.vviews === 1 ? (
-                    "1 view"
-                  ) : (
-                    `${video.vviews} views`
-                  )}
+                  <Skeleton visible={isLoading}>
+                    <p>
+                      {video.vviews === 1 ? "1 view" : `${video.vviews} views`}
+                    </p>
+                  </Skeleton>
                 </span>
               </p>
               <Popover
@@ -94,49 +90,43 @@ export const VideoCard = ({
                 onClose={() => toggleAuthorPopover(false)}
                 position="top"
                 target={
-                  isLoading ? (
-                    <Skeleton width={200} />
-                  ) : (
-                    <div
-                      className={styles.videoCardContentInfoCreator}
-                      onClick={() => toggleAuthorPopover(() => !authorPopover)}
-                    >
-                      <img
-                        src={creator.avatar}
-                        alt={`${creator.username}'s avatar`}
-                        width="32"
-                        height="32"
-                      />
-                      <p>
-                        <span>
-                          {creator.username}
-                          {creator.approved ? (
-                            <>
-                              <Check
-                                fill={"green"}
-                                style={{
-                                  marginLeft: "0.25em",
-                                }}
-                              />
-                              <br />
-                              <p
-                                className={
-                                  styles.videoCardContentInfoCreatorBio
-                                }
-                              >
-                                {creator.bio}
-                              </p>
-                            </>
-                          ) : (
-                            <>
-                              <br />
-                              <p>Unverified</p>
-                            </>
-                          )}
-                        </span>
-                      </p>
-                    </div>
-                  )
+                  <div
+                    className={styles.videoCardContentInfoCreator}
+                    onClick={() => toggleAuthorPopover(() => !authorPopover)}
+                  >
+                    <img
+                      src={creator.avatar}
+                      alt={`${creator.username}'s avatar`}
+                      width="32"
+                      height="32"
+                    />
+                    <p>
+                      <span>
+                        {creator.username}
+                        {creator.approved ? (
+                          <>
+                            <Check
+                              fill={"green"}
+                              style={{
+                                marginLeft: "0.25em",
+                              }}
+                            />
+                            <br />
+                            <p
+                              className={styles.videoCardContentInfoCreatorBio}
+                            >
+                              {creator.bio}
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <br />
+                            <p>Unverified</p>
+                          </>
+                        )}
+                      </span>
+                    </p>
+                  </div>
                 }
               >
                 <div className={styles.videoCardContentInfoCreatorPopover}>
@@ -194,12 +184,10 @@ export const VideoCard = ({
                 </div>
               </Popover>
               <div className={styles.videoCardContentInfoReactions}>
-                {isLoading ? (
-                  <Skeleton width={16} height={16} />
-                ) : (
-                  <span
-                    className={`${styles.videoCardContentInfoReactionsItem} ${styles.videoCardContentInfoReactionsPositive}`}
-                  >
+                <span
+                  className={`${styles.videoCardContentInfoReactionsItem} ${styles.videoCardContentInfoReactionsPositive}`}
+                >
+                  <Skeleton visible={isLoading}>
                     <p>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -218,14 +206,12 @@ export const VideoCard = ({
                       </svg>
                       {video.vclaps}
                     </p>
-                  </span>
-                )}
-                {isLoading ? (
-                  <Skeleton width={16} height={16} />
-                ) : (
-                  <span
-                    className={`${styles.videoCardContentInfoReactionsItem} ${styles.videoCardContentInfoReactionsNegative}`}
-                  >
+                  </Skeleton>
+                </span>
+                <span
+                  className={`${styles.videoCardContentInfoReactionsItem} ${styles.videoCardContentInfoReactionsNegative}`}
+                >
+                  <Skeleton visible={isLoading}>
                     <p>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -244,12 +230,12 @@ export const VideoCard = ({
                       </svg>
                       {video.vcraps}
                     </p>
-                  </span>
-                )}
+                  </Skeleton>
+                </span>
               </div>
             </div>
           </div>
-        </SkeletonTheme>
+        </>
       ) : (
         <></>
       )}
