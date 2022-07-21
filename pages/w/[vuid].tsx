@@ -79,21 +79,26 @@ const ViewVideo: NextPage = () => {
   }, [cookie._hltoken]);
   useEffect(() => {
     const getPageData = async () => {
-      const videoData = await fetch(
-        `https://api.huelet.net/videos/lookup/${vuid}`
-      );
-      setVideoData((await videoData.json()));
-      setLoading(false);
-      console.log(videoData);
-
-      const authorData = await fetch(
-        `https://api.huelet.net/auth/user?uid=${(await videoData.json()).vauthor}`
-      );
-      setAuthorData((await authorData.json()).data);
+        const videoResp = await fetch(
+          `https://api.huelet.net/videos/lookup/${vuid}`
+        );
+        const videoRespData = await videoResp.json();
+        setVideoData(videoRespData);
     };
     getPageData();
   }, [vuid]);
-  undefined;
+	useEffect(() => {
+		const getAuthorData = async () => {
+			const authorResp = await fetch(
+				`https://api.huelet.net/auth/user?uid=${videoData.vauthor}`
+			);
+			const authorRespData = await authorResp.json();
+			setAuthorData(authorRespData.data);
+
+			setLoading(false);
+		};
+		getAuthorData();
+	}, [videoData]);
   const addClap = async () => {
     const resp = await fetch(
       `https://api.huelet.net/videos/interact/upvote/${vuid}`,
@@ -192,12 +197,12 @@ const ViewVideo: NextPage = () => {
     <div id="klausen">
       <Head>
         <title>
-          {videoData.vtitle} by {authorData.username} - Huelet, the video
+          {videoData.vtitle} by {authorData?.username} - Huelet, the video
           platform for humans
         </title>
         <meta
           name="title"
-          content={`${videoData.vtitle} by ${authorData.username} - Huelet, the video platform for humans`}
+          content={`${videoData.vtitle} by ${authorData?.username} - Huelet, the video platform for humans`}
         />
         <meta
           name="description"
@@ -207,7 +212,7 @@ const ViewVideo: NextPage = () => {
         <meta property="og:url" content={`https://huelet.net/w/${vuid}`} />
         <meta
           property="og:title"
-          content={`${videoData.vtitle} by ${authorData.username} - Huelet, the video platform for humans`}
+          content={`${videoData.vtitle} by ${authorData?.username} - Huelet, the video platform for humans`}
         />
         <meta
           property="og:description"
@@ -218,7 +223,7 @@ const ViewVideo: NextPage = () => {
         <meta property="twitter:url" content={`https://huelet.net/w/${vuid}`} />
         <meta
           property="twitter:title"
-          content={`${videoData.vtitle} by ${authorData.username} - Huelet, the video platform for humans`}
+          content={`${videoData.vtitle} by ${authorData?.username} - Huelet, the video platform for humans`}
         />
         <meta
           property="twitter:description"
@@ -251,7 +256,7 @@ const ViewVideo: NextPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Avatar username={authorData.username} dimensions={64} />
+              <Avatar username={authorData?.username} dimensions={64} />
             </div>
             <div className={styles.mobileCreatorInfoText}>
               <span
@@ -260,10 +265,10 @@ const ViewVideo: NextPage = () => {
                   flexDirection: "column",
                 }}
               >
-                <Link href={`/c/@${authorData.username}`} passHref={true}>
-                  <h3>{authorData.username}</h3>
+                <Link href={`/c/@${authorData?.username}`} passHref={true}>
+                  <h3>{authorData?.username}</h3>
                 </Link>
-                <p>{authorData.followers} followers</p>
+                <p>{authorData?.followers} followers</p>
                 <Follow />
               </span>
             </div>
@@ -390,7 +395,7 @@ const ViewVideo: NextPage = () => {
                   passHref
                 >
                   <h2 className={`${styles.videoDetailsAuthor}`}>
-                    By {authorData.username}
+                    By {authorData?.username}
                   </h2>
                 </Link>
                 <div className={styles.videoWrapper}>
