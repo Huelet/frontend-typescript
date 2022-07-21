@@ -251,7 +251,7 @@ const ViewVideo: NextPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Avatar username={authorData.username} />
+              <Avatar username={authorData.username} dimensions={64} />
             </div>
             <div className={styles.mobileCreatorInfoText}>
               <span

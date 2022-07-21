@@ -16,6 +16,7 @@ import { Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { useSound } from "use-sound";
 import { Search } from "./search";
+import { Avatar } from "./avatar";
 
 export interface HeaderProps {
   username?: string;
@@ -81,14 +82,7 @@ export const Header = ({ username }: HeaderProps) => {
             onClick={() => playClickSound()}
           >
             <Menu
-              control={
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={pfp}
-                  alt={`${username}'s profile image`}
-                  className={"avatar avatar--image"}
-                />
-              }
+              control={<Avatar username={username}  dimensions={64} />}
             >
               <Menu.Label>Your account</Menu.Label>
               <Menu.Item

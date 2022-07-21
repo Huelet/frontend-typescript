@@ -213,7 +213,7 @@ const AuthSettings: NextPage = () => {
                   {loading ? (
                     <Skeleton width={128} height={128} circle={true} />
                   ) : (
-                    <AvatarImage username={username} chonky={true} />
+                    <AvatarImage username={username} dimensions={128} />
                   )}
                   {loading ? (
                     <Skeleton width={128} height={64} />
@@ -235,7 +235,7 @@ const AuthSettings: NextPage = () => {
                         onClose={() => togglePfpModal(false)}
                       >
                         <div className={`${styles.profileImageUpload}`}>
-                          <AvatarImage username={username} chonky={true} />
+                          <AvatarImage username={username} dimensions={128} />
                           <form onSubmit={() => submitNewPfp}>
                             <input
                               type="file"

@@ -87,7 +87,7 @@ const ViewCreator: NextPage = () => {
       >
         <div className={`${styles.creatorBodyDetails}`}>
           <div className={`${styles.creatorBodyProfileImage}`}>
-            <Avatar username={uname} chonky={true} />
+            <Avatar username={uname} dimensions={128} />
           </div>
           <div className={`${styles.creatorBodyDetailsText}`}>
             <div className={`${styles.creatorBodyTitle}`}>
