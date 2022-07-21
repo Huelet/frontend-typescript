@@ -86,7 +86,7 @@ export const VideoCard = ({
                     className={styles.videoCardContentInfoCreator}
                     onClick={() => toggleAuthorPopover(() => !authorPopover)}
                   >
-                    <Avatar username={video.vauthor} dimensions={64} />
+                    <Avatar username={video.vauthor} dimensions={32} />
                     <p>
                       <span>
                         {creator.username}
@@ -120,7 +120,7 @@ export const VideoCard = ({
                   <div
                     className={styles.videoCardContentInfoCreatorPopoverAvatar}
                   >
-                    <Avatar username={creator.username} />
+                    <Avatar username={creator.username} dimensions={32} />
                   </div>
                   <div
                     className={styles.videoCardContentInfoCreatorPopoverInfo}

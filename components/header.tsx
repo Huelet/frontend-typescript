@@ -82,7 +82,7 @@ export const Header = ({ username }: HeaderProps) => {
             onClick={() => playClickSound()}
           >
             <Menu
-              control={<Avatar username={username}  dimensions={64} />}
+              control={<Avatar username={username} dimensions={64} />}
             >
               <Menu.Label>Your account</Menu.Label>
               <Menu.Item
