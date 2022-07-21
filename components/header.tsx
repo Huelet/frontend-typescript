@@ -42,8 +42,7 @@ export const Header = ({ username }: HeaderProps) => {
     };
 
     getData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [username]);
   return (
     <div className={styles.navContainer}>
       <div className={styles.navBar}>
