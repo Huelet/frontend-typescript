@@ -1,6 +1,5 @@
 import Script from "next/script";
 import Head from "next/head";
-import Twemoji from "react-twemoji";
 import "../styles/globals.css";
 import "../styles/adstyles.css";
 import "../styles/VideoPlayer.css";
@@ -67,9 +66,7 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
         <MantineProvider
           theme={{ fontFamily: "Red Hat Display", colorScheme: "dark" }}
         >
-          <Twemoji>
-            <Component {...pageProps} />
-          </Twemoji>
+          <Component {...pageProps} />
         </MantineProvider>
       </CookiesProvider>
     </>
