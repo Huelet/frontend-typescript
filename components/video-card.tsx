@@ -43,7 +43,7 @@ export const VideoCard = ({
     if (typeof vuid === "string") {
       getData();
     }
-  }, []);
+  }, [vuid]);
   return (
     <div
       className={`${styles.videoCard} cursor`}

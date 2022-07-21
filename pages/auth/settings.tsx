@@ -117,25 +117,7 @@ const AuthSettings: NextPage = () => {
   const percentage = (partialValue, totalValue) => {
     return (100 * partialValue) / totalValue;
   };
-  const handleBioChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setUpdatedBio(event.target.value);
-  };
-  const handlePfpChange = (event: any) => {
-    setUpdatedPfp(event.target.files[0]);
-  };
-  const handlePronounsChange = (event: {
-    target: { value: SetStateAction<any> };
-  }) => {
-    setUpdatedPronouns(event.target.value);
-  };
-  const handleLocationChange = (event: {
-    target: { value: SetStateAction<any> };
-  }) => {
-    setUpdatedLocation(event.target.value);
-  };
-  const submitNewPfp = async (event: { preventDefault: () => void }) => {
+  const submitNewPfp = async (event: any) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("file", updatedPfp);
@@ -254,13 +236,15 @@ const AuthSettings: NextPage = () => {
                       >
                         <div className={`${styles.profileImageUpload}`}>
                           <AvatarImage username={username} chonky={true} />
-                          <form>
+                          <form onSubmit={() => submitNewPfp}>
                             <input
                               type="file"
                               name="file"
                               id="file"
                               accept="image/*"
-                              onChange={handlePfpChange}
+                              onChange={(event) =>
+                                setUpdatedPfp(event.target.files![0])
+                              }
                               className={`${styles.profileImageUploadInput}`}
                             />
                             <label
@@ -326,7 +310,9 @@ const AuthSettings: NextPage = () => {
                                   type="text"
                                   name="pronouns"
                                   placeholder="Pronouns"
-                                  onChange={handlePronounsChange}
+                                  onChange={(event) =>
+                                    setUpdatedPronouns(event.target.value)
+                                  }
                                   className={`${styles.editPronounsInput}`}
                                 />
                                 <button
@@ -379,7 +365,9 @@ const AuthSettings: NextPage = () => {
                                   type="text"
                                   name="bio"
                                   placeholder="Bio"
-                                  onChange={handleBioChange}
+                                  onChange={(event) =>
+                                    setUpdatedBio(event.target.value)
+                                  }
                                   className={`${styles.editBioInput}`}
                                 />
                                 <div className={styles.progressBarInputEdit}>
@@ -451,7 +439,9 @@ const AuthSettings: NextPage = () => {
                                   type="text"
                                   name="location"
                                   placeholder="Location"
-                                  onChange={handleLocationChange}
+                                  onChange={(event) =>
+                                    setUpdatedLocation(event.target.value)
+                                  }
                                   className={`${styles.editLocationInput}`}
                                 />
                                 <div className={styles.progressBarInputEdit}>
