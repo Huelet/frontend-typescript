@@ -29,17 +29,13 @@ export const VideoCard = ({
   const router = useRouter();
   useEffect(() => {
     const getData = async () => {
-      let resp = await fetch(
-        `https://api.huelet.net/videos/lookup/${vuid}`
-      );
-      console.log(await resp.json());
-      setVideo(await resp.json());
+      let resp = await fetch(`https://api.huelet.net/videos/lookup/${vuid}`);
+      const data = await resp.json();
+      setVideo(data);
       // lookup creator
       const creatorResp = await fetch(
-        `https://api.huelet.net/auth/user?uid=${(await resp.json()).vauthor}`
+        `https://api.huelet.net/auth/user?uid=${data.vauthor}`
       );
-
-      console.log(await creatorResp.json());
 
       setCreator(await creatorResp.json());
       setIsLoading(false);
