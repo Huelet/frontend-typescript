@@ -243,10 +243,10 @@ code {
 }
 
 .avatar--image {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 64px !important;
+  height: 64px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
 }
 
 .h2-1 {

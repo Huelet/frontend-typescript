@@ -1,17 +1,5 @@
-import next from "next";
 import Image from "next/image";
 import styles from "../styles/components/Avatar.module.css";
-import {
-  Accessibility,
-  Copy,
-  Help,
-  Notepad,
-  PaintBrush,
-  Search,
-  Settings,
-  Subtitles,
-  VideoCamera,
-} from "@fdn-ui/icons-react";
 import { useEffect, useState } from "react";
 import { useSound } from "use-sound";
 
@@ -47,8 +35,7 @@ export const Avatar = ({ username, chonky, link, children }: AvatarProps) => {
           } ${styles.avatarImageBorder}`}
           alt={`${username}'s profile picture`}
           loader={() => pfp}
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAM1BMVEVndYWzuL2Nl6Gbo6yqsLZxfYx/ipd1gpCgp69seYmSm6WlrLN6hpOvtLqEjpqXn6iIkp4fvOWIAAAAiklEQVR4XtXS2woDMQgE0BnNbe/7/19bqKxQMrTPPa8adIL4D7uT3E5oJ4MvECofK4SLqWJ2MBkmCxNdjk4DMya528akojc+Cr4m2yGt8VZVu10V9TZrwD7ss6UVkscdCd9Dtj5vVVYzZzi6yKS+bqGUZ0Cp5x1IDcEoGYJTcoRBaSAUSgWBGn+XX0A2A4V4OvWYAAAAAElFTkSuQmCC"
+          placeholder="empty"
           width={chonky ? "128" : "64"}
           height={chonky ? "128" : "64"}
         />
