@@ -37,7 +37,9 @@ export const VideoCard = ({
         `https://api.huelet.net/auth/user?uid=${data.vauthor}`
       );
 
-      setCreator(await creatorResp.json());
+      const creatorData = await creatorResp.json();
+
+      setCreator(creatorData.data);
       setIsLoading(false);
     };
     if (typeof vuid === "string") {
