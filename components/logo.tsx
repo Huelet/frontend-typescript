@@ -1,4 +1,9 @@
-export const Logo = (width: string, height: string) => {
+export interface LogoProps {
+  width?: number;
+  height?: number;
+}
+
+export const Logo = ({ width, height }: LogoProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
