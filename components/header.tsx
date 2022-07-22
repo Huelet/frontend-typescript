@@ -17,6 +17,7 @@ import { NextLink } from "@mantine/next";
 import { useSound } from "use-sound";
 import { Search } from "./search";
 import { Avatar } from "./avatar";
+import { Logo } from "./logo";
 
 export interface HeaderProps {
   username?: string;
@@ -49,13 +50,7 @@ export const Header = ({ username }: HeaderProps) => {
       <div className={styles.navBar}>
         <div className={styles.navIcon} onClick={() => playBgSound()}>
           <Link href="/explore">
-            <img
-              src="https://cdn.huelet.net/assets/logo.png"
-              alt="logo"
-              width={64}
-              height={64}
-              style={{ borderRadius: "50%", cursor: "pointer" }}
-            />
+            <Logo width={64} height={64} />
           </Link>
         </div>
         <Search />
@@ -81,9 +76,7 @@ export const Header = ({ username }: HeaderProps) => {
             className="avatar--container hover cursor"
             onClick={() => playClickSound()}
           >
-            <Menu
-              control={<Avatar username={username} dimensions={64} />}
-            >
+            <Menu control={<Avatar username={username} dimensions={64} />}>
               <Menu.Label>Your account</Menu.Label>
               <Menu.Item
                 icon={<Settings fill={"white"} />}
