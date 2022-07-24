@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
     "@fdn-ui/icons-react": "^0.0.11",
     "@huelet/pencil.js": "^1.0.0",
     "@mantine/core": "^4.0.9",
