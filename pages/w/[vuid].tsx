@@ -28,7 +28,7 @@ import {
 import Loader from "../../components/loader";
 import { Modal, Popover, Popper } from "@mantine/core";
 import { useSound } from "use-sound";
-import { Card } from "../../components/card";
+import { Card } from "@huelet/foundation-ui";
 import { Avatar } from "../../components/avatar";
 import { Follow } from "../../components/Buttons/follow";
 import { Pill } from "../../components/pill";

@@ -1,4 +1,5 @@
 import styles from "../styles/components/Card.module.css";
+import { css, jsx } from "@emotion/react";
 
 export interface CardProps {
   children: React.ReactNode;
@@ -23,7 +24,12 @@ export const Card = ({
 }: CardProps) => {
   return (
     <div className={`${full ? "main-si" : ""} ${cursor ? "cursor" : ""}`}>
-      <div className={styles.cardOuter}>
+      <div
+        css={css`
+          display: flex;
+          flex-direction: column;
+        `}
+      >
         <div
           className={`${styles.cardInner} ${className}`}
           style={{ padding: `${padding ? padding : "7em"}` }}

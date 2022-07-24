@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Card } from "../components/card";
+import { Card } from "@huelet/foundation-ui";
 
 const Why: NextPage = () => {
   return (

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import { useCookies } from "react-cookie";
-import { Card } from "../../components/card";
+import { Card } from "@huelet/foundation-ui";
 
 const AuthIn: NextPage = () => {
   const [resp, setResp] = useState<string>("");

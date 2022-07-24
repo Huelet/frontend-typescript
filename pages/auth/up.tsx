@@ -5,7 +5,7 @@ import styles from "../../styles/Signup.module.css";
 import { Modal, Popover } from "@mantine/core";
 import { useCookies } from "react-cookie";
 import { Add, Info } from "@fdn-ui/icons-react";
-import { Card } from "../../components/card";
+import { Card } from "@huelet/foundation-ui";
 
 const AuthUp: NextPage = () => {
   const [username, setUsername] = useState("");

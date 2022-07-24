@@ -10,7 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Avatar, BulletList, Upload, Location } from "@fdn-ui/icons-react";
 import { Avatar as AvatarImage } from "../../components/avatar";
 import Loader from "../../components/loader";
-import { Card } from "../../components/card";
+import { Card } from "@huelet/foundation-ui";
 
 const AuthSettings: NextPage = () => {
   const [loading, setLoading] = useState(true);

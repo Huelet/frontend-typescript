@@ -1,6 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
-import { Card } from "../../components/card";
+import { Card } from "@huelet/foundation-ui";
 import { useCookies } from "react-cookie";
 import { Header } from "../../components/header";
 import Image from "next/image";
