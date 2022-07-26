@@ -3,7 +3,12 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import styles from "../../styles/Creator.module.css";
 import { useEffect, useState } from "react";
-import { Location } from "@fdn-ui/icons-react";
+import {
+  Avatar as AvatarIcon,
+  BulletList,
+  Calendar,
+  Location,
+} from "@fdn-ui/icons-react";
 import { Header } from "../../components/header";
 import { Follow } from "../../components/Buttons/follow";
 import { Avatar } from "../../components/avatar";
@@ -79,17 +84,47 @@ const ViewCreator: NextPage = () => {
               </h2>
             </div>
             <div className={`${styles.creatorBodyBio}`}>
-              <div className={`${styles.creatorBodyBioText}`}>
+              <div
+                css={css({
+                  display: "flex",
+                  flexDirection: "row",
+                })}
+              >
+                <BulletList fill="white" />
                 <p
                   dangerouslySetInnerHTML={{
                     __html: user?.bio ? user?.bio : "Loading...",
                   }}
                 ></p>
               </div>
-              <div className={`${styles.creatorBodyBioPronouns}`}>
+              <div
+                css={css({
+                  display: "flex",
+                  flexDirection: "row",
+                })}
+              >
+                <Calendar fill="white" />
+                <p>{`Joined ${new Intl.DateTimeFormat("en-US", {
+                  month: "long",
+                }).format(
+                  new Date(user?.createdAt ? Math.floor(user?.createdAt * 1000) : 0)
+                )} ${new Date(user?.createdAt ? Math.floor(user?.createdAt * 1000) : 0).getFullYear()}`}</p>
+              </div>
+              <div
+                css={css({
+                  display: "flex",
+                  flexDirection: "row",
+                })}
+              >
+                <AvatarIcon fill="white" />
                 <p>{user?.pronouns?.join("/")}</p>
               </div>
-              <div className={`${styles.creatorBodyBioLocation}`}>
+              <div
+                css={css({
+                  display: "flex",
+                  flexDirection: "row",
+                })}
+              >
                 <Location fill={"white"} />
                 <p>{user?.location}</p>
               </div>
