@@ -2,8 +2,6 @@
 
 name: CI
 
-uses: comchangs/action-yarn@v0.1-beta
-
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
