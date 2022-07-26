@@ -120,10 +120,10 @@ const AuthSettings: NextPage = () => {
   const submitNewPfp = async (event: any) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("file", updatedPfp);
+    formData.append("avatar", updatedPfp);
     formData.append("username", username);
     const resp = await fetch("https://api.huelet.net/auth/pfp", {
-      method: "POST",
+      method: "PATCH",
       mode: "cors",
       cache: "no-cache",
       headers: {
@@ -132,22 +132,7 @@ const AuthSettings: NextPage = () => {
       body: formData,
     });
     const respJSON = await resp.json();
-    if (resp.status === 200) {
-      const resp2 = await fetch("https://api.huelet.net/auth/pfp", {
-        method: "PATCH",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer: ${cookie._hltoken}`,
-        },
-        body: JSON.stringify({
-          username: username,
-          url: respJSON.pfp,
-        }),
-      });
-      window.location.reload();
-    }
+    window.location.reload();
   };
   const submitNewBio = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -263,10 +248,10 @@ const AuthSettings: NextPage = () => {
                             <button
                               type="submit"
                               className={`${styles.profileImageUploadButton}`}
-                              onClick={() => {
+                              onClick={(e) => {
+                                submitNewPfp(e);
                                 setPfpUploading(true);
                                 playSubmitSound();
-                                submitNewPfp;
                               }}
                             >
                               <div className={pfpUploading ? "hidden" : ""}>
