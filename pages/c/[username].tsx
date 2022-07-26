@@ -1,89 +1,72 @@
+/** @jsxImportSource @emotion/react */
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import styles from "../../styles/Creator.module.css";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { Location } from "@fdn-ui/icons-react";
 import { Header } from "../../components/header";
 import { Follow } from "../../components/Buttons/follow";
 import { Avatar } from "../../components/avatar";
+import { ColorExtractor } from "react-color-extractor";
+import { jsx, css } from "@emotion/react";
 
 const ViewCreator: NextPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [header, setHeader] = useState("");
-  const [pfp, setPfp] = useState("");
-  const [bio, setBio] = useState("");
-  const [pronouns, setPronouns] = useState([]);
-  const [location, setLocation] = useState("");
+  const [user, setUser] = useState<any>({});
+  const [colors, setColors] = useState<any[]>([]);
   const router = useRouter();
   const { username } = router.query;
   const uname = username?.toString().replace("@", "");
   useEffect(() => {
     const getData = async () => {
-      const bioData = await fetch(
-        `https://api.huelet.net/auth/bio?username=${uname}`,
-        {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      const userData = await fetch(
+        `https://api.huelet.net/auth/user?username=${uname}`
       );
-      const bioDataJSON = await bioData.json();
-      setBio(bioDataJSON.bio);
-      const pronounData = await fetch(
-        `https://api.huelet.net/auth/pronouns?username=${uname}`,
-        {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const pronounDataJSON = await pronounData.json();
-      setPronouns(pronounDataJSON.pronouns);
-      const locationData = await fetch(
-        `https://api.huelet.net/auth/location?username=${uname}`,
-        {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const locationDataJSON = await locationData.json();
-      setLocation(locationDataJSON.location);
-
-      setLoading(false);
+      const userDataJSON = await userData.json();
+      setUser(userDataJSON.data);
     };
     getData();
-  }, []);
+  }, [uname]);
   return (
     <div id="klausen">
       <Header username="" />
+      <ColorExtractor
+        src={user?.avatar}
+        getColors={(colors) => {
+          setColors(colors);
+        }}
+      />
       <div className={`${styles.creatorHeader}`}>
         <img
-          src={header ? header : "https://cdn.huelet.net/assets/logo.png"}
+          src={
+            user?.header
+              ? user?.header
+              : "https://cdn.huelet.net/assets/logo.png"
+          }
           alt="Header"
           className={`${
-            header
+            user?.header
               ? styles.creatorHeaderImage
               : styles.creatorHeaderImageDefault
           }`}
         />
       </div>
       <div
-        className={`${styles.creatorBody}`}
-        style={{
-          // TODO: make this dynamic
-          boxShadow: `0px -120px 120px 0px #1ed760 !important`,
-        }}
+        css={css({
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          color: "#FFFFFF",
+          background: "rgba(255, 255, 255, 0.20)",
+          border: "0.1em solid rgba(0, 0, 0, 0.15)",
+          borderRadius: "10px",
+          transition: "0.6s",
+          padding: "2em",
+          boxShadow: `0px -120px 120px 0px ${
+            colors
+              ? colors[Math.floor(Math.random() * colors.length)]
+              : "var(--hueletSecondaryColor)"
+          } !important`,
+        })}
       >
         <div className={`${styles.creatorBodyDetails}`}>
           <div className={`${styles.creatorBodyProfileImage}`}>
@@ -97,14 +80,18 @@ const ViewCreator: NextPage = () => {
             </div>
             <div className={`${styles.creatorBodyBio}`}>
               <div className={`${styles.creatorBodyBioText}`}>
-                <p>{bio}</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: user?.bio ? user?.bio : "Loading...",
+                  }}
+                ></p>
               </div>
               <div className={`${styles.creatorBodyBioPronouns}`}>
-                <p>{pronouns.join("/")}</p>
+                <p>{user?.pronouns?.join("/")}</p>
               </div>
               <div className={`${styles.creatorBodyBioLocation}`}>
                 <Location fill={"white"} />
-                <p>{location}</p>
+                <p>{user?.location}</p>
               </div>
             </div>
           </div>
