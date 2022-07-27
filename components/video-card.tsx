@@ -43,10 +43,10 @@ export const VideoCard = ({
     const getData = async () => {
       let resp = await fetch(`https://api.huelet.net/videos/lookup/${vuid}`);
       const data = await resp.json();
-      setVideo(data);
+      setVideo(data.data);
       // lookup creator
       const creatorResp = await fetch(
-        `https://api.huelet.net/auth/user?uid=${data.vauthor}`
+        `https://api.huelet.net/auth/user?uid=${data.data.authorId}`
       );
 
       const creatorData = await creatorResp.json();
@@ -71,7 +71,7 @@ export const VideoCard = ({
           <div
             className={styles.videoCardContentPoster}
             style={{
-              backgroundImage: `url(${video.vimg})`,
+              backgroundImage: `url(${video.thumbnail})`,
             }}
           ></div>
           <div className={styles.videoCardContentInfo}>
@@ -81,11 +81,11 @@ export const VideoCard = ({
                 padding: padding ? `${padding}em` : "0.5em",
               }}
             >
-              <h2>{video.vtitle}</h2>
+              <h2>{video?.title}</h2>
               <p>
                 <span>
                   <p>
-                    {video.vviews === 1 ? "1 view" : `${video.vviews} views`}
+                    {video?.views === 1 ? "1 view" : `${video?.views} views`}
                   </p>
                 </span>
               </p>
@@ -98,11 +98,11 @@ export const VideoCard = ({
                     className={styles.videoCardContentInfoCreator}
                     onClick={() => toggleAuthorPopover(() => !authorPopover)}
                   >
-                    <Avatar username={video.vauthor} dimensions={32} />
+                    <Avatar username={creator?.username} dimensions={32} />
                     <p>
                       <span>
-                        {creator.username}
-                        {creator.approved ? (
+                        {creator?.username}
+                        {creator?.approved ? (
                           <>
                             <Check
                               fill={"green"}
@@ -114,7 +114,7 @@ export const VideoCard = ({
                             <p
                               className={styles.videoCardContentInfoCreatorBio}
                             >
-                              {creator.bio}
+                              {creator?.bio}
                             </p>
                           </>
                         ) : (
@@ -132,12 +132,12 @@ export const VideoCard = ({
                   <div
                     className={styles.videoCardContentInfoCreatorPopoverAvatar}
                   >
-                    <Avatar username={creator.username} dimensions={32} />
+                    <Avatar username={creator?.username} dimensions={32} />
                   </div>
                   <div
                     className={styles.videoCardContentInfoCreatorPopoverInfo}
                   >
-                    <h2>{creator.username}</h2>
+                    <h2>{creator?.username}</h2>
                     <span
                       className={
                         styles.videoCardContentInfoCreatorPopoverInfoItem
@@ -149,8 +149,8 @@ export const VideoCard = ({
                         height={"16px"}
                       />
                       <span>
-                        {creator.pronouns
-                          ? creator.pronouns.join("/")
+                        {creator?.pronouns
+                          ? creator?.pronouns.join("/")
                           : "No pronouns"}
                       </span>
                     </span>
@@ -164,7 +164,7 @@ export const VideoCard = ({
                         width={"16px"}
                         height={"16px"}
                       />
-                      <span>{creator.bio}</span>
+                      <span>{creator?.bio}</span>
                     </span>
                     <span
                       className={
@@ -172,7 +172,7 @@ export const VideoCard = ({
                       }
                     >
                       <Location fill={"white"} width={"16px"} height={"16px"} />
-                      <span>{creator.location}</span>
+                      <span>{creator?.location}</span>
                     </span>
                   </div>
                   <div
@@ -198,7 +198,7 @@ export const VideoCard = ({
                     d="M23.02 21.249h8.604c1.17 0 2.268-.626 2.866-1.633.246-.415.109-.952-.307-1.199-.415-.247-.952-.108-1.199.307-.283.479-.806.775-1.361.775h-8.81c-.873 0-1.583-.71-1.583-1.583s.71-1.583 1.583-1.583H28.7c.483 0 .875-.392.875-.875s-.392-.875-.875-.875h-5.888c-1.838 0-3.333 1.495-3.333 3.333 0 1.025.475 1.932 1.205 2.544-.615.605-.998 1.445-.998 2.373 0 1.028.478 1.938 1.212 2.549-.611.604-.99 1.441-.99 2.367 0 1.12.559 2.108 1.409 2.713-.524.589-.852 1.356-.852 2.204 0 1.838 1.495 3.333 3.333 3.333h5.484c1.17 0 2.269-.625 2.867-1.632.247-.415.11-.952-.305-1.199-.416-.245-.953-.11-1.199.305-.285.479-.808.776-1.363.776h-5.484c-.873 0-1.583-.71-1.583-1.583s.71-1.583 1.583-1.583h6.506c1.17 0 2.27-.626 2.867-1.633.247-.416.11-.953-.305-1.199-.419-.251-.954-.11-1.199.305-.289.487-.799.777-1.363.777h-7.063c-.873 0-1.583-.711-1.583-1.584s.71-1.583 1.583-1.583h8.091c1.17 0 2.269-.625 2.867-1.632.247-.415.11-.952-.305-1.199-.417-.246-.953-.11-1.199.305-.289.486-.799.776-1.363.776H23.02c-.873 0-1.583-.71-1.583-1.583s.709-1.584 1.583-1.584z"
                   />
                 </svg>
-                <p>{calculateRatio(video.vclaps, video.vcraps)}</p>
+                <p>{calculateRatio(video?.upvotes, video?.downvotes)}</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 36 36"
