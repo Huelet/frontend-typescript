@@ -79,26 +79,26 @@ const ViewVideo: NextPage = () => {
   }, [cookie._hltoken]);
   useEffect(() => {
     const getPageData = async () => {
-        const videoResp = await fetch(
-          `https://api.huelet.net/videos/lookup/${vuid}`
-        );
-        const videoRespData = await videoResp.json();
-        setVideoData(videoRespData);
+      const videoResp = await fetch(
+        `https://api.huelet.net/videos/lookup/${vuid}`
+      );
+      const videoRespData = await videoResp.json();
+      setVideoData(videoRespData.data);
     };
     getPageData();
   }, [vuid]);
-	useEffect(() => {
-		const getAuthorData = async () => {
-			const authorResp = await fetch(
-				`https://api.huelet.net/auth/user?uid=${videoData.vauthor}`
-			);
-			const authorRespData = await authorResp.json();
-			setAuthorData(authorRespData.data);
+  useEffect(() => {
+    const getAuthorData = async () => {
+      const authorResp = await fetch(
+        `https://api.huelet.net/auth/user?uid=${videoData?.authorId}`
+      );
+      const authorRespData = await authorResp.json();
+      setAuthorData(authorRespData.data);
 
-			setLoading(false);
-		};
-		getAuthorData();
-	}, [videoData]);
+      setLoading(false);
+    };
+    getAuthorData();
+  }, [videoData]);
   const addClap = async () => {
     const resp = await fetch(
       `https://api.huelet.net/videos/interact/upvote/${vuid}`,
@@ -197,46 +197,45 @@ const ViewVideo: NextPage = () => {
     <div id="klausen">
       <Head>
         <title>
-          {videoData.vtitle} by {authorData?.username} - Huelet, the video
+          {videoData?.title} by {authorData?.username} - Huelet, the video
           platform for humans
         </title>
         <meta
           name="title"
-          content={`${videoData.vtitle} by ${authorData?.username} - Huelet, the video platform for humans`}
+          content={`${videoData?.title} by ${authorData?.username} - Huelet, the video platform for humans`}
         />
         <meta
           name="description"
-          content={`${videoData.vtitle} is a video posted on Huelet, the video platform for humans. Start watching now!"`}
+          content={`${videoData?.title} is a video posted on Huelet, the video platform for humans. Start watching now!"`}
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://huelet.net/w/${vuid}`} />
         <meta
           property="og:title"
-          content={`${videoData.vtitle} by ${authorData?.username} - Huelet, the video platform for humans`}
+          content={`${videoData?.title} by ${authorData?.username} - Huelet, the video platform for humans`}
         />
         <meta
           property="og:description"
-          content={`${videoData.vtitle} is a video posted on Huelet, the video platform for humans. Start watching now!`}
+          content={`${videoData?.title} is a video posted on Huelet, the video platform for humans. Start watching now!`}
         />
-        <meta property="og:image" content={videoData.vimg} />
+        <meta property="og:image" content={videoData?.thumbnail} />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={`https://huelet.net/w/${vuid}`} />
         <meta
           property="twitter:title"
-          content={`${videoData.vtitle} by ${authorData?.username} - Huelet, the video platform for humans`}
+          content={`${videoData?.title} by ${authorData?.username} - Huelet, the video platform for humans`}
         />
         <meta
           property="twitter:description"
-          content={`${videoData.vtitle} is a video posted on Huelet, the video platform for humans. Start watching now!`}
+          content={`${videoData?.title} is a video posted on Huelet, the video platform for humans. Start watching now!`}
         />
-        <meta property="twitter:image" content={videoData.vimg} />
+        <meta property="twitter:image" content={videoData?.img} />
       </Head>
       <Header username={username} />
       <div className="spacer-sm"></div>
       <article>
         <MobileView>
           <Player
-            src={videoData.vurl}
             playsInline
             fluid={true}
             width={typeof window !== "undefined" ? window.innerWidth : 0}
@@ -245,9 +244,13 @@ const ViewVideo: NextPage = () => {
                 ? Math.round(window.innerHeight / 2)
                 : 0
             }
-            poster={videoData.vimg}
-          />
-          <h2>{videoData.vtitle}</h2>
+            poster={videoData?.thumbnail}
+          >
+            <source src={videoData?.vurl_webm} type="video/webm" />
+            <source src={videoData?.vurl_mp4} type="video/mp4" />
+            <source src={videoData?.url} type="video/mp4" />
+          </Player>
+          <h2>{videoData?.title}</h2>
           <div className={styles.mobileCreatorInfo}>
             <div
               style={{
@@ -273,9 +276,9 @@ const ViewVideo: NextPage = () => {
               </span>
             </div>
             <div className={styles.mobileCreatorInfoAttr}>
-              <Pill type="primary">{videoData.vviews} views</Pill>
+              <Pill type="primary">{videoData?.vviews} views</Pill>
               <div className="spacer-sm"></div>
-              <Pill type="primary">{videoData.vuploaded}</Pill>
+              <Pill type="primary">{videoData?.vuploaded}</Pill>
             </div>
             <div className={styles.mobileCreatorInfoMoreTrigger_outer}>
               <div className={styles.mobileCreatorInfoMoreTrigger}>
@@ -388,10 +391,10 @@ const ViewVideo: NextPage = () => {
             <div>
               <div className={styles.videoFrame}>
                 <h1 className={`${styles.videoDetailsTitle}`}>
-                  {videoData.vtitle}
+                  {videoData?.title}
                 </h1>
                 <Link
-                  href={`https://huelet.net/c/${videoData.authorId}`}
+                  href={`https://huelet.net/c/${videoData?.authorId}`}
                   passHref
                 >
                   <h2 className={`${styles.videoDetailsAuthor}`}>
@@ -400,13 +403,17 @@ const ViewVideo: NextPage = () => {
                 </Link>
                 <div className={styles.videoWrapper}>
                   <Player
-                    src={videoData.vurl}
-                    playsInline
+                    key={videoData?.vurl_webm || videoData?.vurl_mp4 || videoData?.url || ""}
+
                     fluid={true}
                     width={830}
                     height={400}
                     className={styles.videoPlayer}
+                    poster={videoData?.thumbnail}
                   >
+                    <source src={videoData?.vurl_webm} type="video/webm" />
+                    <source src={videoData?.vurl_mp4} type="video/mp4" />
+                    <source src={videoData?.url} type="video/mp4" />
                     <ControlBar>
                       <VolumeMenuButton disabled />
                     </ControlBar>
@@ -432,7 +439,7 @@ const ViewVideo: NextPage = () => {
                       draggable="false"
                       data-type="emoji"
                     ></img>
-                    <span>{videoData.vclaps}</span>
+                    <span>{videoData?.upvotes}</span>
                   </div>
                   <div
                     className={`${styles.videoDetailsOptionsReactionNegative} ${styles.videoDetailsOptionsReaction}`}
@@ -448,7 +455,7 @@ const ViewVideo: NextPage = () => {
                       draggable="false"
                       data-type="emoji"
                     ></img>
-                    <span>{videoData.vcraps}</span>
+                    <span>{videoData?.downvotes}</span>
                   </div>
                   <div
                     className={`${styles.videoDetailsOptionsShare} ${styles.videoDetailsOptionsReaction}`}
@@ -458,7 +465,7 @@ const ViewVideo: NextPage = () => {
                     }}
                   >
                     <Forward fill={"white"} />
-                    <span>{videoData.vshares}</span>
+                    <span>{videoData?.shares}</span>
                   </div>
                   <Modal
                     opened={shareModal}
@@ -571,13 +578,13 @@ const ViewVideo: NextPage = () => {
                 </div>
                 <div className={styles.videoAttributes}>
                   <span className={`${styles.videoAttributes1}`}>
-                    Uploaded: {videoData.uploadedDate}
+                    Uploaded: {videoData?.uploadedDate}
                   </span>
                   <span className={`${styles.videoAttributesSpacerText}`}>
                     &nbsp;|&nbsp;
                   </span>
                   <span className={`${styles.videoAttributes2}`}>
-                    Views: {videoData.vviews}
+                    Views: {videoData?.views}
                   </span>
                 </div>
               </div>
