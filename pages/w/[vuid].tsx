@@ -3,30 +3,17 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from "react-device-detect";
+import { BrowserView, MobileView } from "react-device-detect";
 import { Player, ControlBar, VolumeMenuButton } from "video-react";
 import { Header } from "../../components/header";
-import { Editor } from "../../components/editor";
 import styles from "../../styles/Video.module.css";
 import { useCookies } from "react-cookie";
 import "react-loading-skeleton/dist/skeleton.css";
-import {
-  Forward,
-  Play,
-  Pause,
-  WarningFilled,
-  Copy,
-  Mail,
-  ChevronDown,
-} from "@fdn-ui/icons-react";
-import { Modal, Popover } from "@mantine/core";
+import { WarningFilled, ChevronDown, Check } from "@fdn-ui/icons-react";
+import { Popover } from "@mantine/core";
 import { useSound } from "use-sound";
 import { Card, Pill } from "@huelet/foundation-ui";
 import { Avatar } from "../../components/avatar";
@@ -38,19 +25,12 @@ import { jsx, css } from "@emotion/react";
 const ViewVideo: NextPage = () => {
   const [loading, setLoading] = useState(true);
   const [commentSubmitted, setCommentSubmitted] = useState(false);
-  const [preview, togglePreview] = useState(false);
   const [safeComment, setSafeComment] = useState(false);
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const [videoData, setVideoData]: [any, any] = useState({});
   const [authorData, setAuthorData]: [any, any] = useState({});
   const [username, setUsername] = useState("");
   const [comment, changeComment] = useState("");
-  const [shareModal, toggleShareModal] = useState(false);
-  const [shareUrl, setShareUrl] = useState("");
-  const [copyPopover, toggleCopyPopover] = useState(false);
-  const [mailPopover, toggleMailPopover] = useState(false);
-  const [facebookPopover, toggleFacebookPopover] = useState(false);
-  const [twitterPopover, toggleTwitterPopover] = useState(false);
   /* sounds */
   const [playBgSound] = useSound(
     "https://cdn.huelet.net/assets/sounds/Windows%20Background.wav",
@@ -351,7 +331,6 @@ const ViewVideo: NextPage = () => {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "center",
               width: "100vw",
               height: "100vh",
             })}
@@ -385,12 +364,7 @@ const ViewVideo: NextPage = () => {
                     padding: "0 0 3em 3em",
                   })}
                 >
-                  <Editor
-                    onChange={changeComment}
-                    value={comment}
-                    preview={preview}
-                    onPreviewToggle={togglePreview}
-                  />
+                  {/* editor here */}
                   <div
                     css={css({
                       width: "5em",
@@ -575,93 +549,92 @@ const ViewVideo: NextPage = () => {
               </div>
               <div
                 css={css({
-                  padding: "1.3em 4.3em",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  padding: "2em",
                   border: "1px solid #e6e6e6",
+                  borderRadius: "15px",
                 })}
               >
+                <Link href={`/c/@${authorData?.username}`} passHref={true}>
+                  <div
+                    css={css({
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    })}
+                  >
+                    <Avatar username={authorData?.username} dimensions={128} />
+                    <div
+                      css={css({
+                        display: "flex",
+                        flexDirection: "column",
+                        paddingLeft: "1em",
+                      })}
+                    >
+                      {authorData?.approved ? (
+                        <>
+                          <span
+                            css={css({
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            })}
+                          >
+                            <h2>@{authorData?.username}</h2>
+                            <Check
+                              fill="green"
+                              css={css({
+                                marginLeft: "0.5em",
+                              })}
+                            />
+                          </span>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: authorData?.bio,
+                            }}
+                          ></div>
+                        </>
+                      ) : (
+                        <>
+                          <h2>@{authorData?.username}</h2>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: authorData?.bio,
+                            }}
+                          ></div>
+                        </>
+                      )}
+                      <Follow />
+                    </div>
+                  </div>
+                </Link>
                 <div
                   css={css({
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "space-around",
-                    marginTop: "3em",
-                    marginBottom: "3em",
-                    width: "12em",
                   })}
                 >
                   <div
                     css={css({
-                      alignItems: "center",
-                      borderRadius: "5rem",
-                      cursor: "pointer",
-                      boxSizing: "border-box",
-                      marginRight: ".25rem",
-                      marginBottom: ".25rem",
-                      userSelect: "none",
-                      borderColor: "#bde6fb",
-                      border: "0.1em solid",
-                      padding: "0.2em",
-                      width: "3em",
-                      background: "#BDE6FB30",
-                      transition: "100ms",
-                      backgroundColor: "#436072",
-                      objectFit: "contain",
-                    })}
-                    onClick={() => {
-                      addClap;
-                      playClickSound();
-                    }}
-                  >
-                    <Image
-                      src="https://cdn.huelet.net/assets/emoji/1F44F.svg"
-                      alt="Yellow hands clapping"
-                      width={16}
-                      height={16}
-                      loader={({ src }) => {
-                        return src;
-                      }}
-                      draggable="false"
-                      data-type="emoji"
-                    />
-                    <span>{videoData?.upvotes}</span>
-                  </div>
-                  <div
-                    className={`${styles.videoDetailsOptionsReactionNegative} ${styles.videoDetailsOptionsReaction}`}
-                    onClick={() => {
-                      addCrap;
-                      playClickSound();
-                    }}
-                  >
-                    <Image
-                      src="https://cdn.huelet.net/assets/emoji/1F4A9.svg"
-                      alt="Brown poop"
-                      width={16}
-                      height={16}
-                      loader={({ src }) => {
-                        return src;
-                      }}
-                      draggable="false"
-                      data-type="emoji"
-                    />
-                    <span>{videoData?.downvotes}</span>
-                  </div>
-                </div>
-                <div
-                  css={css({
-                    padding: "1em",
-                  })}
-                >
-                  <span>Uploaded: {videoData?.uploadedDate}</span>
-                  <span
-                    css={css({
-                      fontWeight: "2em",
-                      fontSize: "2em",
-                      padding: "3em",
+                      display: "flex",
+                      flexDirection: "column",
                     })}
                   >
-                    &nbsp;|&nbsp;
-                  </span>
-                  <span>Views: {videoData?.views}</span>
+                    <Pill type="primary">
+                      {videoData?.views === 1
+                        ? `${videoData?.views} view`
+                        : `${videoData?.views} views`}
+                    </Pill>
+                    <div className="spacer-sm"></div>
+                    <Pill type="primary">
+                      {videoData?.createdAt
+                        ? new Date(videoData?.createdAt).toLocaleDateString()
+                        : "Unknown"}
+                    </Pill>
+                  </div>
                 </div>
               </div>
             </div>
