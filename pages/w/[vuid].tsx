@@ -26,6 +26,7 @@ const ViewVideo: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
   const [videoData, setVideoData]: [any, any] = useState({});
   const [authorData, setAuthorData]: [any, any] = useState({});
+  const [commentAuthorData, setCommentAuthorData]: [any, any] = useState([]);
   const [username, setUsername] = useState("");
   const [comment, changeComment] = useState("");
 
@@ -79,6 +80,21 @@ const ViewVideo: NextPage = () => {
       setLoading(false);
     };
     getAuthorData();
+  }, [videoData]);
+  useEffect(() => {
+    const getCommentData = async () => {
+      videoData?.comments?.forEach((element) => {
+        fetch(`https://api.huelet.net/auth/user?uid=${element.author}`)
+          .then((res) => res.json())
+          .then((data) => {
+            setCommentAuthorData((prevState: any) => [
+              ...prevState,
+              { uid: data?.data?.uid, username: data?.data?.username },
+            ]);
+          });
+      });
+    };
+    getCommentData();
   }, [videoData]);
   const submitComment = async () => {
     setCommentSubmitted(true);
@@ -459,7 +475,7 @@ const ViewVideo: NextPage = () => {
                   padding: "4em",
                 })}
               >
-                <p></p>
+                <div></div>
               </div>
             </Card>
             <div>
@@ -621,7 +637,6 @@ const ViewVideo: NextPage = () => {
                         cursor: "pointer",
                       })}
                       onClick={async () => {
-                        
                         const resp = await fetch(
                           `https://api.huelet.net/videos/interact/upvote/${vuid}`,
                           {
