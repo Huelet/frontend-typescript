@@ -1,18 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { BrowserView, MobileView } from "react-device-detect";
 import { Player, ControlBar, VolumeMenuButton } from "video-react";
 import { Header } from "../../components/header";
-import styles from "../../styles/Video.module.css";
 import { useCookies } from "react-cookie";
 import "react-loading-skeleton/dist/skeleton.css";
-import { WarningFilled, ChevronDown, Check } from "@fdn-ui/icons-react";
+import { WarningFilled, ChevronDown, Check, Share } from "@fdn-ui/icons-react";
 import { Popover } from "@mantine/core";
 import { useSound } from "use-sound";
 import { Card, Pill } from "@huelet/foundation-ui";
@@ -31,6 +28,9 @@ const ViewVideo: NextPage = () => {
   const [authorData, setAuthorData]: [any, any] = useState({});
   const [username, setUsername] = useState("");
   const [comment, changeComment] = useState("");
+
+  const [userUpvoted, setUserUpvoted] = useState(false);
+  const [userDownvoted, setUserDownvoted] = useState(false);
   /* sounds */
   const [playBgSound] = useSound(
     "https://cdn.huelet.net/assets/sounds/Windows%20Background.wav",
@@ -80,44 +80,6 @@ const ViewVideo: NextPage = () => {
     };
     getAuthorData();
   }, [videoData]);
-  const addClap = async () => {
-    const resp = await fetch(
-      `https://api.huelet.net/videos/interact/upvote/${vuid}`,
-      {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: cookie._hltoken,
-        }),
-      }
-    );
-  };
-  const addCrap = async () => {
-    const resp = await fetch(
-      `https://api.huelet.net/videos/interact/downvote/${vuid}`,
-      {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: cookie._hltoken,
-        }),
-      }
-    );
-  };
   const submitComment = async () => {
     setCommentSubmitted(true);
     const safetyCheck = await fetch(
@@ -330,9 +292,10 @@ const ViewVideo: NextPage = () => {
             css={css({
               display: "flex",
               flexDirection: "row",
+              justifyContent: "center",
               alignItems: "center",
               width: "100vw",
-              height: "100vh",
+              height: "80vh",
             })}
           >
             <Card
@@ -634,6 +597,101 @@ const ViewVideo: NextPage = () => {
                         ? new Date(videoData?.createdAt).toLocaleDateString()
                         : "Unknown"}
                     </Pill>
+                  </div>
+                </div>
+                <div
+                  css={css({
+                    display: "flex",
+                    flexDirection: "row",
+                  })}
+                >
+                  <div
+                    css={css({
+                      marginLeft: "0.5em",
+                      fontSize: "1.5em",
+                    })}
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 270 270"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      css={css({
+                        cursor: "pointer",
+                      })}
+                      onClick={async () => {
+                        
+                        const resp = await fetch(
+                          `https://api.huelet.net/videos/interact/upvote/${vuid}`,
+                          {
+                            method: "POST",
+                          }
+                        );
+                        console.log(await resp.json());
+                        setVideoData((prev) => {
+                          return {
+                            ...prev,
+                            upvotes: prev?.upvotes + 1,
+                          };
+                        });
+                        setUserUpvoted(true);
+                      }}
+                    >
+                      <path
+                        d="M118.125 40.0714H119.625V38.5714V19.2857C119.625 9.26853 126.69 1.5 135 1.5C143.31 1.5 150.375 9.26853 150.375 19.2857V38.5714V40.0714H151.875H202.5C229.449 40.0714 251.625 65.109 251.625 96.4286V135V136.5H253.125C261.435 136.5 268.5 144.269 268.5 154.286C268.5 164.303 261.435 172.071 253.125 172.071H251.625V173.571V212.143C251.625 243.462 229.449 268.5 202.5 268.5H67.5C40.5509 268.5 18.375 243.462 18.375 212.143V173.571V172.071H16.875C8.56549 172.071 1.5 164.303 1.5 154.286C1.5 144.269 8.56551 136.5 16.875 136.5H18.375V135V96.4286C18.375 65.109 40.5509 40.0714 67.5 40.0714H118.125ZM85.875 115.714C85.875 105.697 92.9405 97.9286 101.25 97.9286C109.56 97.9286 116.625 105.697 116.625 115.714C116.625 125.731 109.56 133.5 101.25 133.5C92.9405 133.5 85.875 125.731 85.875 115.714ZM153.375 115.714C153.375 105.697 160.441 97.9286 168.75 97.9286C177.059 97.9286 184.125 105.697 184.125 115.714C184.125 125.731 177.06 133.5 168.75 133.5C160.441 133.5 153.375 125.731 153.375 115.714ZM88.5048 163.629C93.2648 155.469 102.732 153.408 109.701 158.718C121.212 167.488 128.753 170.25 135 170.25C141.247 170.25 148.788 167.488 160.298 158.718C167.268 153.408 176.735 155.469 181.495 163.629C186.314 171.89 184.306 183.012 177.202 188.425C163.399 198.941 149.847 205.821 135 205.821C120.153 205.821 106.601 198.941 92.7985 188.425C85.6936 183.012 83.6859 171.89 88.5048 163.629ZM67.5 75.6429C57.1699 75.6429 49.125 85.1434 49.125 96.4286V212.143C49.125 223.428 57.1699 232.929 67.5 232.929H202.5C212.83 232.929 220.875 223.428 220.875 212.143V96.4286C220.875 85.1434 212.83 75.6429 202.5 75.6429H67.5Z"
+                        fill={userUpvoted ? "green" : "white"}
+                        stroke="black"
+                        strokeWidth="3"
+                      />
+                    </svg>
+
+                    {videoData?.upvotes}
+                  </div>
+                  <div
+                    css={css({
+                      marginRight: "0.5em",
+                      fontSize: "1.5em",
+                    })}
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 270 270"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      css={css({
+                        cursor: "pointer",
+                      })}
+                      onClick={async () => {
+                        const resp = await fetch(
+                          `https://api.huelet.net/videos/interact/downvote/${vuid}`,
+                          {
+                            method: "POST",
+                          }
+                        );
+                        console.log(await resp.json());
+                        setVideoData((prev) => {
+                          return {
+                            ...prev,
+                            downvotes: prev?.downvotes + 1,
+                          };
+                        });
+                        setUserDownvoted(true);
+                      }}
+                    >
+                      <path
+                        d="M118.125 40.0714H119.625V38.5714V19.2857C119.625 9.26853 126.69 1.5 135 1.5C143.31 1.5 150.375 9.26853 150.375 19.2857V38.5714V40.0714H151.875H202.5C229.449 40.0714 251.625 65.109 251.625 96.4286V135V136.5H253.125C261.434 136.5 268.5 144.269 268.5 154.286C268.5 164.303 261.434 172.071 253.125 172.071H251.625V173.571V212.143C251.625 243.462 229.449 268.5 202.5 268.5H67.5C40.5509 268.5 18.375 243.462 18.375 212.143V173.571V172.071H16.875C8.56549 172.071 1.5 164.303 1.5 154.286C1.5 144.269 8.56551 136.5 16.875 136.5H18.375V135V96.4286C18.375 65.109 40.5509 40.0714 67.5 40.0714H118.125ZM85.875 115.714C85.875 114.169 85.8357 112.603 85.7987 111.128C85.7726 110.091 85.7477 109.099 85.7384 108.192C85.715 105.897 85.7842 103.956 86.1069 102.378C86.4273 100.811 86.9663 99.7615 87.7583 99.0842C88.5418 98.4143 89.7842 97.9286 91.8894 97.9286C95.9897 97.9286 100.318 100.37 104.713 104.104C108.618 107.422 112.354 111.561 115.812 115.392C116.217 115.84 116.617 116.284 117.013 116.721C118.567 118.436 118.898 120.179 118.507 121.893C118.095 123.697 116.844 125.601 114.969 127.379C111.189 130.961 105.445 133.5 101.25 133.5C92.9405 133.5 85.875 125.731 85.875 115.714ZM152.885 116.823C154.639 115.226 156.49 113.334 158.376 111.404C158.553 111.224 158.729 111.044 158.906 110.863C160.991 108.733 163.129 106.57 165.313 104.626C169.758 100.669 174.062 97.9286 178.111 97.9286C180.216 97.9286 181.458 98.4143 182.242 99.0842C183.034 99.7615 183.573 100.811 183.893 102.378C184.216 103.956 184.285 105.897 184.262 108.192C184.252 109.099 184.227 110.091 184.201 111.128C184.164 112.603 184.125 114.169 184.125 115.714C184.125 125.731 177.06 133.5 168.75 133.5C166.724 133.5 164.265 132.814 161.783 131.601C159.316 130.396 156.93 128.72 155.057 126.859C153.163 124.979 151.903 123.02 151.491 121.271C151.105 119.631 151.439 118.14 152.885 116.823ZM181.495 205.962C176.735 214.122 167.268 216.183 160.299 210.873C159.37 210.166 158.497 209.496 157.671 208.861C153.495 205.654 150.511 203.362 147.595 201.86C143.97 199.994 140.465 199.341 135 199.341C129.535 199.341 126.03 199.994 122.405 201.86C119.489 203.362 116.505 205.654 112.329 208.861C111.503 209.496 110.63 210.166 109.701 210.873C106.242 213.509 101.199 214.367 96.3251 213.457C91.457 212.547 87.0351 209.925 84.723 205.962C82.4311 202.033 82.529 197.32 84.2184 192.759C85.9094 188.193 89.1412 183.953 92.7985 181.166C106.601 170.651 120.153 163.77 135 163.77C149.847 163.77 163.399 170.651 177.201 181.166C184.306 186.58 186.314 197.701 181.495 205.962ZM67.5 75.6429C57.1699 75.6429 49.125 85.1434 49.125 96.4286V212.143C49.125 223.428 57.1699 232.929 67.5 232.929H202.5C212.83 232.929 220.875 223.428 220.875 212.143V96.4286C220.875 85.1434 212.83 75.6429 202.5 75.6429H67.5Z"
+                        fill={userDownvoted ? "red" : "white"}
+                        stroke="black"
+                        strokeWidth="3"
+                      />
+                    </svg>
+
+                    {videoData?.downvotes}
+                  </div>
+                  <div>
+                    <Share fill="white" width="24" height="24" />
                   </div>
                 </div>
               </div>
