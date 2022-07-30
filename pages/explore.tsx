@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Head from "next/head";
@@ -6,6 +7,7 @@ import { useCookies } from "react-cookie";
 import { Header } from "../components/header";
 import { VideoCard } from "../components/video-card";
 import Image from "next/image";
+import { css, jsx } from "@emotion/react";
 
 const Explore: NextPage = () => {
   const [cookie, setCookie] = useCookies(["_hltoken"]);
@@ -38,7 +40,7 @@ const Explore: NextPage = () => {
         <div className={`${styles.exploreWelcome}`}>
           <Image
             loader={() => {
-              return "https://cdn.huelet.net/assets/logo.png"
+              return "https://cdn.huelet.net/assets/logo.png";
             }}
             src="https://cdn.huelet.net/assets/logo.png"
             alt="Huelet logo"
@@ -58,9 +60,26 @@ const Explore: NextPage = () => {
         </div>
         <div className={styles.exploreVideoList}>
           <h2 className={styles.exploreVideoListText}>Today&apos;s videos</h2>
-          <div className={styles.exploreVideoListItems}>
-            <VideoCard vuid={"x181c2etzrzqvd4o"} />
-            <VideoCard vuid={"15xqiownj1672fjysg"} />
+          <div
+            css={css({
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            })}
+          >
+            <div
+              css={css({
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                width: "100%",
+              })}
+            >
+              <VideoCard vuid={"x181c2etzrzqvd4o"} />
+              <VideoCard vuid={"15xqiownj1672fjysg"} />
+              <VideoCard vuid={"14t5jd0s6oklq5cli"} />
+            </div>
           </div>
         </div>
       </div>

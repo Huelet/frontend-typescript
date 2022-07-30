@@ -1,14 +1,57 @@
-import Script from "next/script";
+import { useRef, useState } from "react";
 import Head from "next/head";
 import "../styles/globals.css";
 import "../styles/adstyles.css";
 import "../styles/VideoPlayer.css";
 import "../styles/components/rte.css";
 import type { AppProps } from "next/app";
-import { MantineProvider } from "@mantine/core";
-import { CookiesProvider } from "react-cookie";
+import { Kbd, MantineProvider, Modal } from "@mantine/core";
+import {
+  SpotlightProvider,
+  registerSpotlightActions,
+} from "@mantine/spotlight";
+import { CookiesProvider, useCookies } from "react-cookie";
+import { Search, Settings, Star, Video } from "@fdn-ui/icons-react";
 
 function HueletWebapp({ Component, pageProps }: AppProps) {
+  const [cookies, setCookie] = useCookies(["_hlnfmd"]);
+  const [actions, setActions] = useState([
+    {
+      id: "search",
+      title: "Search",
+      onTrigger: () => {
+        location.assign("/s/");
+      },
+      icon: <Search fill="white" />,
+    },
+    {
+      id: "settings",
+      title: "Settings",
+      onTrigger: () => {
+        location.assign("/auth/settings/");
+      },
+      icon: <Settings fill="white" />,
+    },
+    {
+      id: "dash",
+      title: "Video Dashboard",
+      onTrigger: () => {
+        location.assign("https://dash.huelet.net");
+      },
+      icon: <Video fill="white" />,
+    },
+    {
+      id: "liked",
+      title: "Liked Videos",
+      onTrigger: () => {
+        location.assign("/auth/liked/");
+      },
+      icon: <Star fill="white" />,
+    },
+  ]);
+  if (cookies._hlnfmd === undefined) {
+    setCookie("_hlnfmd", 1, { path: "/" });
+  }
   return (
     <>
       <Head>
@@ -66,7 +109,35 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
         <MantineProvider
           theme={{ fontFamily: "Red Hat Display", colorScheme: "dark" }}
         >
-          <Component {...pageProps} />
+          <SpotlightProvider
+            actions={actions}
+            onQueryChange={async (query) => {
+              const resp = await fetch(
+                `https://api.huelet.net/videos/search?searchContent=${query}`
+              );
+              const data = (await resp.json()).data.hits;
+              registerSpotlightActions([
+                ...data.map((video) => ({
+                  id: video.vuid,
+                  title: video.title,
+                  onTrigger: () => {
+                    location.assign(`/w/${video.vuid}`);
+                  },
+                })),
+              ]);
+            }}
+            shortcut={["mod + shift + P"]}
+          >
+            <Modal
+              opened={cookies._hlnfmd === 1}
+              onClose={() => setCookie("_hlnfmd", 0, { path: "/" })}
+              title={<h2>New feature!</h2>}
+            >
+              You can now use the spotlight to navigate the site! Press{" "}
+              <Kbd>mod</Kbd> + <Kbd>shift</Kbd> + <Kbd>P</Kbd> to open it.
+            </Modal>
+            <Component {...pageProps} />
+          </SpotlightProvider>
         </MantineProvider>
       </CookiesProvider>
     </>

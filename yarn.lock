@@ -408,6 +408,13 @@
   dependencies:
     "@mantine/ssr" "4.2.12"
 
+"@mantine/spotlight@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@mantine/spotlight/-/spotlight-5.0.0.tgz#20de7c4caba9ef533a75964b8933cd3630fc05b7"
+  integrity sha512-emDuL15OSKQ9xw1y9gjTWIqWugD7MpLhoPBkfEQ8vAVnqgVUNZ99JGusyxmKZnvuXHg1BvAHio/PxFA+63dV1g==
+  dependencies:
+    "@mantine/utils" "5.0.0"
+
 "@mantine/ssr@4.2.12":
   version "4.2.12"
   resolved "https://registry.yarnpkg.com/@mantine/ssr/-/ssr-4.2.12.tgz#86e86243f7c3e010ad4ae0a2f0f6ce6f7154434a"
@@ -433,6 +440,11 @@
     "@emotion/utils" "1.0.0"
     clsx "^1.1.1"
     csstype "3.0.9"
+
+"@mantine/utils@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.0.0.tgz#576ebab6b0980b996ecb70b277f4ea378dcfb474"
+  integrity sha512-Fy9BdxWvrXkplWua8ZKmsBQODo24QB8OPn6BEmvXUt4O+3qoP27VaAWQVea4opWZsy+L5dtEe/kOXY/Q/kC2qg==
 
 "@next/env@12.1.0":
   version "12.1.0"
