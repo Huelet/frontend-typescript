@@ -1,17 +1,13 @@
-export interface LogoProps {
-  width?: number;
-  height?: number;
-}
+import React from "react";
 
-export const Logo = ({ width, height }: LogoProps) => {
+export const Logo = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.0"
-      width={width}
-      height={height}
       viewBox="0 0 400.000000 400.000000"
       preserveAspectRatio="xMidYMid meet"
+      {...props}
     >
       <g
         transform="translate(0.000000,400.000000) scale(0.100000,-0.100000)"

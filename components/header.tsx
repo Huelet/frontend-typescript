@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import next from "next";
 import Link from "next/link";
 import {
@@ -18,6 +19,7 @@ import { useSound } from "use-sound";
 import { Search } from "./search";
 import { Avatar } from "./avatar";
 import { Logo } from "./logo";
+import { css, jsx } from "@emotion/react";
 
 export interface HeaderProps {
   username?: string;
@@ -48,8 +50,14 @@ export const Header = ({ username }: HeaderProps) => {
   return (
     <div className={styles.navContainer}>
       <div className={styles.navBar}>
-        <div className={styles.navIcon} onClick={() => playBgSound()}>
-          <Link href="/explore">
+        <div
+          className={styles.navIcon}
+          onClick={() => playBgSound()}
+          css={css({
+            cursor: "pointer",
+          })}
+        >
+          <Link href="/explore" passHref={true}>
             <Logo width={64} height={64} />
           </Link>
         </div>
