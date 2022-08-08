@@ -1,15 +1,47 @@
+/** @jsxImportSource @emotion/react */
 import * as React from "react";
+import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { SetStateAction, useState } from "react";
 import styles from "../../styles/Signup.module.css";
 import { useCookies } from "react-cookie";
 import { Card } from "@huelet/foundation-ui";
+import { jsx, css } from "@emotion/react";
+import Loader from "../../components/loader";
 
 const AuthIn: NextPage = () => {
+	const [loading, setLoading] = useState(false);
 	const [resp, setResp] = useState<string>("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
+	const router = useRouter();
+
+	React.useEffect(() => {
+		const checkCookie = async () => {
+			const token = JWTcookie._hltoken;
+			if (token) {
+				const resp = await fetch("https://api.huelet.net/auth/token", {
+					method: "GET",
+					mode: "cors",
+					cache: "no-cache",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				const data = await resp.json();
+				if (resp.status === 200) {
+					router.push((router.query.redir as string) || "/explore");
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+		checkCookie();
+	}, [JWTcookie]);
+
 	const handleUsernameChange = (event: {
 		target: { value: SetStateAction<string> };
 	}) => {
@@ -22,6 +54,8 @@ const AuthIn: NextPage = () => {
 	};
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
+		setLoading(true);
+		if (!username || !password) setResp("You forgot to fill in a field!");
 		try {
 			const resp = await fetch("https://api.huelet.net/auth/in", {
 				method: "POST",
@@ -36,54 +70,72 @@ const AuthIn: NextPage = () => {
 				}),
 			});
 			const data = await resp.json();
-			console.log(data);
+			setLoading(false);
 			if (resp.status === 401) {
 				setResp("Invalid username or password");
-			}
-			if (resp.status === 200) {
+			} else if (resp.status === 200) {
 				setJWTCookie("_hltoken", data.token, {
 					path: "/",
 				});
-				location.assign("/explore");
+				router.push((router.query.redir as string) || "/explore");
+			} else if (resp.status === 500) {
+				setLoading(false);
+				setResp("Something went wrong. Please report this bug.");
 			}
 		} catch (error) {
 			console.log(error);
+			setLoading(false);
+			setResp("Something went wrong. Please report this bug.");
 		}
 	};
 	return (
 		<div id="klausen">
 			<Card title="Sign in" full={true}>
-				<form id="form" onSubmit={handleSubmit} className={styles.form}>
-					<input
-						className={styles.input}
-						id="username"
-						type="div"
-						name="username"
-						placeholder="Username"
-						onChange={handleUsernameChange}
-						value={username}
-					/>
-					<div className="spacer-sm"></div>
-					<div className="pwd-input flex">
+				{loading ? (
+					<Loader />
+				) : (
+					<form id="form" onSubmit={handleSubmit} className={styles.form}>
 						<input
 							className={styles.input}
-							id="password"
-							type="password"
-							name="password"
-							placeholder="Password"
-							onChange={handlePasswordChange}
-							value={password}
+							id="username"
+							type="div"
+							name="username"
+							placeholder="Username"
+							onChange={handleUsernameChange}
+							value={username}
 						/>
 						<div className="spacer-sm"></div>
-					</div>
-					<div className="spacer"></div>
-					<button className={"button-primary"} id="submit" type="submit">
-						Sign In
-					</button>
-					<div className={"error-box sp-1-io"}>
-						<p className="error-text">{resp}</p>
-					</div>
-				</form>
+						<div className="pwd-input flex">
+							<input
+								className={styles.input}
+								id="password"
+								type="password"
+								name="password"
+								placeholder="Password"
+								onChange={handlePasswordChange}
+								value={password}
+							/>
+							<div className="spacer-sm"></div>
+						</div>
+						<div className="spacer"></div>
+						<button className={"button-primary"} id="submit" type="submit">
+							Sign In
+						</button>
+						{resp ? (
+							<div
+								css={{
+									backgroundColor: "red",
+									marginTop: "1rem",
+									borderRadius: "10px",
+								}}
+							>
+								<Card>
+									<p>{resp}</p>
+								</Card>
+							</div>
+						) : null}
+					</form>
+				)}
 			</Card>
 		</div>
 	);
