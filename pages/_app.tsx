@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import "../styles/globals.css";
 import "../styles/adstyles.css";
 import "../styles/VideoPlayer.css";
@@ -15,41 +15,8 @@ import { CookiesProvider, useCookies } from "react-cookie";
 import { Search, Settings, Star, Video } from "@fdn-ui/icons-react";
 
 function HueletWebapp({ Component, pageProps }: AppProps) {
+	const router = useRouter();
 	const [cookies, setCookie] = useCookies(["_hlnfmd"]);
-	const [actions, setActions] = useState([
-		{
-			id: "search",
-			title: "Search",
-			onTrigger: () => {
-				location.assign("/s/");
-			},
-			icon: <Search fill="white" />,
-		},
-		{
-			id: "settings",
-			title: "Settings",
-			onTrigger: () => {
-				location.assign("/auth/settings/");
-			},
-			icon: <Settings fill="white" />,
-		},
-		{
-			id: "dash",
-			title: "Video Dashboard",
-			onTrigger: () => {
-				location.assign("https://dash.huelet.net");
-			},
-			icon: <Video fill="white" />,
-		},
-		{
-			id: "liked",
-			title: "Liked Videos",
-			onTrigger: () => {
-				location.assign("/auth/liked/");
-			},
-			icon: <Star fill="white" />,
-		},
-	]);
 	if (cookies._hlnfmd === undefined) {
 		setCookie("_hlnfmd", 1, { path: "/" });
 	}
@@ -111,7 +78,40 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
 					theme={{ fontFamily: "Red Hat Display", colorScheme: "dark" }}
 				>
 					<SpotlightProvider
-						actions={actions}
+						actions={[
+							{
+								id: "search",
+								title: "Search",
+								onTrigger: () => {
+									router.push("/s/");
+								},
+								icon: <Search fill="white" />,
+							},
+							{
+								id: "settings",
+								title: "Settings",
+								onTrigger: () => {
+									router.push("/auth/settings/");
+								},
+								icon: <Settings fill="white" />,
+							},
+							{
+								id: "dash",
+								title: "Video Dashboard",
+								onTrigger: () => {
+									router.push("https://dash.huelet.net");
+								},
+								icon: <Video fill="white" />,
+							},
+							{
+								id: "liked",
+								title: "Liked Videos",
+								onTrigger: () => {
+									router.push("/auth/liked/");
+								},
+								icon: <Star fill="white" />,
+							},
+						]}
 						onQueryChange={async (query) => {
 							const resp = await fetch(
 								`https://api.huelet.net/videos/search?searchContent=${query}`
@@ -122,7 +122,7 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
 									id: video.vuid,
 									title: video.title,
 									onTrigger: () => {
-										location.assign(`/w/${video.vuid}`);
+										router.push(`/w/${video.vuid}`);
 									},
 								})),
 							]);
