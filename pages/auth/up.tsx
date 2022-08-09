@@ -106,31 +106,29 @@ const AuthUp: NextPage = () => {
 
 							<Modal opened={pwgModal} onClose={() => togglePwgModal(false)}>
 								<div className={styles.pwgModalContent}>
-									<div className="sp-1-eo">
-										<div className="sp-1-io p-5">
-											<div className={styles.mainText}>
-												<h2>Generate a password</h2>
-											</div>
-											<div className={styles.mainText}>
-												<p className="pwg-subtitle">
-													Generate a password for your account
-												</p>
-											</div>
-											<button
-												className={"button-primary"}
-												id="pwg-submit"
-												onClick={getRandomPassword}
-											>
-												Generate
-											</button>
-											<div className="spacer.sm"></div>
-											<div className="sp-1-io">
-												<div className="p-5" id="pwg-response">
-													<div className={styles.mainText}>{pwgResponse}</div>
-												</div>
-											</div>
+									<Card>
+										<div className={styles.mainText}>
+											<h2>Generate a password</h2>
 										</div>
-									</div>
+										<div className={styles.mainText}>
+											<p className="pwg-subtitle">
+												Generate a password for your account
+											</p>
+										</div>
+										<button
+											className={"button-primary"}
+											id="pwg-submit"
+											onClick={getRandomPassword}
+										>
+											Generate
+										</button>
+										<div className="spacer.sm"></div>
+										<Card>
+											<div className="p-5" id="pwg-response">
+												<div className={styles.mainText}>{pwgResponse}</div>
+											</div>
+										</Card>
+									</Card>
 								</div>
 							</Modal>
 						</a>
