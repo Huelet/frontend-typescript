@@ -5,6 +5,8 @@ import "../styles/globals.css";
 import "../styles/adstyles.css";
 import "../styles/VideoPlayer.css";
 import "../styles/components/rte.css";
+import "@fontsource/red-hat-display";
+import "@fontsource/red-hat-text";
 import type { AppProps } from "next/app";
 import { Kbd, MantineProvider, Modal } from "@mantine/core";
 import {

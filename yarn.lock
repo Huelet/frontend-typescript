@@ -238,6 +238,16 @@
   dependencies:
     react "^17.0.2"
 
+"@fontsource/red-hat-display@^4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@fontsource/red-hat-display/-/red-hat-display-4.5.10.tgz#bd78159ec536c46f318bf184dfb8228fea6640ff"
+  integrity sha512-V9ME2SuCQ6vjveo+nfPND82Jr9ZB5xfSGDJ04ynkAyen2kj8jCVhGd7kr3IiOAe2twiKXjm7SQZ56mR7UZzvZw==
+
+"@fontsource/red-hat-text@^4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@fontsource/red-hat-text/-/red-hat-text-4.5.10.tgz#50db2d7b552417eaec3c9df5ed330cc58c500c35"
+  integrity sha512-H+KM5fAmpWyCfbI5cWGLeRP2xOIIysjwFSxW8INdtLgEOYUGBbEVxaieUIXdM/myMRD7ykSDmT4dn60Of27MQg==
+
 "@huelet/foundation-ui@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@huelet/foundation-ui/-/foundation-ui-0.2.0.tgz#405ccd104463f4645980c6c171d7a16533bb17bb"
