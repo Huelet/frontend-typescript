@@ -3,10 +3,10 @@ import * as React from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { BrowserView, MobileView } from "react-device-detect";
-import { Player, ControlBar, VolumeMenuButton } from "video-react";
 import { Header } from "../../components/header";
 import { useCookies } from "react-cookie";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -49,6 +49,9 @@ const ViewVideo: NextPage = () => {
 	const router = useRouter();
 	const { vuid } = router.query;
 
+	const Player = dynamic(() => import("griffith"), {
+		loading: () => <Loader />,
+	});
 	useEffect(() => {
 		const getUserData = async () => {
 			const userData = await fetch("https://api.huelet.net/auth/token", {
@@ -196,20 +199,23 @@ const ViewVideo: NextPage = () => {
 			<article>
 				<MobileView>
 					<Player
-						playsInline
-						fluid={true}
-						width={typeof window !== "undefined" ? window.innerWidth : 0}
-						height={
-							typeof window !== "undefined"
-								? Math.round(window.innerHeight / 2)
-								: 0
-						}
-						poster={videoData?.thumbnail}
-					>
-						<source src={videoData?.vurl_webm} type="video/webm" />
-						<source src={videoData?.vurl_mp4} type="video/mp4" />
-						<source src={videoData?.url} type="video/mp4" />
-					</Player>
+						id={[...Array(2)]
+							.map((i) =>
+								Math.round(Date.now() + Math.random() * Date.now()).toString(36)
+							)
+							.join("")}
+						sources={{
+							hd: {
+								play_url: videoData?.vurl_webm || videoData?.url,
+							},
+						}}
+						cover={videoData?.thumbnail}
+						title={videoData?.title}
+						css={css({
+							paddingTop: "56% !important",
+							borderRadius: "15px",
+						})}
+					/>
 					<h2>{videoData?.title}</h2>
 					<div
 						css={css({
@@ -503,28 +509,25 @@ const ViewVideo: NextPage = () => {
 									})}
 								>
 									<Player
-										key={
-											videoData?.vurl_webm ||
-											videoData?.vurl_mp4 ||
-											videoData?.url ||
-											""
-										}
-										fluid={true}
-										width={830}
-										height={400}
+										id={[...Array(2)]
+											.map((i) =>
+												Math.round(
+													Date.now() + Math.random() * Date.now()
+												).toString(36)
+											)
+											.join("")}
+										sources={{
+											hd: {
+												play_url: videoData?.vurl_webm || videoData?.url,
+											},
+										}}
+										cover={videoData?.thumbnail}
+										title={videoData?.title}
 										css={css({
 											paddingTop: "56% !important",
-											borderRadius: "15px",
+											borderRadius: "15px !important",
 										})}
-										poster={videoData?.thumbnail}
-									>
-										<source src={videoData?.vurl_webm} type="video/webm" />
-										<source src={videoData?.vurl_mp4} type="video/mp4" />
-										<source src={videoData?.url} type="video/mp4" />
-										<ControlBar>
-											<VolumeMenuButton disabled />
-										</ControlBar>
-									</Player>
+									/>
 								</div>
 							</div>
 							<div
