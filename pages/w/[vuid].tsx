@@ -211,10 +211,6 @@ const ViewVideo: NextPage = () => {
 						}}
 						cover={videoData?.thumbnail}
 						title={videoData?.title}
-						css={css({
-							paddingTop: "56% !important",
-							borderRadius: "15px",
-						})}
 					/>
 					<h2>{videoData?.title}</h2>
 					<div
@@ -523,10 +519,6 @@ const ViewVideo: NextPage = () => {
 										}}
 										cover={videoData?.thumbnail}
 										title={videoData?.title}
-										css={css({
-											paddingTop: "56% !important",
-											borderRadius: "15px !important",
-										})}
 									/>
 								</div>
 							</div>
