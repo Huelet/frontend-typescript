@@ -49,7 +49,7 @@ const ViewVideo: NextPage = () => {
 	const router = useRouter();
 	const { vuid } = router.query;
 
-	const Player = dynamic(() => import("@huelet/player"), {
+	const Player = dynamic(() => import("griffith"), {
 		loading: () => <Loader />,
 	});
 	useEffect(() => {
