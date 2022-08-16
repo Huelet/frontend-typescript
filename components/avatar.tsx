@@ -1,5 +1,5 @@
 import * as React from "react";
-import Image from "next/image";
+import NextImage from "next/image";
 import styles from "../styles/components/Avatar.module.css";
 import { useEffect, useState } from "react";
 import { useSound } from "use-sound";
@@ -9,6 +9,7 @@ export interface AvatarProps {
 	username: string | undefined;
 	dimensions?: number;
 	link?: boolean;
+	dontUseNextImage?: boolean;	
 	children?: React.ReactNode;
 }
 
@@ -16,6 +17,7 @@ export const Avatar = ({
 	username,
 	dimensions,
 	link,
+	dontUseNextImage,
 	children,
 }: AvatarProps) => {
 	const [playBgSound] = useSound(
@@ -24,6 +26,9 @@ export const Avatar = ({
 	);
 	const [loading, setLoading] = useState(true);
 	const [pfp, setPfp] = useState<string>("");
+
+	const ImageElement = dontUseNextImage ? "img" : NextImage;
+
 	useEffect(() => {
 		const getUserData = async () => {
 			if (username) {
@@ -44,11 +49,10 @@ export const Avatar = ({
 			{loading ? (
 				<Skeleton height={dimensions} width={dimensions} circle={true} />
 			) : (
-				<Image
+				<ImageElement
 					src={pfp ? pfp : "https://cdn.huelet.net/assets/images/avatar.png"}
 					className={styles.avatarImageBorder}
 					alt={`${username}'s profile picture`}
-					loader={() => pfp}
 					placeholder="empty"
 					width={dimensions}
 					height={dimensions}
