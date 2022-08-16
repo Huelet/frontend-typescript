@@ -83,13 +83,9 @@ export const VideoCard = ({
 							}}
 						>
 							<h2>{video?.title}</h2>
-							<p>
-								<span>
-									<p>
-										{video?.views === 1 ? "1 view" : `${video?.views} views`}
-									</p>
-								</span>
-							</p>
+							<span>
+								<p>{video?.views === 1 ? "1 view" : `${video?.views} views`}</p>
+							</span>
 							<Popover
 								opened={authorPopover}
 								onClose={() => toggleAuthorPopover(false)}
@@ -100,32 +96,28 @@ export const VideoCard = ({
 										onClick={() => toggleAuthorPopover(() => !authorPopover)}
 									>
 										<Avatar username={creator?.username} dimensions={32} />
-										<p>
-											<span>
-												{creator?.username}
-												{creator?.approved ? (
-													<>
-														<Check
-															fill={"green"}
-															style={{
-																marginLeft: "0.25em",
-															}}
-														/>
-														<br />
-														<p
-															className={styles.videoCardContentInfoCreatorBio}
-														>
-															{creator?.bio}
-														</p>
-													</>
-												) : (
-													<>
-														<br />
-														<p>Unverified</p>
-													</>
-												)}
-											</span>
-										</p>
+										<span>
+											{creator?.username}
+											{creator?.approved ? (
+												<>
+													<Check
+														fill={"green"}
+														style={{
+															marginLeft: "0.25em",
+														}}
+													/>
+													<br />
+													<p className={styles.videoCardContentInfoCreatorBio}>
+														{creator?.bio}
+													</p>
+												</>
+											) : (
+												<>
+													<br />
+													<p>Unverified</p>
+												</>
+											)}
+										</span>
 									</div>
 								}
 							>
