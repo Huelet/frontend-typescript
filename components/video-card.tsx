@@ -92,12 +92,19 @@ export const VideoCard = ({
 								></div>
 								<div className={styles.videoCardContentInfo}>
 									<div
-										className={styles.videoCardContentInfoTitle}
-										style={{
+										css={{
 											padding: padding ? `${padding}em` : "0.5em",
 										}}
 									>
-										<h2>{video?.title}</h2>
+										<h2
+											css={{
+												whiteSpace: "nowrap",
+												overflow: "hidden",
+												textOverflow: "ellipsis",
+											}}
+										>
+											{video?.title}
+										</h2>
 										<span>
 											<p>
 												{video?.views === 1
