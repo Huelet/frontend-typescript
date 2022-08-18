@@ -12,13 +12,14 @@ import {
 	VideoCamera,
 } from "@fdn-ui/icons-react";
 import { useEffect, useState } from "react";
-import styles from "../styles/components/Header.module.css";
 import { Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { useSound } from "use-sound";
 import { Search } from "./search";
 import { Logo } from "./logo";
 import { css, jsx } from "@emotion/react";
+import { useRouter } from "next/router";
+import Image from "next/image";
 
 export interface HeaderProps {
 	username?: string;
@@ -33,8 +34,10 @@ export const Header = ({ username }: HeaderProps) => {
 		"https://cdn.huelet.net/assets/sounds/Windows%20Hardware%20Fail.wav",
 		{ volume: 1 }
 	);
-	const [searchModal, toggleSearchModal] = useState(false);
 	const [pfp, setPfp] = useState("");
+
+	const router = useRouter();
+
 	useEffect(() => {
 		const getData = async () => {
 			const res = await fetch(
@@ -43,42 +46,64 @@ export const Header = ({ username }: HeaderProps) => {
 			const data = await res.json();
 			setPfp(data.pfp);
 		};
-
-		getData();
+		if (username) {
+			getData();
+		}
 	}, [username]);
 	return (
-		<div className={styles.navContainer}>
-			<div className={styles.navBar}>
-				<div
-					className={styles.navIcon}
-					onClick={() => playBgSound()}
-					css={css({
-						cursor: "pointer",
-					})}
-				>
-					<Link href="/explore" passHref={true}>
-						<Logo width={64} height={64} />
+		<div
+			css={{
+				display: "flex",
+				flexDirection: "row",
+				justifyContent: "space-between",
+				alignItems: "center",
+				backgroundColor: "#1A1B1E",
+				width: "100%",
+				height: "5vh",
+			}}
+		>
+			<div
+				onClick={() => playBgSound()}
+				css={{
+					cursor: "pointer",
+				}}
+			>
+				<Link href="/explore" passHref={true}>
+					<Image
+						src="https://cdn.huelet.net/assets/logo.png"
+						alt="Huelet Logo"
+						width={42}
+						height={42}
+						css={{
+							cursor: "pointer",
+							borderRadius: "50%",
+						}}
+						loader={() => "https://cdn.huelet.net/assets/logo.png"}
+					/>
+				</Link>
+			</div>
+			<Search />
+			<div
+				css={{
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "space-between",
+					alignItems: "center",
+				}}
+			>
+				<div className="hover cursor">
+					<a href="https://dash.huelet.net">
+						<VideoCamera fill={"white"} width={42} height={40} />
+					</a>
+				</div>
+				<div className="hover cursor" onClick={() => playClickSound()}>
+					<Link href="/auth/settings" passHref={true}>
+						<div>
+							<Settings fill={"white"} width={42} height={40} />
+						</div>
 					</Link>
 				</div>
-				<Search />
-				<div className={styles.accountIconsContainer}>
-					<div className="hover cursor">
-						<a href="https://dash.huelet.net">
-							<div className={styles.navIcon}>
-								<VideoCamera fill={"white"} width={64} height={64} />
-							</div>
-						</a>
-					</div>
-					<div
-						className="settings--container hover cursor"
-						onClick={() => playClickSound()}
-					>
-						<Link href="/auth/settings" passHref={true}>
-							<div className={styles.navIcon}>
-								<Settings fill={"white"} width={64} height={64} />
-							</div>
-						</Link>
-					</div>
+				{username ? (
 					<div
 						className="avatar--container hover cursor"
 						onClick={() => playClickSound()}
@@ -89,16 +114,20 @@ export const Header = ({ username }: HeaderProps) => {
 									src={
 										pfp
 											? pfp
-											: "https://cdn.huelet.net/assets/images/avatar.png"
+											: "https://cdn.huelet.net/assets/AvatarMenu_defaultAvatarSmall.png"
 									}
 									css={{
 										border: "2px solid var(--hueletColor)",
 										borderRadius: "50%",
 										padding: "2px",
 									}}
-									alt={`${username}'s profile picture`}
-									width={64}
-									height={64}
+									alt={
+										username
+											? `${username}'s profile picture`
+											: "Default profile picture"
+									}
+									width={42}
+									height={40}
 								/>
 							}
 						>
@@ -159,7 +188,38 @@ export const Header = ({ username }: HeaderProps) => {
 							</Menu.Item>
 						</Menu>
 					</div>
-				</div>
+				) : (
+					<>
+						<div
+							css={css({
+								display: "flex",
+								justifyContent: "space-evenly",
+								alignItems: "center",
+								flexDirection: "row",
+								background: "transparent",
+								borderRadius: "5px",
+								border: "1px solid #7600ff",
+								opacity: "1",
+								color: "#eee",
+								cursor: "pointer",
+								margin: 0,
+								paddingLeft: "1.5em",
+								paddingRight: "1.5em",
+								outline: "0",
+
+								"&:hover": {
+									background: "rgba(0, 0, 0, 0.1)",
+								},
+							})}
+							onClick={() => {
+								playClickSound();
+								router.push("/auth/in");
+							}}
+						>
+							Log In
+						</div>
+					</>
+				)}
 			</div>
 		</div>
 	);
