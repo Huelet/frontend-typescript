@@ -39,9 +39,9 @@ const LogoList: NextPage = () => {
 			<Card
 				full={true}
 				title="Logos"
-				css={{
+				css={css({
 					display: "grid",
-				}}
+				})}
 			>
 				<Card padding={20}>
 					<Image
