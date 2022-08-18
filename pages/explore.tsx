@@ -54,6 +54,10 @@ const Explore: NextPage = () => {
 						<h2
 							css={{
 								fontSize: "3rem",
+
+								"@media (max-width: 768px)": {
+									fontSize: "2.4rem",
+								},
 							}}
 						>
 							Good {getDate()}!
