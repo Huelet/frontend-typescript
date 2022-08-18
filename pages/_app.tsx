@@ -54,7 +54,6 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
 				/>
 				<meta name="twitter:url" content="https://huelet.net" />
 				<meta name="twitter:site" content="@TeamHuelet" />
-				<link rel="manifest" href="/manifest.json" />
 				<link
 					rel="apple-touch-icon"
 					href="https://cdn.huelet.net/assets/logo.png"
@@ -135,7 +134,7 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
 							onClose={() => setCookie("_hlnfmd", 0, { path: "/" })}
 							title={<h2>New feature!</h2>}
 						>
-              You can now use the spotlight to navigate the site! Press{" "}
+							You can now use the spotlight to navigate the site! Press{" "}
 							<Kbd>mod</Kbd> + <Kbd>shift</Kbd> + <Kbd>P</Kbd> to open it.
 						</Modal>
 						<Component {...pageProps} />
