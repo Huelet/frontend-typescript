@@ -80,6 +80,10 @@ const Explore: NextPage = () => {
 								flexDirection: "row",
 								justifyContent: "space-around",
 								width: "100%",
+
+								"@media (max-width: 768px)": {
+									flexDirection: "column",
+								},
 							})}
 						>
 							<VideoCard vuid={"x181c2etzrzqvd4o"} />
