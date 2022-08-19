@@ -257,7 +257,7 @@ const ViewVideo: NextPage = () => {
 							padding: "0.5em",
 						}}
 						dangerouslySetInnerHTML={{
-							__html: videoData?.description.replace(/\n/g, "<br />"),
+							__html: videoData?.description?.replace(/\n/g, "<br />"),
 						}}
 					></div>
 				</div>
