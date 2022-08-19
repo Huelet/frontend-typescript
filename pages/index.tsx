@@ -105,7 +105,7 @@ const Home: NextPage = () => {
 						up and immediately start posting videos, gain an audience, and grow
 						your community!
 					</p>
-					<Button>
+					<Button type="primary">
 						<span
 							css={{
 								display: "flex",

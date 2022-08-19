@@ -51,7 +51,7 @@ const LogoList: NextPage = () => {
 						height={200}
 						loader={() => "https://cdn.huelet.net/assets/logo.png"}
 					/>
-					<Button>
+					<Button type="primary">
 						<span
 							css={{
 								display: "flex",
