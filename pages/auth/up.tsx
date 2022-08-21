@@ -5,6 +5,7 @@ import styles from "../../styles/Signup.module.css";
 import { Modal, Popover } from "@mantine/core";
 import { useCookies } from "react-cookie";
 import { Add, Info } from "@fdn-ui/icons-react";
+import { WidgetInstance } from "friendly-challenge";
 import { Card } from "@huelet/foundation-ui";
 
 const AuthUp: NextPage = () => {
@@ -12,8 +13,26 @@ const AuthUp: NextPage = () => {
 	const [password, setPassword] = useState("");
 	const [accessCode, setAccessCode] = useState("");
 	const [pwgResponse, setPwgResponse] = useState("");
+	const [captchaToken, setCaptchaToken] = useState("");
 	const [accessCodeModal, toggleAccessCodeModal] = useState(false);
 	const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
+
+	const container = React.useRef(null);
+	const widget = React.useRef(null);
+
+	React.useEffect(() => {
+		if (!widget.current && container.current) {
+			(widget as any).current = new WidgetInstance(container.current, {
+				startMode: "none",
+				doneCallback: setCaptchaToken,
+			});
+		}
+
+		return () => {
+			if (widget.current != undefined) (widget.current as any).destroy();
+		};
+	}, [container]);
+
 	/* modals */
 	const [pwgModal, togglePwgModal] = useState(false);
 	const handleUsernameChange = (event: {
@@ -48,6 +67,7 @@ const AuthUp: NextPage = () => {
 				cache: "no-cache",
 				headers: {
 					"Content-Type": "application/json",
+					"frc-token": captchaToken,
 				},
 				body: JSON.stringify({
 					username: username,
@@ -163,6 +183,11 @@ const AuthUp: NextPage = () => {
 						</Popover>
 					</div>
 					<div className="spacer"></div>
+					<div
+						ref={container}
+						className="frc-captcha"
+						data-sitekey="FCMM7022N09KS3T5"
+					/>
 					<button className={"button-primary"} id="submit" type="submit">
 						Sign up
 					</button>

@@ -7,6 +7,7 @@ import styles from "../../styles/Signup.module.css";
 import { useCookies } from "react-cookie";
 import { Card } from "@huelet/foundation-ui";
 import { jsx, css } from "@emotion/react";
+import { WidgetInstance } from "friendly-challenge";
 import Loader from "../../components/loader";
 
 const AuthIn: NextPage = () => {
@@ -14,8 +15,25 @@ const AuthIn: NextPage = () => {
 	const [resp, setResp] = useState<string>("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [captchaToken, setCaptchaToken] = useState("");
 	const [JWTcookie, setJWTCookie] = useCookies(["_hltoken"]);
 	const router = useRouter();
+
+	const container = React.useRef(null);
+	const widget = React.useRef(null);
+
+	React.useEffect(() => {
+		if (!widget.current && container.current) {
+			(widget as any).current = new WidgetInstance(container.current, {
+				startMode: "none",
+				doneCallback: setCaptchaToken,
+			});
+		}
+
+		return () => {
+			if (widget.current != undefined) (widget.current as any).destroy();
+		};
+	}, [container]);
 
 	React.useEffect(() => {
 		const checkCookie = async () => {
@@ -63,6 +81,7 @@ const AuthIn: NextPage = () => {
 				cache: "no-cache",
 				headers: {
 					"Content-Type": "application/json",
+					"frc-token": captchaToken,
 				},
 				body: JSON.stringify({
 					username: username,
@@ -118,6 +137,11 @@ const AuthIn: NextPage = () => {
 							<div className="spacer-sm"></div>
 						</div>
 						<div className="spacer"></div>
+						<div
+							ref={container}
+							className="frc-captcha"
+							data-sitekey="FCMM7022N09KS3T5"
+						/>
 						<button className={"button-primary"} id="submit" type="submit">
 							Sign In
 						</button>

@@ -22,6 +22,7 @@
     "@mantine/modals": "^4.0.9",
     "@mantine/next": "^4.0.9",
     "@mantine/spotlight": "^5.0.0",
+    "friendly-challenge": "^0.9.5",
     "griffith": "^1.26.1",
     "highlight.js": "^11.6.0",
     "huelet-video-react": "^0.1.0",
