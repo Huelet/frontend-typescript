@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import * as React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -7,20 +8,17 @@ import "../styles/VideoPlayer.css";
 import "@fontsource/red-hat-display";
 import "@fontsource/red-hat-text";
 import type { AppProps } from "next/app";
-import { Kbd, MantineProvider, Modal } from "@mantine/core";
+import { css, Global, jsx } from "@emotion/react";
+import { MantineProvider } from "@mantine/core";
 import {
 	SpotlightProvider,
 	registerSpotlightActions,
 } from "@mantine/spotlight";
-import { CookiesProvider, useCookies } from "react-cookie";
+import { CookiesProvider } from "react-cookie";
 import { Search, Settings, Star, Video } from "@fdn-ui/icons-react";
 
 function HueletWebapp({ Component, pageProps }: AppProps) {
 	const router = useRouter();
-	const [cookies, setCookie] = useCookies(["_hlnfmd"]);
-	if (cookies._hlnfmd === undefined) {
-		setCookie("_hlnfmd", 1, { path: "/" });
-	}
 	return (
 		<>
 			<Head>
@@ -129,14 +127,6 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
 						}}
 						shortcut={["mod + shift + P"]}
 					>
-						<Modal
-							opened={cookies._hlnfmd === 1}
-							onClose={() => setCookie("_hlnfmd", 0, { path: "/" })}
-							title={<h2>New feature!</h2>}
-						>
-							You can now use the spotlight to navigate the site! Press{" "}
-							<Kbd>mod</Kbd> + <Kbd>shift</Kbd> + <Kbd>P</Kbd> to open it.
-						</Modal>
 						<Component {...pageProps} />
 					</SpotlightProvider>
 				</MantineProvider>
