@@ -16,6 +16,7 @@ import {
 } from "@mantine/spotlight";
 import { CookiesProvider } from "react-cookie";
 import { Search, Settings, Star, Video } from "@fdn-ui/icons-react";
+import Script from "next/script";
 
 function HueletWebapp({ Component, pageProps }: AppProps) {
 	const router = useRouter();
@@ -69,6 +70,13 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
 					rel="icon"
 					type="image/png"
 					href="https://cdn.huelet.net/assets/logo.png"
+				/>
+				<Script
+					defer
+					type="text/javascript"
+					src="https://api.pirsch.io/pirsch.js"
+					id="pirschjs"
+					data-code="32siQ36yPulRQHCEKfrRVOs8ywQpqsgx"
 				/>
 			</Head>
 			<CookiesProvider>
