@@ -7,6 +7,7 @@ import {
 	Help,
 	Notepad,
 	PaintBrush,
+	Send,
 	Settings,
 	Subtitles,
 	VideoCamera,
@@ -138,6 +139,13 @@ export const Header = ({ username }: HeaderProps) => {
 								href="/auth/settings"
 							>
 								Settings
+							</Menu.Item>
+							<Menu.Item
+								icon={<Send fill={"white"} />}
+								component={NextLink}
+								href="/auth/invite"
+							>
+								Invite
 							</Menu.Item>
 							<Menu.Item
 								icon={<PaintBrush fill={"white"} />}
