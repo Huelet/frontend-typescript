@@ -77,6 +77,7 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
 					src="https://api.pirsch.io/pirsch.js"
 					id="pirschjs"
 					data-code="32siQ36yPulRQHCEKfrRVOs8ywQpqsgx"
+					strategy="afterInteractive"
 				/>
 			</Head>
 			<CookiesProvider>
