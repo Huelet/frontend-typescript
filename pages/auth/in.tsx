@@ -3,7 +3,6 @@ import * as React from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { SetStateAction, useState } from "react";
-import styles from "../../styles/Signup.module.css";
 import { useCookies } from "react-cookie";
 import { Card } from "@huelet/foundation-ui";
 import { jsx, css } from "@emotion/react";
@@ -113,9 +112,19 @@ const AuthIn: NextPage = () => {
 				{loading ? (
 					<Loader />
 				) : (
-					<form id="form" onSubmit={handleSubmit} className={styles.form}>
+					<form id="form" onSubmit={handleSubmit} css={{ marginTop: "2em" }}>
 						<input
-							className={styles.input}
+							css={{
+								backgroundColor: "#303245",
+								borderRadius: "12px",
+								border: "0",
+								boxSizing: "border-box",
+								color: "#eee",
+								fontSize: "18px",
+								outline: "0",
+								padding: "4px 20px 0",
+								width: "100%",
+							}}
 							id="username"
 							type="div"
 							name="username"
@@ -126,7 +135,17 @@ const AuthIn: NextPage = () => {
 						<div className="spacer-sm"></div>
 						<div className="pwd-input flex">
 							<input
-								className={styles.input}
+								css={{
+									backgroundColor: "#303245",
+									borderRadius: "12px",
+									border: "0",
+									boxSizing: "border-box",
+									color: "#eee",
+									fontSize: "18px",
+									outline: "0",
+									padding: "4px 20px 0",
+									width: "100%",
+								}}
 								id="password"
 								type="password"
 								name="password"
