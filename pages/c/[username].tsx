@@ -2,7 +2,6 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import styles from "../../styles/Creator.module.css";
 import { useEffect, useRef, useState } from "react";
 import {
 	Avatar as AvatarIcon,
@@ -13,7 +12,6 @@ import {
 import { Header } from "../../components/header";
 import { Follow } from "../../components/Buttons/follow";
 import { Avatar } from "../../components/avatar";
-import { ColorExtractor } from "react-color-extractor";
 import { jsx, css } from "@emotion/react";
 import { VideoCard } from "../../components/video-card";
 
@@ -22,7 +20,6 @@ const ViewCreator: NextPage = () => {
 	const [videos, setVideos] = useState<any[]>([]);
 	const [colors, setColors] = useState<any[]>([]);
 	const [response, setResponse] = useState<any>(<></>);
-	const mounted: any = useRef(false);
 	const router = useRouter();
 	const { username } = router.query;
 	const uname = username?.toString().replace("@", "");
@@ -33,18 +30,25 @@ const ViewCreator: NextPage = () => {
 			);
 			const userDataJSON = await userData.json();
 			setUser(userDataJSON.data);
-
-			const videoData = await fetch(
-				`https://api.huelet.net/videos/search/fromcreator?creatorId=${userDataJSON.data?.uid}`
-			);
-			const videoDataJSON = await videoData.json();
-			setVideos(videoDataJSON.data);
+			setColors(userDataJSON.data?.avatarColor);
 		};
 		getData();
 	}, [uname]);
 
 	useEffect(() => {
-		if (mounted.current) {
+		const getVideos = async () => {
+			const videoData = await fetch(
+				`https://api.huelet.net/videos/search/fromcreator?creatorId=${user?.uid}`
+			);
+			const videoDataJSON = await videoData.json();
+			setVideos(videoDataJSON.data);
+		};
+		getVideos();
+	}, [user]);
+
+	useEffect(() => {
+		let mounted = true;
+		if (mounted) {
 			setResponse(
 				videos.map(({ vuid }) => {
 					return (
@@ -54,20 +58,22 @@ const ViewCreator: NextPage = () => {
 					);
 				})
 			);
-		} else {
-			mounted.current = true;
 		}
+		return () => {
+			mounted = false;
+		};
 	}, [videos]);
 	return (
 		<div id="klausen">
 			<Header username="" />
-			<ColorExtractor
-				src={user?.avatar}
-				getColors={(colors) => {
-					setColors(colors);
+			<div
+				css={{
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "center",
+					padding: "0.5rem",
 				}}
-			/>
-			<div className={`${styles.creatorHeader}`}>
+			>
 				<img
 					src={
 						user?.header
@@ -75,11 +81,26 @@ const ViewCreator: NextPage = () => {
 							: "https://cdn.huelet.net/assets/logo.png"
 					}
 					alt="Header"
-					className={`${
-						user?.header
-							? styles.creatorHeaderImage
-							: styles.creatorHeaderImageDefault
-					}`}
+					css={{
+						width: "100vw",
+						height: "350px",
+						filter: user?.header ? undefined : "blur(400em)",
+						backgroundSize: "cover",
+						backgroundPosition: "center",
+						backgroundRepeat: "no-repeat",
+
+						"@media screen and (max-width: 1400px)": {
+							height: "300px",
+						},
+
+						"@media screen and (max-width: 600px)": {
+							height: "250px",
+						},
+
+						"@media screen and (max-width: 400px)": {
+							height: "200px",
+						},
+					}}
 				/>
 			</div>
 			<div
@@ -98,19 +119,45 @@ const ViewCreator: NextPage = () => {
 							? colors[Math.floor(Math.random() * colors.length)]
 							: "var(--hueletSecondaryColor)"
 					} !important`,
+
+					"@media screen and (max-width: 400px)": {
+						boxShadow: `0px -64px 69px 0px ${
+							colors
+								? colors[Math.floor(Math.random() * colors.length)]
+								: "var(--hueletSecondaryColor)"
+						} !important`,
+					},
 				})}
 			>
-				<div className={`${styles.creatorBodyDetails}`}>
-					<div className={`${styles.creatorBodyProfileImage}`}>
+				<div
+					css={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "space-between",
+					}}
+				>
+					<div css={{ padding: "1em" }}>
 						<Avatar username={uname} dimensions={128} />
 					</div>
-					<div className={`${styles.creatorBodyDetailsText}`}>
-						<div className={`${styles.creatorBodyTitle}`}>
-							<h2 className={`${styles.creatorBodyName}`}>
-								{username ? uname : "Loading..."}
-							</h2>
-						</div>
-						<div className={`${styles.creatorBodyBio}`}>
+					<div
+						css={{
+							display: "flex",
+							flexDirection: "column",
+							padding: "0.1em",
+						}}
+					>
+						<h2
+							css={{
+								fontSize: "2em",
+							}}
+						>
+							{username ? uname : "Loading..."}
+						</h2>
+						<div
+							css={{
+								flexDirection: "column",
+							}}
+						>
 							<div
 								css={css({
 									display: "flex",
@@ -163,7 +210,13 @@ const ViewCreator: NextPage = () => {
 					</div>
 				</div>
 				<div></div>
-				<div className={`${styles.creatorBodySocials}`}>
+				<div
+					css={{
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
+					}}
+				>
 					<Follow />
 				</div>
 			</div>
@@ -172,7 +225,6 @@ const ViewCreator: NextPage = () => {
 					display: "flex",
 					flexDirection: "row",
 					justifyContent: "space-evenly",
-					flex: "0 0 33.333333%",
 				})}
 			>
 				{response}
