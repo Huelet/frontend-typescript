@@ -1,6 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import * as React from "react";
 import NextImage from "next/image";
-import styles from "../styles/components/Avatar.module.css";
+import { jsx, css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { useSound } from "use-sound";
 import Skeleton from "react-loading-skeleton";
@@ -9,7 +10,7 @@ export interface AvatarProps {
 	username: string | undefined;
 	dimensions?: number;
 	link?: boolean;
-	dontUseNextImage?: boolean;	
+	dontUseNextImage?: boolean;
 	children?: React.ReactNode;
 }
 
@@ -51,7 +52,11 @@ export const Avatar = ({
 			) : (
 				<ImageElement
 					src={pfp ? pfp : "https://cdn.huelet.net/assets/images/avatar.png"}
-					className={styles.avatarImageBorder}
+					css={{
+						border: "2px solid var(--hueletColor) !important",
+						borderRadius: "50% !important",
+						padding: "2px !important",
+					}}
 					alt={`${username}'s profile picture`}
 					placeholder="empty"
 					width={dimensions}
