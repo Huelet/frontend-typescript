@@ -3,12 +3,9 @@ import * as React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import "../styles/globals.css";
-import "../styles/adstyles.css";
-import "../styles/VideoPlayer.css";
 import "@fontsource/red-hat-display";
 import "@fontsource/red-hat-text";
 import type { AppProps } from "next/app";
-import { css, Global, jsx } from "@emotion/react";
 import { MantineProvider } from "@mantine/core";
 import {
 	SpotlightProvider,
