@@ -77,7 +77,7 @@ export const Header = ({ username }: HeaderProps) => {
 						cursor: "pointer",
 					}}
 				>
-					<Link href="/explore" passHref={true}>
+					<Link href={username ? "/explore" : "/"} passHref={true}>
 						<Image
 							src="https://cdn.huelet.net/assets/logo.png"
 							alt="Huelet Logo"
