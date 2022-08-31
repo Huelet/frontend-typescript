@@ -11,6 +11,7 @@ import { Header } from "../../components/header";
 import { useCookies } from "react-cookie";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ChevronDown } from "@fdn-ui/icons-react";
+import { DateTime } from "luxon";
 import { useSound } from "use-sound";
 import { Pill } from "@huelet/foundation-ui";
 import { Avatar } from "../../components/avatar";
@@ -193,9 +194,15 @@ const ViewVideo: NextPage = () => {
 								padding: "0.5em",
 							})}
 						>
-							<Pill type="primary">{videoData?.vviews} views</Pill>
+							<Pill type="primary">{videoData?.views} views</Pill>
 							<div className="spacer-sm"></div>
-							<Pill type="primary">{videoData?.vuploaded}</Pill>
+							<Pill type="primary">
+								{videoData?.videoUploaded
+									? DateTime.fromMillis(videoData?.videoUploaded).toRelative()
+									: DateTime.fromMillis(
+											Math.round(1637779853 * 1000)
+									  ).toRelative()}
+							</Pill>
 						</div>
 						<div
 							css={css({
@@ -228,21 +235,21 @@ const ViewVideo: NextPage = () => {
 
 										animation: descriptionMenu
 											? `${keyframes({
-												from: {
-													transform: "rotate(0deg)",
-												},
-												to: {
-													transform: "rotate(180deg)",
-												},
-											})} 0.5s ease-in-out`
+													from: {
+														transform: "rotate(0deg)",
+													},
+													to: {
+														transform: "rotate(180deg)",
+													},
+											  })} 0.5s ease-in-out`
 											: `${keyframes({
-												from: {
-													transform: "rotate(180deg)",
-												},
-												to: {
-													transform: "rotate(0deg)",
-												},
-											})} 0.5s ease-in-out`,
+													from: {
+														transform: "rotate(180deg)",
+													},
+													to: {
+														transform: "rotate(0deg)",
+													},
+											  })} 0.5s ease-in-out`,
 									}}
 								/>
 							</div>
