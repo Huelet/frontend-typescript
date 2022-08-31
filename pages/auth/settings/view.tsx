@@ -16,7 +16,7 @@ const Themes: NextPage = () => {
 	/* modals */
 	const [suggestModal, toggleSuggestModal] = useState(false);
 	/* settings */
-	const [darkMode, toggleDarkMode] = useToggle(true, [true, false]);
+	const [darkMode, toggleDarkMode] = useToggle([true, false] as const);
 
 	const checkCookie = () => {
 		const token = cookie._hltoken;

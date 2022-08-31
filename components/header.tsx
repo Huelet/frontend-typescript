@@ -21,6 +21,7 @@ import { css, jsx } from "@emotion/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { Avatar } from "./avatar";
 
 export interface HeaderProps {
 	username?: string;
@@ -121,7 +122,12 @@ export const Header = ({ username }: HeaderProps) => {
 									onClick={() => playClickSound()}
 								>
 									<Menu
-										control={
+										shadow="md"
+										offset={10}
+										transition="pop-top-left"
+										transitionDuration={250}
+									>
+										<Menu.Target>
 											<img
 												src={
 													pfp
@@ -141,70 +147,72 @@ export const Header = ({ username }: HeaderProps) => {
 												width={42}
 												height={40}
 											/>
-										}
-									>
-										<Menu.Label>Your account</Menu.Label>
-										<Menu.Item
-											icon={<Settings fill={"white"} />}
-											component={NextLink}
-											href="/auth/settings"
-										>
-											Settings
-										</Menu.Item>
-										<Menu.Item
-											icon={<Send fill={"white"} />}
-											component={NextLink}
-											href="/auth/invite"
-										>
-											Invite
-										</Menu.Item>
-										<Menu.Item
-											icon={<PaintBrush fill={"white"} />}
-											component={NextLink}
-											href="/auth/settings/view"
-										>
-											Customization
-										</Menu.Item>
-										<Menu.Item
-											icon={<VideoCamera fill={"white"} />}
-											component={NextLink}
-											href="https://dash.huelet.net/"
-										>
-											Your Videos
-										</Menu.Item>
-										<Menu.Item icon={<Subtitles fill={"white"} />} disabled>
-											Huelet Premium (Coming Soon)
-										</Menu.Item>
-										<Menu.Item
-											icon={<Accessibility fill={"white"} />}
-											component={NextLink}
-											href="/auth/settings/accessibility"
-										>
-											Accessibility Settings
-										</Menu.Item>
-										<Menu.Label>Help</Menu.Label>
-										<Menu.Item
-											icon={<Help fill={"white"} />}
-											component={NextLink}
-											href="https://docs.huelet.net/"
-										>
-											Help Center
-										</Menu.Item>
-										<Menu.Item
-											icon={<Notepad fill={"white"} />}
-											component={NextLink}
-											href="https://huelet.net/s/report"
-										>
-											Report a problem
-										</Menu.Item>
-										<Menu.Label>Your data</Menu.Label>
-										<Menu.Item
-											icon={<Copy fill={"white"} />}
-											component={NextLink}
-											href="/auth/data"
-										>
-											Your data in Huelet
-										</Menu.Item>
+										</Menu.Target>
+
+										<Menu.Dropdown>
+											<Menu.Label>Your account</Menu.Label>
+											<Menu.Item
+												icon={<Settings fill={"white"} />}
+												component={NextLink}
+												href="/auth/settings"
+											>
+												Settings
+											</Menu.Item>
+											<Menu.Item
+												icon={<Send fill={"white"} />}
+												component={NextLink}
+												href="/auth/invite"
+											>
+												Invite
+											</Menu.Item>
+											<Menu.Item
+												icon={<PaintBrush fill={"white"} />}
+												component={NextLink}
+												href="/auth/settings/view"
+											>
+												Customization
+											</Menu.Item>
+											<Menu.Item
+												icon={<VideoCamera fill={"white"} />}
+												component={NextLink}
+												href="https://dash.huelet.net/"
+											>
+												Your Videos
+											</Menu.Item>
+											<Menu.Item icon={<Subtitles fill={"white"} />} disabled>
+												Huelet Premium (Coming Soon)
+											</Menu.Item>
+											<Menu.Item
+												icon={<Accessibility fill={"white"} />}
+												component={NextLink}
+												href="/auth/settings/accessibility"
+											>
+												Accessibility Settings
+											</Menu.Item>
+											<Menu.Label>Help</Menu.Label>
+											<Menu.Item
+												icon={<Help fill={"white"} />}
+												component={NextLink}
+												href="https://docs.huelet.net/"
+											>
+												Help Center
+											</Menu.Item>
+											<Menu.Item
+												icon={<Notepad fill={"white"} />}
+												component={NextLink}
+												href="https://huelet.net/s/report"
+											>
+												Report a problem
+											</Menu.Item>
+											<Menu.Label>Your data</Menu.Label>
+											<Menu.Item
+												icon={<Copy fill={"white"} />}
+												component={NextLink}
+												href="/auth/data"
+											>
+												Your data in Huelet
+											</Menu.Item>
+										</Menu.Dropdown>
 									</Menu>
 								</div>
 							) : (

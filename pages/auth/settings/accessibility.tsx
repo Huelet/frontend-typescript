@@ -12,13 +12,13 @@ const Accessibility: NextPage = () => {
 	const [cookie, setCookie] = useCookies(["_hltoken"]);
 	const [username, setUsername] = useState("");
 
-	const [sounds, toggleSounds] = useToggle(true, [true, false]);
-	const [captions, toggleCaptions] = useToggle(true, [true, false]);
-	const [motion, toggleMotion] = useToggle(true, [true, false]);
-	const [highContrast, toggleHighContrast] = useToggle(true, [true, false]);
-	const [invertColors, toggleInvertColors] = useToggle(true, [true, false]);
-	const [grayscale, toggleGrayscale] = useToggle(true, [true, false]);
-	const [autoplay, toggleAutoplay] = useToggle(true, [true, false]);
+	const [sounds, toggleSounds] = useToggle([true, false] as const);
+	const [captions, toggleCaptions] = useToggle([true, false] as const);
+	const [motion, toggleMotion] = useToggle([true, false] as const);
+	const [highContrast, toggleHighContrast] = useToggle([true, false] as const);
+	const [invertColors, toggleInvertColors] = useToggle([true, false] as const);
+	const [grayscale, toggleGrayscale] = useToggle([true, false] as const);
+	const [autoplay, toggleAutoplay] = useToggle([true, false] as const);
 	const [zoom, setZoom] = useState(1);
 
 	React.useEffect(() => {

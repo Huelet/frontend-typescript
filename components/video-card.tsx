@@ -131,7 +131,8 @@ export const VideoCard = ({ type, view, vuid, padding }: VideoCardProps) => {
 										opened={authorPopover}
 										onClose={() => toggleAuthorPopover(false)}
 										position="top"
-										target={
+									>
+										<Popover.Target>
 											<div
 												css={{
 													display: "flex",
@@ -173,91 +174,95 @@ export const VideoCard = ({ type, view, vuid, padding }: VideoCardProps) => {
 													)}
 												</span>
 											</div>
-										}
-									>
-										<div
-											css={{
-												display: "flex",
-												flexDirection: "row",
-												padding: "0.5em",
-											}}
-										>
+										</Popover.Target>
+										<Popover.Dropdown>
 											<div
 												css={{
 													display: "flex",
-													flexDirection: "column",
-													alignItems: "center",
-													justifyContent: "center",
+													flexDirection: "row",
+													padding: "0.5em",
 												}}
 											>
-												<Avatar username={creator?.username} dimensions={32} />
-											</div>
-											<div
-												css={{
-													display: "flex",
-													flexDirection: "column",
-													alignItems: "center",
-													justifyContent: "center",
-												}}
-											>
-												<h2>{creator?.username}</h2>
-												<span
+												<div
 													css={{
 														display: "flex",
-														flexDirection: "row",
+														flexDirection: "column",
 														alignItems: "center",
 														justifyContent: "center",
-														marginBottom: "0.5em",
 													}}
 												>
-													<AvatarFilled
-														fill={"white"}
-														width={"16px"}
-														height={"16px"}
+													<Avatar
+														username={creator?.username}
+														dimensions={32}
 													/>
-													<span>
-														{creator?.pronouns
-															? creator?.pronouns.join("/")
-															: "No pronouns"}
+												</div>
+												<div
+													css={{
+														display: "flex",
+														flexDirection: "column",
+														alignItems: "center",
+														justifyContent: "center",
+													}}
+												>
+													<h2>{creator?.username}</h2>
+													<span
+														css={{
+															display: "flex",
+															flexDirection: "row",
+															alignItems: "center",
+															justifyContent: "center",
+															marginBottom: "0.5em",
+														}}
+													>
+														<AvatarFilled
+															fill={"white"}
+															width={"16px"}
+															height={"16px"}
+														/>
+														<span>
+															{creator?.pronouns
+																? creator?.pronouns.join("/")
+																: "No pronouns"}
+														</span>
 													</span>
-												</span>
-												<span
-													css={{
-														display: "flex",
-														flexDirection: "row",
-														alignItems: "center",
-														justifyContent: "center",
-														marginBottom: "0.5em",
-													}}
-												>
-													<BulletList
-														fill={"white"}
-														width={"16px"}
-														height={"16px"}
-													/>
-													<span>{creator?.bio}</span>
-												</span>
-												<span
-													css={{
-														display: "flex",
-														flexDirection: "row",
-														alignItems: "center",
-														justifyContent: "center",
-														marginBottom: "0.5em",
-													}}
-												>
-													<Location
-														fill={"white"}
-														width={"16px"}
-														height={"16px"}
-													/>
-													<span>{creator?.location}</span>
+													<span
+														css={{
+															display: "flex",
+															flexDirection: "row",
+															alignItems: "center",
+															justifyContent: "center",
+															marginBottom: "0.5em",
+														}}
+													>
+														<BulletList
+															fill={"white"}
+															width={"16px"}
+															height={"16px"}
+														/>
+														<span>{creator?.bio}</span>
+													</span>
+													<span
+														css={{
+															display: "flex",
+															flexDirection: "row",
+															alignItems: "center",
+															justifyContent: "center",
+															marginBottom: "0.5em",
+														}}
+													>
+														<Location
+															fill={"white"}
+															width={"16px"}
+															height={"16px"}
+														/>
+														<span>{creator?.location}</span>
+													</span>
+												</div>
+												<span>
+													<Follow />
 												</span>
 											</div>
-											<span>
-												<Follow />
-											</span>
-										</div>
+										</Popover.Dropdown>
 									</Popover>
 									<div
 										css={{
