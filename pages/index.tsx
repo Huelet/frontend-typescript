@@ -105,37 +105,21 @@ const Home: NextPage = () => {
 						up and immediately start posting videos, gain an audience, and grow
 						your community!
 					</p>
-					<Button type="primary">
-						<span
-							css={{
-								display: "flex",
-								alignItems: "center",
-								justifyContent: "center",
-								width: "100%",
-								height: "100%",
-							}}
-							onClick={() => {
-								router.push("https://dsc.gg/huelet");
-							}}
-						>
-							Join our community
-						</span>
+					<Button
+						type="primary"
+						onPress={() => {
+							router.push("https://dsc.gg/huelet");
+						}}
+					>
+						Join our community
 					</Button>
-					<Button type="secondary">
-						<span
-							css={{
-								display: "flex",
-								alignItems: "center",
-								justifyContent: "center",
-								width: "100%",
-								height: "100%",
-							}}
-							onClick={() => {
-								router.push("/auth/in");
-							}}
-						>
-							I already have an account
-						</span>
+					<Button
+						type="secondary"
+						onPress={() => {
+							router.push("/auth/in");
+						}}
+					>
+						I already have an account
 					</Button>
 				</main>
 			</div>
