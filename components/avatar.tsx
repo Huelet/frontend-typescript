@@ -37,8 +37,7 @@ export const Avatar = ({
 					`https://api.huelet.net/auth/pfp?username=${username}`
 				);
 
-				const image = await fetch(await (await resp.json()).pfp);
-				setPfp(URL.createObjectURL(await image.blob()) as string);
+				setPfp((await resp.json()).pfp);
 
 				setLoading(false);
 			}
@@ -59,6 +58,9 @@ export const Avatar = ({
 					}}
 					alt={`${username}'s profile picture`}
 					placeholder="empty"
+					loader={({ src, width, quality }) =>
+						`${src}?width=${width}&quality=${quality || 70}`
+					}
 					width={dimensions}
 					height={dimensions}
 				/>
