@@ -121,6 +121,22 @@ const Home: NextPage = () => {
 							Join our community
 						</span>
 					</Button>
+					<Button type="secondary">
+						<span
+							css={{
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+								width: "100%",
+								height: "100%",
+							}}
+							onClick={() => {
+								router.push("/auth/in");
+							}}
+						>
+							I already have an account
+						</span>
+					</Button>
 				</main>
 			</div>
 		</div>
