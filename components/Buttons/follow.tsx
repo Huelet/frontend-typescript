@@ -14,12 +14,12 @@ export const Follow = ({ username, chonky }: FollowProps) => {
 
 	React.useEffect(() => {
 		if (typeof username !== "undefined" && localStorage.getItem("username")) {
-			fetch(`https://api.huelet.net/users/info/following?username=${username}`)
+			fetch(`https://api.huelet.net/users/info/followers?username=${username}`)
 				.then((res) => res.json())
 				.then((data) => {
 					console.log(data);
 
-					if (data.following.includes(localStorage.getItem("username"))) {
+					if (data?.following?.includes(localStorage.getItem("username"))) {
 						setFollowed(true);
 					}
 				});
