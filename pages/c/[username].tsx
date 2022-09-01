@@ -32,7 +32,9 @@ const ViewCreator: NextPage = () => {
 			setUser(userDataJSON.data);
 			setColors(userDataJSON.data?.avatarColor);
 		};
-		getData();
+		if (typeof uname !== "undefined") {
+			getData();
+		}
 	}, [uname]);
 
 	useEffect(() => {

@@ -78,7 +78,9 @@ const ViewVideo: NextPage = () => {
 
 			setLoading(false);
 		};
-		getAuthorData();
+		if (typeof videoData?.authorId !== "undefined") {
+			getAuthorData();
+		}
 	}, [videoData]);
 
 	return (
