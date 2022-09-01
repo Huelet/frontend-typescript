@@ -66,7 +66,9 @@ const ViewVideo: NextPage = () => {
 			const videoRespData = await videoResp.json();
 			setVideoData(videoRespData.data);
 		};
-		getPageData();
+		if (typeof vuid !== "undefined") {
+			getPageData();
+		}
 	}, [vuid]);
 	useEffect(() => {
 		const getAuthorData = async () => {
