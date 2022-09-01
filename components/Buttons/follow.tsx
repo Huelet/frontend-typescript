@@ -4,10 +4,11 @@ import { jsx, css } from "@emotion/react";
 import { Add } from "@fdn-ui/icons-react";
 
 export interface FollowProps {
+	username: string;
 	chonky?: boolean;
 }
 
-export const Follow = ({ chonky }: FollowProps) => {
+export const Follow = ({ username, chonky }: FollowProps) => {
 	return (
 		<div
 			css={{
