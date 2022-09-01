@@ -1,7 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import * as React from "react";
-import { Add, WarningFilled } from "@fdn-ui/icons-react";
-import { Alert } from "@mantine/core";
-import styles from "../../styles/components/Buttons/Follow.module.css";
+import { jsx, css } from "@emotion/react";
+import { Add } from "@fdn-ui/icons-react";
 
 export interface FollowProps {
 	chonky?: boolean;
@@ -9,11 +9,28 @@ export interface FollowProps {
 
 export const Follow = ({ chonky }: FollowProps) => {
 	return (
-		<>
-			<div className={styles.buttonContainer}>
-				<Add fill={"white"} />
-				<p className={styles.buttonText}>Follow</p>
-			</div>
-		</>
+		<div
+			css={{
+				display: "flex",
+				flexDirection: "row",
+				justifyContent: "center",
+				alignItems: "center",
+				backgroundColor: "transparent",
+				border: "var(--hueletColor) 1px solid",
+				borderRadius: "5px",
+				padding: "0.75em",
+				cursor: "pointer",
+			}}
+		>
+			<Add fill={"white"} />
+			<p
+				css={{
+					fontSize: "1.2em",
+					fontWeight: "bold",
+				}}
+			>
+				Follow
+			</p>
+		</div>
 	);
 };
