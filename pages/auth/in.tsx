@@ -95,7 +95,7 @@ const AuthIn: NextPage = () => {
 				setJWTCookie("_hltoken", data.token, {
 					path: "/",
 				});
-				localStorage.setItem("username", data.username);
+				localStorage.setItem("username", username);
 				localStorage.setItem("token", data.token);
 				router.push((router.query.redir as string) || "/explore");
 			} else if (resp.status === 500) {
