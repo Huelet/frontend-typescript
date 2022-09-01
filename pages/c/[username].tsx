@@ -217,7 +217,7 @@ const ViewCreator: NextPage = () => {
 						alignItems: "center",
 					}}
 				>
-					<Follow />
+					<Follow username={user?.username} />
 				</div>
 			</div>
 			<div

@@ -259,7 +259,7 @@ export const VideoCard = ({ type, view, vuid, padding }: VideoCardProps) => {
 													</span>
 												</div>
 												<span>
-													<Follow />
+													<Follow username={creator?.username} />
 												</span>
 											</div>
 										</Popover.Dropdown>

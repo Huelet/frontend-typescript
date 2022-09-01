@@ -182,7 +182,7 @@ const ViewVideo: NextPage = () => {
 									<h3>{authorData?.username}</h3>
 								</Link>
 								<p>{authorData?.followers} followers</p>
-								<Follow />
+								<Follow username={authorData?.username} />
 							</span>
 						</div>
 						<div
