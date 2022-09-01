@@ -261,13 +261,15 @@
   resolved "https://registry.yarnpkg.com/@fontsource/red-hat-text/-/red-hat-text-4.5.10.tgz#50db2d7b552417eaec3c9df5ed330cc58c500c35"
   integrity sha512-H+KM5fAmpWyCfbI5cWGLeRP2xOIIysjwFSxW8INdtLgEOYUGBbEVxaieUIXdM/myMRD7ykSDmT4dn60Of27MQg==
 
-"@huelet/foundation-ui@^0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@huelet/foundation-ui/-/foundation-ui-0.3.8.tgz#211c837ccabed346f2c87100084e9da27acb954f"
-  integrity sha512-O46YINezjTSqlY1UKYJD971ULIUYzj8rHJYjMFTQGUzxlDtoh6+Z6SInfuodHA6fb1QmPfarRZP6ZGG4znSLKQ==
+"@huelet/foundation-ui@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@huelet/foundation-ui/-/foundation-ui-0.4.0.tgz#d4c994f6dc94225b5d9796f0af61308631c8c1e1"
+  integrity sha512-zMyPbcW1FYix7BfQSNqtFx5/lAdu40Qz5/u9k6BO29bR/S1ZMPo2ZuTGaNLWFsLrKYg0VNYm9v1ocqw+alv7/g==
   dependencies:
     "@emotion/css" "^11.9.0"
     "@emotion/react" "^11.9.3"
+    "@fdn-ui/icons-react" "^0.0.11"
+    react-portal "^4.2.2"
 
 "@huelet/pencil.js@^1.0.0":
   version "1.2.2"
@@ -2325,7 +2327,7 @@ promis@^1.1.4:
   resolved "https://registry.yarnpkg.com/promis/-/promis-1.1.4.tgz#0d0ef43ccacacdd8f9679cd6e0950f7c7f52096c"
   integrity sha512-PYoK1UKLWbi+kKcYFVbNhjfh9RhLzIr0jEO12Enw2HXBAX55l0eUemBjRKoeG/qpN8W2vzyKyZk01XTlff6IWw==
 
-prop-types@^15.5.6, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -2380,6 +2382,13 @@ react-loading-skeleton@^3.0.3:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-loading-skeleton/-/react-loading-skeleton-3.1.0.tgz#ce22942f1af77bfd60854417075792367f54f41e"
   integrity sha512-j1U1CWWs68nBPOg7tkQqnlFcAMFF6oEK6MgqAo15f8A5p7mjH6xyKn2gHbkcimpwfO0VQXqxAswnSYVr8lWzjw==
+
+react-portal@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-4.2.2.tgz#bff1e024147d6041ba8c530ffc99d4c8248f49fa"
+  integrity sha512-vS18idTmevQxyQpnde0Td6ZcUlv+pD8GTyR42n3CHUQq9OHi1C4jDE4ZWEbEsrbrLRhSECYiao58cvocwMtP7Q==
+  dependencies:
+    prop-types "^15.5.8"
 
 react-property@2.0.0:
   version "2.0.0"
