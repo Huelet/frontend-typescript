@@ -181,7 +181,7 @@ const ViewVideo: NextPage = () => {
 								<Link href={`/c/@${authorData?.username}`} passHref={true}>
 									<h3>{authorData?.username}</h3>
 								</Link>
-								<p>{authorData?.followers.length} followers</p>
+								<p>{authorData?.followers?.length} followers</p>
 								<Follow username={authorData?.username} />
 							</span>
 						</div>
