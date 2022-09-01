@@ -13,7 +13,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { ChevronDown } from "@fdn-ui/icons-react";
 import { DateTime } from "luxon";
 import { useSound } from "use-sound";
-import { Pill } from "@huelet/foundation-ui";
+import { Pill, Toast } from "@huelet/foundation-ui";
 import { Avatar } from "../../components/avatar";
 import Loader from "../../components/loader";
 import { Follow } from "../../components/Buttons/follow";
@@ -21,6 +21,7 @@ import { VideoCard } from "../../components/video-card";
 
 const ViewVideo: NextPage = () => {
 	const [loading, setLoading] = useState(true);
+	const [rateLimited, setRateLimited] = useState(false);
 	const [cookie, setCookie] = useCookies(["_hltoken"]);
 	const [videoData, setVideoData]: [any, any] = useState({});
 	const [authorData, setAuthorData]: [any, any] = useState({});
@@ -55,6 +56,9 @@ const ViewVideo: NextPage = () => {
 				},
 			});
 			setUsername((await userData.json()).username);
+			if (userData.status === 429) {
+				setRateLimited(true);
+			}
 		};
 		getUserData();
 	}, [cookie._hltoken]);
@@ -65,6 +69,9 @@ const ViewVideo: NextPage = () => {
 			);
 			const videoRespData = await videoResp.json();
 			setVideoData(videoRespData.data);
+			if (videoResp.status === 429) {
+				setRateLimited(true);
+			}
 		};
 		if (typeof vuid !== "undefined") {
 			getPageData();
@@ -77,6 +84,10 @@ const ViewVideo: NextPage = () => {
 			);
 			const authorRespData = await authorResp.json();
 			setAuthorData(authorRespData.data);
+
+			if (authorResp.status === 429) {
+				setRateLimited(true);
+			}
 
 			setLoading(false);
 		};
@@ -204,8 +215,8 @@ const ViewVideo: NextPage = () => {
 								{videoData?.videoUploaded
 									? DateTime.fromMillis(videoData?.videoUploaded).toRelative()
 									: DateTime.fromMillis(
-										Math.round(1637779853 * 1000)
-									).toRelative()}
+											Math.round(1637779853 * 1000)
+									  ).toRelative()}
 							</Pill>
 						</div>
 						<div
@@ -237,23 +248,23 @@ const ViewVideo: NextPage = () => {
 											? "rotate(180deg)"
 											: "rotate(0deg)",
 
-										animation: descriptionMenu ?
-											`${keyframes({
-												from: {
-													transform: "rotate(0deg)",
-												},
-												to: {
-													transform: "rotate(180deg)",
-												},
-											})} 0.5s ease-in-out`
+										animation: descriptionMenu
+											? `${keyframes({
+													from: {
+														transform: "rotate(0deg)",
+													},
+													to: {
+														transform: "rotate(180deg)",
+													},
+											  })} 0.5s ease-in-out`
 											: `${keyframes({
-												from: {
-													transform: "rotate(180deg)",
-												},
-												to: {
-													transform: "rotate(0deg)",
-												},
-											})} 0.5s ease-in-out`,
+													from: {
+														transform: "rotate(180deg)",
+													},
+													to: {
+														transform: "rotate(0deg)",
+													},
+											  })} 0.5s ease-in-out`,
 									}}
 								/>
 							</div>
@@ -291,6 +302,12 @@ const ViewVideo: NextPage = () => {
 					<VideoCard vuid={undefined} />
 				</div>
 			</article>
+			<Toast
+				opened={rateLimited}
+				onClose={() => setRateLimited(false)}
+				heading="You are being rate limited."
+				body="You are being rate limited because you are making too many requests. Please wait one minute and try again."
+			/>
 		</div>
 	);
 };
