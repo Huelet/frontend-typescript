@@ -70,13 +70,13 @@ export const Follow = ({ username, chonky }: FollowProps) => {
 					animation: `${
 						followed
 							? keyframes({
-									from: { transform: "rotate(0deg)" },
-									to: { transform: "rotate(405deg)" },
-							  })
+								from: { transform: "rotate(0deg)" },
+								to: { transform: "rotate(405deg)" },
+							})
 							: keyframes({
-									from: { transform: "rotate(405deg)" },
-									to: { transform: "rotate(0deg)" },
-							  })
+								from: { transform: "rotate(405deg)" },
+								to: { transform: "rotate(0deg)" },
+							})
 					} 1000ms linear`,
 					userSelect: "none",
 				}}
