@@ -215,8 +215,8 @@ const ViewVideo: NextPage = () => {
 								{videoData?.videoUploaded
 									? DateTime.fromMillis(videoData?.videoUploaded).toRelative()
 									: DateTime.fromMillis(
-											Math.round(1637779853 * 1000)
-									  ).toRelative()}
+										Math.round(1637779853 * 1000)
+									).toRelative()}
 							</Pill>
 						</div>
 						<div
@@ -250,21 +250,21 @@ const ViewVideo: NextPage = () => {
 
 										animation: descriptionMenu
 											? `${keyframes({
-													from: {
-														transform: "rotate(0deg)",
-													},
-													to: {
-														transform: "rotate(180deg)",
-													},
-											  })} 0.5s ease-in-out`
+												from: {
+													transform: "rotate(0deg)",
+												},
+												to: {
+													transform: "rotate(180deg)",
+												},
+											})} 0.5s ease-in-out`
 											: `${keyframes({
-													from: {
-														transform: "rotate(180deg)",
-													},
-													to: {
-														transform: "rotate(0deg)",
-													},
-											  })} 0.5s ease-in-out`,
+												from: {
+													transform: "rotate(180deg)",
+												},
+												to: {
+													transform: "rotate(0deg)",
+												},
+											})} 0.5s ease-in-out`,
 									}}
 								/>
 							</div>
