@@ -352,6 +352,9 @@ const Invite: NextPage = () => {
 													path: "/",
 													maxAge: 60 * 60 * 24 * 30,
 												});
+
+												localStorage.setItem("username", data.username);
+												localStorage.setItem("token", data.token);
 											}
 										}}
 									>
