@@ -1,4 +1,4 @@
 import { useID } from "./id";
-import { fetcher } from "./fetch";
+import { useFetch } from "./fetch";
 
-export { useID, fetcher };
+export { useID, useFetch };
