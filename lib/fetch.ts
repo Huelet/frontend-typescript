@@ -5,7 +5,7 @@ export interface FetchProps {
 	headers?: { [key: string]: string };
 }
 
-export const useFetch = async ({
+export const useFetch = ({
 	url,
 	method = "GET",
 	body,
