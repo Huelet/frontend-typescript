@@ -13,21 +13,21 @@ export const useFetch = async ({
 }: FetchProps) => {
 	let error = false;
 	let loading = true;
-	try {
-		const res = await fetch(url, {
-			method: method,
-			body: JSON.stringify(body),
-			headers: {
-				"Content-Type": "application/json",
-				...headers,
-			},
+	fetch(url, {
+		method: method,
+		body: JSON.stringify(body),
+		headers: {
+			"Content-Type": "application/json",
+			...headers,
+		},
+	})
+		.then((res) => {
+			loading = false;
+			return [res.json(), error, loading];
+		})
+		.catch((err) => {
+			error = true;
+			loading = false;
+			return [err, error, loading];
 		});
-		const data = await res.json();
-		loading = false;
-		return [data, error, loading];
-	} catch (err) {
-		error = true;
-		loading = false;
-		return [null, error, loading];
-	}
 };
