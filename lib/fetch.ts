@@ -5,20 +5,15 @@ export interface FetchProps {
 	headers?: { [key: string]: string };
 }
 
-export const useFetch = ({
-	url,
-	method = "GET",
-	body,
-	headers,
-}: FetchProps) => {
+export const useFetch = (props: FetchProps) => {
 	let error = false;
 	let loading = true;
-	fetch(url, {
-		method: method,
-		body: JSON.stringify(body),
+	fetch(props.url, {
+		method: props.method,
+		body: JSON.stringify(props.body),
 		headers: {
 			"Content-Type": "application/json",
-			...headers,
+			...props.headers,
 		},
 	})
 		.then((res) => {
