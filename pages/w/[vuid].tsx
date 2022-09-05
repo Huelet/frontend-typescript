@@ -10,10 +10,10 @@ import { useEffect, useState } from "react";
 import { Header } from "../../components/header";
 import { useCookies } from "react-cookie";
 import "react-loading-skeleton/dist/skeleton.css";
-import { ChevronDown } from "@fdn-ui/icons-react";
+import { ChevronDown, WarningFilled } from "@fdn-ui/icons-react";
 import { DateTime } from "luxon";
 import { useSound } from "use-sound";
-import { Pill, Toast } from "@huelet/foundation-ui";
+import { Button, Pill, Toast } from "@huelet/foundation-ui";
 import { Avatar } from "../../components/avatar";
 import Loader from "../../components/loader";
 import { Follow } from "../../components/Buttons/follow";
@@ -25,6 +25,7 @@ const ViewVideo: NextPage = () => {
 	const [cookie, setCookie] = useCookies(["_hltoken"]);
 	const [videoData, setVideoData]: [any, any] = useState({});
 	const [authorData, setAuthorData]: [any, any] = useState({});
+	const [opened, setOpened] = useState(false);
 	const [username, setUsername] = useState("");
 
 	const [descriptionMenu, toggleDescriptionMenu] = useState(false);
@@ -68,6 +69,8 @@ const ViewVideo: NextPage = () => {
 			if (videoResp.status === 429) setRateLimited(true);
 			const videoRespData = await videoResp.json();
 			setVideoData(videoRespData.data);
+
+			if (videoRespData.data?.flags.length === 0) setOpened(true);
 		};
 		if (typeof vuid !== "undefined") {
 			getPageData();
@@ -130,20 +133,154 @@ const ViewVideo: NextPage = () => {
 			<Header username={username} />
 			<div className="spacer-sm"></div>
 			<article>
-				<Player
-					id={[...Array(2)]
-						.map(() =>
-							Math.round(Date.now() + Math.random() * Date.now()).toString(36)
-						)
-						.join("")}
-					sources={{
-						hd: {
-							play_url: videoData?.vurl_webm || videoData?.url,
-						},
-					}}
-					cover={videoData?.thumbnail}
-					title={videoData?.title}
-				/>
+				{opened === false ? (
+					<div>
+						<div
+							css={{
+								width: "75vw",
+								height: "75vh",
+								backgroundImage: `url(${videoData.thumbnail})`,
+								filter: opened ? "blur(0)" : "blur(5em)",
+								backgroundPosition: "center",
+								backgroundRepeat: "no-repeat",
+								backgroundSize: "cover",
+								animation: `${
+									opened
+										? keyframes`
+									from {
+										filter: blur(0);
+									}
+									to {
+										filter: blur(5em);
+									}
+								`
+										: keyframes`
+									from {
+										filter: blur(0);
+									}
+									to {
+										filter: blur(5em);
+									}
+								`
+								} 0.5s ease-in-out`,
+							}}
+						></div>
+						<div
+							css={{
+								position: "absolute",
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+								width: "75vw",
+								height: "75vh",
+								borderRadius: "2em",
+								top: "50%",
+								left: "50%",
+								transform: "translate(-50%, -50%)",
+								zIndex: "2",
+							}}
+						>
+							<div
+								css={{
+									display: "flex",
+									flexDirection: "row",
+									justifyContent: "center",
+									alignItems: "center",
+									width: "100%",
+									height: "100%",
+								}}
+							>
+								<div
+									css={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+										width: "3em",
+										height: "3em",
+										borderRadius: "50%",
+										background: "#ff0077",
+									}}
+								>
+									<WarningFilled fill="white" />
+								</div>
+								<div
+									css={{
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "center",
+										alignItems: "center",
+									}}
+								>
+									<div
+										css={{
+											marginLeft: "1em",
+										}}
+									>
+										<h1
+											css={{
+												fontSize: "2.3em",
+											}}
+										>
+											Warning
+										</h1>
+										<p
+											css={{
+												fontSize: "1.2em",
+											}}
+										>
+											This video contains content that may be offensive to some
+											viewers.
+										</p>
+										<div
+											css={{
+												backgroundColor: "rgb(120, 120, 120)",
+												borderRadius: "1em",
+											}}
+										>
+											{videoData.flags &&
+												videoData.flags.map((flag) => (
+													<p
+														css={{
+															fontSize: "1.2em",
+															padding: "0.5em",
+														}}
+														key={flag}
+													>
+														{flag}
+													</p>
+												))}
+										</div>
+										<Button onPress={() => setOpened(true)} type="primary">
+											Continue
+										</Button>
+										<Button onPress={() => router.push("/")} type="secondary">
+											Go back
+										</Button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				) : (
+					<>
+						<Player
+							id={[...Array(2)]
+								.map(() =>
+									Math.round(Date.now() + Math.random() * Date.now()).toString(
+										36
+									)
+								)
+								.join("")}
+							sources={{
+								hd: {
+									play_url: videoData?.vurl_webm || videoData?.url,
+								},
+							}}
+							cover={videoData?.thumbnail}
+							title={videoData?.title}
+						/>
+					</>
+				)}
 				<h2>{videoData?.title}</h2>
 				<div
 					css={css({
@@ -208,8 +345,8 @@ const ViewVideo: NextPage = () => {
 								{videoData?.videoUploaded
 									? DateTime.fromMillis(videoData?.videoUploaded).toRelative()
 									: DateTime.fromMillis(
-										Math.round(1637779853 * 1000)
-									).toRelative()}
+											Math.round(1637779853 * 1000)
+									  ).toRelative()}
 							</Pill>
 						</div>
 						<div
@@ -243,21 +380,21 @@ const ViewVideo: NextPage = () => {
 
 										animation: descriptionMenu
 											? `${keyframes({
-												from: {
-													transform: "rotate(0deg)",
-												},
-												to: {
-													transform: "rotate(180deg)",
-												},
-											})} 0.5s ease-in-out`
+													from: {
+														transform: "rotate(0deg)",
+													},
+													to: {
+														transform: "rotate(180deg)",
+													},
+											  })} 0.5s ease-in-out`
 											: `${keyframes({
-												from: {
-													transform: "rotate(180deg)",
-												},
-												to: {
-													transform: "rotate(0deg)",
-												},
-											})} 0.5s ease-in-out`,
+													from: {
+														transform: "rotate(180deg)",
+													},
+													to: {
+														transform: "rotate(0deg)",
+													},
+											  })} 0.5s ease-in-out`,
 									}}
 								/>
 							</div>
