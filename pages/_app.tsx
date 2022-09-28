@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as React from "react";
+import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import "../styles/globals.css";
@@ -12,10 +13,12 @@ import {
 	registerSpotlightActions,
 } from "@mantine/spotlight";
 import { CookiesProvider } from "react-cookie";
-import { Search, Settings, Star, Video } from "@fdn-ui/icons-react";
+import { Add, NewNote, Search, Settings, Star, Video } from "@fdn-ui/icons-react";
 import Script from "next/script";
+import { Toast } from "@huelet/foundation-ui";
 
 function HueletWebapp({ Component, pageProps }: AppProps) {
+	const [alertOpen, toggleAlert] = useState(true);
 	const router = useRouter();
 	return (
 		<>
@@ -145,6 +148,16 @@ function HueletWebapp({ Component, pageProps }: AppProps) {
 						}}
 						shortcut={["mod + shift + P"]}
 					>
+						<Toast
+							opened={alertOpen}
+							onClose={() => toggleAlert(false)}
+							heading="This site is being deprecated"
+							body="Please use new.huelet.net for improved performance and features"
+							icon={
+								<Add fill="white" />
+							}
+
+						/>
 						<Component {...pageProps} />
 					</SpotlightProvider>
 				</MantineProvider>
