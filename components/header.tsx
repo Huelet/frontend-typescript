@@ -210,7 +210,7 @@ export const Header = ({ username }: HeaderProps) => {
 												component={NextLink}
 												href="/auth/data"
 											>
-												Your data in Huelet
+												Your data within Huelet
 											</Menu.Item>
 										</Menu.Dropdown>
 									</Menu>
